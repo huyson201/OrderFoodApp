@@ -1,3 +1,17 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">OrderFoodApp</string>
+    <string name="edt_email_hint">E-mail</string>
+    <string name="edt_pw_hint">Password</string>
+    <string name="btn_login">Sign in</string>
+    <string name="btn_register">Sign up</string>
+    <string name="lbl_forget_pw">Forget password?</string>
+    <string name="edt_full_name_hint">Full Name</string>
+    <string name="edt_address_hint">Address</string>
+    <string name="edt_phone_hint">Phone Number</string>
+    <string name="edt_confirm_pw_hint">Confirm Password</string>
+    <string name="lbl_tab_sign_in">Sign in</string>
+    <string name="lbl_tab_sign_up">Sign up</string>
+    <string name="already_account">Already have an account?</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="chk_remember_login">Remember me</string>
 </resources>
