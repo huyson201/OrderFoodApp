@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
-
         edtEmail = findViewById(R.id.edt_email);
         edtPassword = findViewById(R.id.edt_password);
         loginBtn = findViewById(R.id.btn_login);
@@ -124,8 +123,8 @@ public class LoginActivity extends AppCompatActivity {
                                             String json = gson.toJson(user);
                                             editor.putString(USER_LOGGED_IN, json);
                                             editor.apply();
-
                                         }
+
                                         goNextActivity(user);
                                     }
                                 }
@@ -162,5 +161,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
             startActivity(intent);
         }
+        finish();
     }
 }

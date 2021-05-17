@@ -7,6 +7,7 @@ public class User {
     private String phone;
     private String address;
     private int role;
+    private String imgUrl;
 
     public static final int ADMIN_ROLE = 0;
     public static final int USER_ROLE = 1;
@@ -23,6 +24,7 @@ public class User {
         this.phone = phone;
         this.address = address;
         this.role = USER_ROLE;
+        this.imgUrl = "";
     }
 
     public String getId() {
@@ -69,6 +71,14 @@ public class User {
 
     public int getRole() {
         return role;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     @Override
