@@ -25,10 +25,14 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
         setContentView(R.layout.admin_dashboard_layout);
 
         recyclerView = findViewById(R.id.admin_recycler_view);
+
         menus = new ArrayList<AdminMenu>();
         menus.add(new AdminMenu(R.drawable.ic_profile, AdminMenu.PROFILE_TAG));
+        menus.add(new AdminMenu(R.drawable.ic_menu, AdminMenu.MENUS_TAG));
         menus.add(new AdminMenu(R.drawable.ic_task_list, AdminMenu.WAITING_INVOICE_TAG));
         menus.add(new AdminMenu(R.drawable.ic_confirm_list, AdminMenu.CONFIRMED_INVOICE_TAG));
+        menus.add(new AdminMenu(R.drawable.ic_chef, AdminMenu.COOKING_TAG));
+        menus.add(new AdminMenu(R.drawable.ic_food_delivery, AdminMenu.DELIVERY_TAG));
         menus.add(new AdminMenu(R.drawable.ic_logout, AdminMenu.LOGOUT_TAG));
 
         AdminRecyclerViewAdapter adapter = new AdminRecyclerViewAdapter(menus, this);
@@ -59,12 +63,27 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
     }
 
     @Override
-    public void onClickWatingInvoice() {
+    public void onClickWaitingInvoice() {
         Toast.makeText(this, "Clicked Waiting Invoice", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onClickConfirmedInvoice() {
         Toast.makeText(this, "Clicked  Completed Invoice", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onClickMenu() {
+        Toast.makeText(this, "Clicked  Menu", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onClickDelivery() {
+        Toast.makeText(this, "Clicked Delivery Invoice", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onClickCooking() {
+        Toast.makeText(this, "Clicked  Cooking", Toast.LENGTH_LONG).show();
     }
 }

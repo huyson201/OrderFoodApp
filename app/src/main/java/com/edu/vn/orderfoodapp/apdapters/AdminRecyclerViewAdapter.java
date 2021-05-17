@@ -70,11 +70,20 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecycler
                 case AdminMenu.PROFILE_TAG:
                     iMenuItemClick.onClickProfile();
                     break;
+                case AdminMenu.MENUS_TAG:
+                    iMenuItemClick.onClickMenu();
+                    break;
                 case AdminMenu.WAITING_INVOICE_TAG:
-                    iMenuItemClick.onClickWatingInvoice();
+                    iMenuItemClick.onClickWaitingInvoice();
                     break;
                 case AdminMenu.CONFIRMED_INVOICE_TAG:
                     iMenuItemClick.onClickConfirmedInvoice();
+                    break;
+                case AdminMenu.COOKING_TAG:
+                    iMenuItemClick.onClickCooking();
+                    break;
+                case AdminMenu.DELIVERY_TAG:
+                    iMenuItemClick.onClickDelivery();
                     break;
                 case AdminMenu.LOGOUT_TAG:
                     iMenuItemClick.onClickLogout();
@@ -88,8 +97,11 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecycler
     public interface IMenuItemClick{
         void onClickProfile();
         void onClickLogout();
-        void onClickWatingInvoice();
+        void onClickWaitingInvoice();
         void onClickConfirmedInvoice();
+        void onClickMenu();
+        void onClickDelivery();
+        void onClickCooking();
     }
 
 }
