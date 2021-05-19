@@ -2,4 +2,10 @@
 <resources>
     <dimen name="btn_font_size">16sp</dimen>
     <dimen name="edt_font_size">12sp</dimen>
+
+<!--    detail food-->
+    <dimen name="price_size">20sp</dimen>
+    <dimen name="food_name_size">20sp</dimen>
+    <dimen name="description_size">16sp</dimen>
+    <dimen name="content_padding">10dp</dimen>
 </resources>

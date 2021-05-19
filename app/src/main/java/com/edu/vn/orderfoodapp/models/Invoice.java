@@ -39,4 +39,6 @@ public class Invoice {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    
 }
