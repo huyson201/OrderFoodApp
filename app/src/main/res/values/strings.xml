@@ -21,7 +21,7 @@
     <string name="lbl_welcome">Welcome to</string>
     <string name="lbl_admin_name">Son!</string>
 
-<!--    food detail-->
+    <!--    food detail-->
     <string name="lbl_food_name">Thịt bò xào ngon hương vị hấp dẫn </string>
     <string name="lbl_price_unit"><u>đ</u></string>
     <string name="lbl_price">50.000</string>
@@ -29,4 +29,11 @@
     <string name="buy_now_btn">Buy now</string>
     <string name="lbl_description">Description</string>
     <string name="lbl_description_content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+<!--    cart layout-->
+    <string name="lbl_cart">Cart</string>
+    <string name="chk_all">All</string>
+    <string name="lbl_total">Total</string>
+    <string name="btn_buy">Buy</string>
+    <string name="lbl_total_price">2000</string>
+    <string name="lbl_quantity">1</string>
 </resources>

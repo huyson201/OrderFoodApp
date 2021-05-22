@@ -1,16 +1,26 @@
 package com.edu.vn.orderfoodapp.models;
 
 public class Food {
+    private String foodId;
     private String imgUrl;
     private String name;
     private String description;
-    private String price;
+    private int price;
 
-    public Food(String imgUrl, String name, String description, String price) {
+    public Food(String foodId, String imgUrl, String name, String description, int price) {
+        this.foodId = foodId;
         this.imgUrl = imgUrl;
         this.name = name;
         this.description = description;
         this.price = price;
+    }
+
+    public String getFoodId() {
+        return foodId;
+    }
+
+    public void setFoodId(String foodId) {
+        this.foodId = foodId;
     }
 
     public String getImgUrl() {
@@ -37,11 +47,11 @@ public class Food {
         this.description = description;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }

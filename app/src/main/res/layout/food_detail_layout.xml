@@ -45,7 +45,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/food_img">
+                app:layout_constraintTop_toBottomOf="@id/food_img"
+                app:layout_constraintVertical_bias="0.0">
 
                 <TextView
                     android:id="@+id/lbl_food_name"
@@ -220,5 +221,5 @@
                 app:layout_constraintHorizontal_bias="0"
                 android:layout_marginLeft="10dp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </>
+       </Toolbar>
 </androidx.constraintlayout.widget.ConstraintLayout>
