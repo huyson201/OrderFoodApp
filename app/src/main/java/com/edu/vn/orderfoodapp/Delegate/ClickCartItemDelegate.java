@@ -6,6 +6,6 @@ import com.edu.vn.orderfoodapp.models.Invoice;
 
 import java.util.ArrayList;
 
-public interface ClickAllDelegate {
-    void onClickAll(View v, Invoice invoice);
+public interface ClickCartItemDelegate {
+    void onClickCartItem();
 }

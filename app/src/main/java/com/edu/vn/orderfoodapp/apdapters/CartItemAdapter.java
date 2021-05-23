@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.edu.vn.orderfoodapp.Delegate.ClickAllDelegate;
+import com.edu.vn.orderfoodapp.Delegate.ClickCartItemDelegate;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.models.Invoice;
 import com.google.android.material.card.MaterialCardView;
@@ -24,17 +24,16 @@ import java.util.ArrayList;
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartItemViewHolder> {
     private ArrayList<Invoice> invoices;
     private Activity context;
-    private ClickAllDelegate clickAllDelegate;
-    private int position;
-    private CheckBox checkSelected;
+    private ClickCartItemDelegate clickCartItemDelegate;
+
 
     public CartItemAdapter(Activity context, ArrayList<Invoice> invoices) {
         this.invoices = invoices;
         this.context = context;
     }
 
-    public void setClickAllDelegate(ClickAllDelegate clickAllDelegate) {
-        this.clickAllDelegate = clickAllDelegate;
+    public void setClickAllDelegate(ClickCartItemDelegate clickCartItemDelegate) {
+        this.clickCartItemDelegate = clickCartItemDelegate;
     }
 
     @NonNull
@@ -44,23 +43,24 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         return new CartItemViewHolder(cardView);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull CartItemViewHolder holder, int position) {
-        this.position = position;
-        checkSelected = holder.chkSelect;
-
-        Invoice invoice = invoices.get(this.position);
+        Invoice invoice = invoices.get(position);
         Glide.with(this.context).load(invoice.getFoods().getImgUrl()).fitCenter().into(holder.foodImg);
         holder.foodName.setText(invoice.getFoods().getName());
         holder.foodPrice.setText((invoice.getFoods().getPrice() + ""));
         holder.quantity.setText((invoice.getQuantity() + ""));
+        holder.chkSelect.setChecked(invoice.isSelected());
 
         // processing click selected check box
         holder.chkSelect.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 invoice.setSelected(((CheckBox) v).isChecked());
+               if(clickCartItemDelegate != null){
+                   clickCartItemDelegate.onClickCartItem();
+               }
             }
         });
 
@@ -73,6 +73,10 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
                     quantity--;
                     invoice.setQuantity(quantity);
                     holder.quantity.setText(quantity + "");
+                }
+
+                if(clickCartItemDelegate != null){
+                    clickCartItemDelegate.onClickCartItem();
                 }
             }
         });
@@ -89,15 +93,15 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
                 }else{
                     Toast.makeText(context, "Maximum is 10", Toast.LENGTH_SHORT).show();
                 }
+
+                if(clickCartItemDelegate != null){
+                    clickCartItemDelegate.onClickCartItem();
+                }
             }
         });
     }
 
-    public void callClickAllDelegate(){
-        if(clickAllDelegate != null){
-            clickAllDelegate.onClickAll(checkSelected, invoices.get(position));
-        }
-    }
+
     @Override
     public int getItemCount() {
         if(invoices != null){

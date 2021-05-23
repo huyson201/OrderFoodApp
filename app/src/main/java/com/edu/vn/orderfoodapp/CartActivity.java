@@ -6,22 +6,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
-import com.edu.vn.orderfoodapp.Delegate.ClickAllDelegate;
+import com.edu.vn.orderfoodapp.Delegate.ClickCartItemDelegate;
 import com.edu.vn.orderfoodapp.apdapters.CartItemAdapter;
 import com.edu.vn.orderfoodapp.models.Food;
 import com.edu.vn.orderfoodapp.models.Invoice;
 
 import java.util.ArrayList;
 
-public class CartActivity extends AppCompatActivity implements ClickAllDelegate{
+public class CartActivity extends AppCompatActivity implements ClickCartItemDelegate {
     //properties
     private CheckBox chkAll;
     private boolean isCheckAll = false;
     private RecyclerView listCartItems;
     private ArrayList<Invoice> invoices;
     private CartItemAdapter adapter;
+
+    private TextView lblTotalPrice;
+    private ImageButton backBtn;
+    private Button buyBtn;
+
+    public static String CART_TAG = "cart";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +40,33 @@ public class CartActivity extends AppCompatActivity implements ClickAllDelegate{
         chkAll = findViewById(R.id.chkAll);
         invoices = new ArrayList<Invoice>();
         listCartItems = findViewById(R.id.list_cart_item);
+        lblTotalPrice = findViewById(R.id.lbl_total_price);
+        backBtn = findViewById(R.id.back_btn);
+        buyBtn = findViewById(R.id.buy_btn);
+
+        // back btn processing event
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         // check all processing
         chkAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isCheckAll = ((CheckBox) v).isChecked();
-                adapter.callClickAllDelegate();
+                for(Invoice invoice : invoices){
+                    invoice.setSelected(isCheckAll);
+                }
+
+                adapter.notifyDataSetChanged();
+
+                // get sum price
+                int sumPrice = getSumPrice(invoices);
+                lblTotalPrice.setText(sumPrice + "");
+
             }
         });
 
@@ -51,7 +80,6 @@ public class CartActivity extends AppCompatActivity implements ClickAllDelegate{
 
         adapter = new CartItemAdapter(this, invoices);
         adapter.setClickAllDelegate(this);
-
         //init linear layout manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -62,9 +90,20 @@ public class CartActivity extends AppCompatActivity implements ClickAllDelegate{
 
     }
 
+    // calculate sum price of invoices
+    public int getSumPrice(ArrayList<Invoice> invoices){
+        int sum = 0;
+        for(Invoice invoice : invoices){
+            if(invoice.isSelected()){
+                sum += invoice.getQuantity() * invoice.getFoods().getPrice();
+            }
+        }
+        return sum;
+    }
+
     @Override
-    public void onClickAll(View v, Invoice invoice) {
-        ((CheckBox)v).setChecked(isCheckAll);
-        invoice.setSelected(isCheckAll);
+    public void onClickCartItem() {
+        int sumPrice = getSumPrice(invoices);
+        lblTotalPrice.setText(sumPrice + "");
     }
 }
