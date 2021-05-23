@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    card_view:cardElevation="5dp"
+    card_view:cardCornerRadius="20dp"
+    card_view:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/customize_edt"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/food_bg">
+
+
+        <TextView
+            android:id="@+id/foodPrice2"
+            android:layout_width="17dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/lbl_price_unit"
+            android:textColor="@color/white"
+            card_view:layout_constraintBottom_toBottomOf="@+id/foodPrice"
+            card_view:layout_constraintStart_toEndOf="@+id/foodPrice">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/foodImage"
+            android:layout_width="120dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:srcCompat="@drawable/img_thit_bo_xao" />
+
+        <TextView
+            android:id="@+id/foodName"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:text="@string/lbl_food_name"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@+id/foodImage"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/foodPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="29dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="50000"
+            android:textColor="@color/white"
+            android:textSize="@dimen/price_size"
+            android:textStyle="bold"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@+id/foodImage"
+            card_view:layout_constraintTop_toBottomOf="@+id/foodName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

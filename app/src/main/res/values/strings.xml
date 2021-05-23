@@ -37,4 +37,16 @@
     <string name="lbl_total_price">2000</string>
     <string name="lbl_quantity">1</string>
     <string name="lbl_delete">DELETE</string>
+	 <!--Search-->
+    <string name="edtSearch">Search...</string>
+
+    //Bottom navigation bar item
+    <string name="titleItemHome">Home</string>
+    <string name="titleItemCart">Cart</string>
+    <string name="titleItemHistory">History</string>
+    <string name="titleItemUser">User</string>
+
+<!--    Menu item-->
+    <string name="titleItemProfile">Profile</string>
+    <string name="titleItemLogout">Logout</string>
 </resources>
