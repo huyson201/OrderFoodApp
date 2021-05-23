@@ -31,15 +31,15 @@ public class HomeActivity extends AppCompatActivity {
         RecyclerView food_recyclerView = findViewById(R.id.list_foods);
 
         //
-        categories.add(new Category("PIZZA","01"));
-        categories.add(new Category("PIZZA","02"));
-        categories.add(new Category("PIZZA","02"));
-        categories.add(new Category("PIZZA","02"));
-        categories.add(new Category("PIZZA","02"));
-        categories.add(new Category("PIZZA","02"));
-        categories.add(new Category("PIZZA","02"));
-        categories.add(new Category("PIZZA","02"));
-        categories.add(new Category("PIZZA","02"));
+        categories.add(new Category("PIZZA","01","https://firebasestorage.googleapis.com/v0/b/orderfood-160b8.appspot.com/o/categories%2Fmozzarella-burger_5.jpg?alt=media&token=b3fc648b-57a7-4805-a37c-d6b0be29b7b5"));
+//        categories.add(new Category("PIZZA","02"));
+//        categories.add(new Category("PIZZA","02"));
+//        categories.add(new Category("PIZZA","02"));
+//        categories.add(new Category("PIZZA","02"));
+//        categories.add(new Category("PIZZA","02"));
+//        categories.add(new Category("PIZZA","02"));
+//        categories.add(new Category("PIZZA","02"));
+//        categories.add(new Category("PIZZA","02"));
 
         //
         foodList.add(new Food("hihi","hihi","hihi","50000",50000));

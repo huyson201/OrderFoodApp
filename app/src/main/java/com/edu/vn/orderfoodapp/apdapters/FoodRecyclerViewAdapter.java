@@ -44,26 +44,13 @@ public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerVi
         //get data from person list
         Food food  = foodlist.get(position);
         viewHolder.setPosition(position);
-//        viewHolder.chkSelection.setChecked(false);
-
-//        if (category.getDegree().equalsIgnoreCase(QuanLyNhanSuActivity.CAODANG)){
-//            viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.college, context.getTheme()));
-//        } else if (category.getDegree().equalsIgnoreCase(QuanLyNhanSuActivity.DAIHOC)){
-//            viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.university, context.getTheme()));
-//        } else if (category.getDegree().equalsIgnoreCase(QuanLyNhanSuActivity.TRUNGCAP)){
-//            viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.midium, context.getTheme()));
-//        } else {
-//            viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.none, context.getTheme()));
-//        }
-//        viewHolder.txtName.setText(category.getName());
-//        viewHolder.txtHoppies.setText(category.getHobbies());
 
         if (food.getName().equalsIgnoreCase("Delicious stir-fried beef with attractive flavor ")){
             viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.img_thit_bo_xao,context.getTheme()));
         }
 
         viewHolder.foodName.setText(food.getName());
-        viewHolder.foodPrice.setText(food.getPrice());
+       viewHolder.foodPrice.setText(food.getPrice()+"");
 
     }
 

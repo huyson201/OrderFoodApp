@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.models.Category;
 
@@ -47,24 +48,8 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
         //get data from person list
         Category category  = categories.get(position);
         viewHolder.setPosition(position);
-//        viewHolder.chkSelection.setChecked(false);
 
-//        if (category.getDegree().equalsIgnoreCase(QuanLyNhanSuActivity.CAODANG)){
-//            viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.college, context.getTheme()));
-//        } else if (category.getDegree().equalsIgnoreCase(QuanLyNhanSuActivity.DAIHOC)){
-//            viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.university, context.getTheme()));
-//        } else if (category.getDegree().equalsIgnoreCase(QuanLyNhanSuActivity.TRUNGCAP)){
-//            viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.midium, context.getTheme()));
-//        } else {
-//            viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.mipmap.none, context.getTheme()));
-//        }
-//        viewHolder.txtName.setText(category.getName());
-//        viewHolder.txtHoppies.setText(category.getHobbies());
-
-        if (category.getCategoryName().equalsIgnoreCase("PIZZA")){
-            viewHolder.imageButton.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_baseline_local_pizza_24,context.getTheme()));
-        }
-
+        Glide.with(this.context).load(category.getCategoryImg()).fitCenter().into(viewHolder.imageButton);
         viewHolder.categoryName.setText(category.getCategoryName());
 
 
@@ -94,17 +79,6 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             imageButton = itemView.findViewById(R.id.imgButton);
             categoryName = itemView.findViewById(R.id.categoryName);
 
-//            chkSelection.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (((CheckBox)v).isChecked()) {
-//                        members.get(position).setCheck(true);
-//                    }
-//                    else {
-//                        members.get(position).setCheck(false);
-//                    }
-//                }
-//            });
         }
         public void setPosition(int pos){
             position = pos;
