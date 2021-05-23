@@ -14,14 +14,14 @@ import com.edu.vn.orderfoodapp.models.Food;
 
 import java.util.ArrayList;
 
-public class HomeActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private ArrayList<Category> categories = new ArrayList<Category>();
     private ArrayList<Food> foodList = new ArrayList<Food>();
     //private ArrayAdapter<Person> adapter;
     //private PersonAdapter adapter;
     private CategoryRecyclerViewAdapter categoryRecyclerViewAdapter;
     private FoodRecyclerViewAdapter foodRecyclerViewAdapter;
-//    private PersonDatabase DAO;
+    //    private PersonDatabase DAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

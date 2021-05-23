@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.edu.vn.orderfoodapp.apdapters.AdminRecyclerViewAdapter;
@@ -86,4 +85,5 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
     public void onClickCooking() {
         Toast.makeText(this, "Clicked  Cooking", Toast.LENGTH_LONG).show();
     }
+
 }
