@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.edu.vn.orderfoodapp.Delegate.ClickCartItemDelegate;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.models.Invoice;
@@ -22,14 +24,16 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.ArrayList;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartItemViewHolder> {
+    //propeties
     private ArrayList<Invoice> invoices;
     private Activity context;
     private ClickCartItemDelegate clickCartItemDelegate;
-
+    private ViewBinderHelper viewBinderHelper;
 
     public CartItemAdapter(Activity context, ArrayList<Invoice> invoices) {
         this.invoices = invoices;
         this.context = context;
+        viewBinderHelper = new ViewBinderHelper();
     }
 
     public void setClickAllDelegate(ClickCartItemDelegate clickCartItemDelegate) {
@@ -46,12 +50,28 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
 
     @Override
     public void onBindViewHolder(@NonNull CartItemViewHolder holder, int position) {
+
         Invoice invoice = invoices.get(position);
+        viewBinderHelper.bind(holder.swipeRevealLayout,position + "");
+
         Glide.with(this.context).load(invoice.getFoods().getImgUrl()).fitCenter().into(holder.foodImg);
         holder.foodName.setText(invoice.getFoods().getName());
         holder.foodPrice.setText((invoice.getFoods().getPrice() + ""));
         holder.quantity.setText((invoice.getQuantity() + ""));
         holder.chkSelect.setChecked(invoice.isSelected());
+
+        //delete processing
+        holder.lbl_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                invoices.remove(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getAdapterPosition());
+
+                if(clickCartItemDelegate != null){
+                    clickCartItemDelegate.onClickCartItem();
+                }
+            }
+        });
 
         // processing click selected check box
         holder.chkSelect.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +136,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         private TextView foodName, foodPrice, quantity;
         private ImageButton minusBtn, plusBtn;
         private CheckBox chkSelect;
+        private SwipeRevealLayout swipeRevealLayout;
+        private TextView lbl_delete;
         public CartItemViewHolder(@NonNull View cartItem) {
             super(cartItem);
 
@@ -126,8 +148,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
             minusBtn =  cartItem.findViewById(R.id.minus_btn);
             plusBtn =  cartItem.findViewById(R.id.plus_btn);
             chkSelect = cartItem.findViewById(R.id.chk_select);
-
-
+            swipeRevealLayout = cartItem.findViewById(R.id.swipe_reveal_layout);
+            lbl_delete = cartItem.findViewById(R.id.lbl_delete);
         }
     }
 }

@@ -36,4 +36,5 @@
     <string name="btn_buy">Buy</string>
     <string name="lbl_total_price">2000</string>
     <string name="lbl_quantity">1</string>
+    <string name="lbl_delete">DELETE</string>
 </resources>
