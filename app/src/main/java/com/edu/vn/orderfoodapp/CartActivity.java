@@ -95,7 +95,7 @@ public class CartActivity extends AppCompatActivity implements ClickCartItemDele
         int sum = 0;
         for(Invoice invoice : invoices){
             if(invoice.isSelected()){
-                sum += invoice.getQuantity() * invoice.getFoods().getPrice();
+                sum += invoice.getQuantity() * invoice.getFoods().getFoodPrice();
             }
         }
         return sum;

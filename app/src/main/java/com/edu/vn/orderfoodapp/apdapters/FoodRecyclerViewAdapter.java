@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.models.Food;
 
@@ -45,12 +45,9 @@ public class FoodRecyclerViewAdapter extends RecyclerView.Adapter<FoodRecyclerVi
         Food food  = foodlist.get(position);
         viewHolder.setPosition(position);
 
-        if (food.getName().equalsIgnoreCase("Delicious stir-fried beef with attractive flavor ")){
-            viewHolder.imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.img_thit_bo_xao,context.getTheme()));
-        }
-
-        viewHolder.foodName.setText(food.getName());
-       viewHolder.foodPrice.setText(food.getPrice()+"");
+        Glide.with(this.context).load(food.getFoodImage()).fitCenter().into(viewHolder.imageView);
+        viewHolder.foodName.setText(food.getFoodName());
+       viewHolder.foodPrice.setText(food.getFoodPrice()+"");
 
     }
 

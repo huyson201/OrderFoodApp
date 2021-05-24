@@ -54,9 +54,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         Invoice invoice = invoices.get(position);
         viewBinderHelper.bind(holder.swipeRevealLayout,position + "");
 
-        Glide.with(this.context).load(invoice.getFoods().getImgUrl()).fitCenter().into(holder.foodImg);
-        holder.foodName.setText(invoice.getFoods().getName());
-        holder.foodPrice.setText((invoice.getFoods().getPrice() + ""));
+        Glide.with(this.context).load(invoice.getFoods().getFoodImage()).fitCenter().into(holder.foodImg);
+        holder.foodName.setText(invoice.getFoods().getFoodName());
+        holder.foodPrice.setText((invoice.getFoods().getFoodPrice() + ""));
         holder.quantity.setText((invoice.getQuantity() + ""));
         holder.chkSelect.setChecked(invoice.isSelected());
 

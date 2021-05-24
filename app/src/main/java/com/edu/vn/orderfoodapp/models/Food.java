@@ -1,20 +1,23 @@
 package com.edu.vn.orderfoodapp.models;
 
 public class Food {
+    private String categoryId;
     private String foodId;
-    private String imgUrl;
-    private String name;
-    private String description;
-    private int price;
+    private String foodImage;
+    private String foodName;
+    private String foodDescription;
+    private int foodPrice;
 
     public Food(String foodId, String imgUrl, String name, String description, int price) {
         this.foodId = foodId;
-        this.imgUrl = imgUrl;
-        this.name = name;
-        this.description = description;
-        this.price = price;
+        this.foodImage = imgUrl;
+        this.foodName = name;
+        this.foodDescription = description;
+        this.foodPrice = price;
     }
 
+    public Food() {
+    }
 
     public String getFoodId() {
         return foodId;
@@ -24,35 +27,43 @@ public class Food {
         this.foodId = foodId;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getFoodImage() {
+        return foodImage;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setFoodImage(String foodImage) {
+        this.foodImage = foodImage;
     }
 
-    public String getName() {
-        return name;
+    public String getFoodName() {
+        return foodName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getFoodDescription() {
+        return foodDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFoodDescription(String foodDescription) {
+        this.foodDescription = foodDescription;
     }
 
-    public int getPrice() {
-        return price;
+    public int getFoodPrice() {
+        return foodPrice;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setFoodPrice(int foodPrice) {
+        this.foodPrice = foodPrice;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 }

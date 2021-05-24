@@ -4,7 +4,7 @@ public class Category {
     private String categoryName;
     private String categoryID;
     private String categoryImg;
-
+    public  Category(){}
     public Category(String categoryName, String categoryID,String categoryImg) {
         this.categoryName = categoryName;
         this.categoryID = categoryID;
