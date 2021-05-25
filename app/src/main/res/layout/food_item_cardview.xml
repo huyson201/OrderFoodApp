@@ -13,7 +13,8 @@
         style="@style/customize_edt"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/food_bg">
+        android:background="@drawable/food_bg"
+        android:id="@+id/constraintLayout">
 
 
         <TextView

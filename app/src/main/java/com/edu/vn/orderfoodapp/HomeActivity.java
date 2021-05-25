@@ -5,8 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.edu.vn.orderfoodapp.apdapters.CategoryAdapter;
 import com.edu.vn.orderfoodapp.apdapters.FoodAdapter;
@@ -30,6 +38,8 @@ public class HomeActivity extends AppCompatActivity implements UpdateRecyclerVie
     private CategoryAdapter categoryAdapter;
     private FoodAdapter foodAdapter;
 
+    private ImageView imageView;
+    private EditText edtSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +48,12 @@ public class HomeActivity extends AppCompatActivity implements UpdateRecyclerVie
         categories = new ArrayList<Category>();
         database_Categories = FirebaseDatabase.getInstance().getReference("categories");
 
+        //hien thi du lieu categories ra recylerview
         categoryRecyclerView = findViewById(R.id.categories);
         categoryAdapter = new CategoryAdapter(this, categories, this);
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         categoryRecyclerView.setAdapter(categoryAdapter);
-
+        //lay du lieu categories trong database
         database_Categories.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -59,15 +70,30 @@ public class HomeActivity extends AppCompatActivity implements UpdateRecyclerVie
             }
         });
 
-        foodList = new ArrayList<>();
+        //hien thi du lieu food ra rycylerview
+//        foodList = new ArrayList<>();
         foodRecyclerView = findViewById(R.id.list_foods);
-        foodAdapter = new FoodAdapter(this, foodList);
+//        foodAdapter = new FoodAdapter(this, foodList);
         foodRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        foodRecyclerView.setAdapter(foodAdapter);
+//        foodRecyclerView.setAdapter(foodAdapter);
 
-
-
-
+        edtSearch=findViewById(R.id.editSearch);
+        imageView=findViewById(R.id.imageView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!edtSearch.getText().toString().equalsIgnoreCase(""))
+                {
+                    Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                    intent.putExtra("text",edtSearch.getText().toString());
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    v.getContext().startActivity(intent);
+                }else {
+                    Toast.makeText(HomeActivity.this,"Please Input Keyword !!",Toast.LENGTH_LONG).show();
+                }
+//                Log.d("edtSearch",edtSearch.getText().toString());
+            }
+        });
     }
 
     @Override

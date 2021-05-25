@@ -36,6 +36,7 @@
         </activity>
 
         <activity android:name=".PlashActivity" />
+        <activity android:name=".SearchActivity" />
     </application>
 
 </manifest>

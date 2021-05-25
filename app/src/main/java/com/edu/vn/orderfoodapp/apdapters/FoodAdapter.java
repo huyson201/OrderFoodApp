@@ -1,6 +1,7 @@
 package com.edu.vn.orderfoodapp.apdapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.edu.vn.orderfoodapp.FoodDetailActivity;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.models.Food;
 
@@ -32,30 +34,46 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
         private ImageView imageView;
         private TextView foodName;
         private TextView foodPrice;
+        private ConstraintLayout constraintLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.foodImage);
             foodName = itemView.findViewById(R.id.foodName);
             foodPrice = itemView.findViewById(R.id.foodPrice);
+            constraintLayout = itemView.findViewById(R.id.constraintLayout);
         }
+
 
     }
 
     @NonNull
     @Override
     public FoodAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        CardView cardView =(CardView)LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_cardview,parent,false);
-        MyViewHolder myViewHolder = new MyViewHolder(cardView);
+       View view =LayoutInflater.from(parent.getContext()).inflate(R.layout.food_item_cardview,parent,false);
+        MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull FoodAdapter.MyViewHolder holder, int position) {
         Food food = foods.get(position);
+        final Food temp = foods.get(position);
         Glide.with(this.context).load(food.getFoodImage()).fitCenter().into(holder.imageView);
         holder.foodName.setText(food.getFoodName());
         holder.foodPrice.setText(food.getFoodPrice()+"");
-
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FoodDetailActivity.class);
+                intent.putExtra("foodId",temp.getFoodId());
+                intent.putExtra("foodName",temp.getFoodName());
+                intent.putExtra("foodImage",temp.getFoodImage());
+                intent.putExtra("foodDesc",temp.getFoodDescription());
+                intent.putExtra("foodPrice",temp.getFoodPrice());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
