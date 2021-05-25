@@ -32,13 +32,13 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
         private ImageView imageView;
         private TextView foodName;
         private TextView foodPrice;
-        ConstraintLayout constraintLayout;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.foodImage);
             foodName = itemView.findViewById(R.id.foodName);
             foodPrice = itemView.findViewById(R.id.foodPrice);
         }
+
     }
 
     @NonNull
@@ -62,6 +62,5 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.MyViewHolder> 
     public int getItemCount() {
         return foods.size();
     }
-
 
 }
