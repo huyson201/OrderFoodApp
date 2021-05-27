@@ -12,7 +12,7 @@ public class AdminMenu {
     public static final String DELIVERY_TAG = "Delivery";
     public static final String MENUS_TAG = "Menu";
     public static final String COOKING_TAG = "Cooking";
-
+    public static final String CATEGORY_TAG = "Categories";
     public AdminMenu(int imgId, String name) {
         this.imgId = imgId;
         this.name = name;

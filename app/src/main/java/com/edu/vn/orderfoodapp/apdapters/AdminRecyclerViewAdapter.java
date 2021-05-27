@@ -88,6 +88,9 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecycler
                 case AdminMenu.LOGOUT_TAG:
                     iMenuItemClick.onClickLogout();
                     break;
+                case AdminMenu.CATEGORY_TAG:
+                    iMenuItemClick.onClickAddCategory();
+                    break;
                 default:
                     break;
             }
@@ -102,6 +105,7 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecycler
         void onClickMenu();
         void onClickDelivery();
         void onClickCooking();
+        void onClickAddCategory();
     }
 
 }

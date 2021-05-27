@@ -27,6 +27,7 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
 
         menus = new ArrayList<AdminMenu>();
         menus.add(new AdminMenu(R.drawable.ic_profile, AdminMenu.PROFILE_TAG));
+        menus.add(new AdminMenu(R.drawable.ic_category, AdminMenu.CATEGORY_TAG));
         menus.add(new AdminMenu(R.drawable.ic_menu, AdminMenu.MENUS_TAG));
         menus.add(new AdminMenu(R.drawable.ic_task_list, AdminMenu.WAITING_INVOICE_TAG));
         menus.add(new AdminMenu(R.drawable.ic_confirm_list, AdminMenu.CONFIRMED_INVOICE_TAG));
@@ -84,6 +85,12 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
     @Override
     public void onClickCooking() {
         Toast.makeText(this, "Clicked  Cooking", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onClickAddCategory() {
+         Intent intent = new Intent(AdminActivity.this, AddCategoryActivity.class);
+         startActivity(intent);
     }
 
 }
