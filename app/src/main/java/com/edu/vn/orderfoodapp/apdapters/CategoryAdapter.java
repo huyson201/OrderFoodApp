@@ -104,7 +104,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Food food = dataSnapshot.getValue(Food.class);
-                    if (Integer.parseInt(food.getCategoryId()) == (position + 1)) {
+                    if (Integer.parseInt(food.getCategoryId())==position+1) {
                         foods.add(food);
                     }
                 }

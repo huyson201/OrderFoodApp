@@ -71,11 +71,11 @@ public class HomeActivity extends AppCompatActivity implements UpdateRecyclerVie
         });
 
         //hien thi du lieu food ra rycylerview
-//        foodList = new ArrayList<>();
+        foodList = new ArrayList<>();
         foodRecyclerView = findViewById(R.id.list_foods);
-//        foodAdapter = new FoodAdapter(this, foodList);
+        foodAdapter = new FoodAdapter(this, foodList);
         foodRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//        foodRecyclerView.setAdapter(foodAdapter);
+        foodRecyclerView.setAdapter(foodAdapter);
 
         edtSearch=findViewById(R.id.editSearch);
         imageView=findViewById(R.id.imageView);
