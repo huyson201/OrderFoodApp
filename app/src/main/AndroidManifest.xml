@@ -18,13 +18,15 @@
 
         </activity>
         <activity android:name=".FoodDetailActivity"></activity>
-        <activity android:name=".CartActivity"></activity>
-        <activity android:name=".AdminActivity" >
+        <activity android:name=".CartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".AdminActivity" >
+
         </activity>
         <activity
             android:name=".SignUpActivity"

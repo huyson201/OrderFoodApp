@@ -37,6 +37,7 @@
     <string name="lbl_total_price">2000</string>
     <string name="lbl_quantity">1</string>
     <string name="lbl_delete">DELETE</string>
+    <string name="lbl_ordered">Ordered</string>
     <!--Search-->
     <string name="edtSearch">Search...</string>
 
@@ -52,9 +53,20 @@
     <string name="lbl_menu">Menus</string>
     <string name="lbl_category">Categories</string>
 
-<!--    upload category activity-->
+    <!--    upload category activity-->
     <string name="upload_btn">Select to upload image</string>
     <string name="cateygory_name_hint">Enter category\'s name</string>
     <string name="add_category_btn">Add category</string>
     <string name="lbl_add_category">New category</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+<!--   ordered fragment-->
+    <string name="lbl_address_title">Address</string>
+    <string name="lbl_name">Nguyễn Đoàn Huy Sơn</string>
+    <string name="lbl_phone">0984182217</string>
+    <string name="lbl_address">Cao đẳng công nghệ thủ đức, Phường Linh Chiểu, Quận Thủ Đức, TP.Hồ Chí Minh</string>
+    <string name="lbl_quantity2">x1</string>
+    <string name="lbl_status">Giao hàng thành công</string>
+    <string name="lbl_bill">Bill</string>
 </resources>
