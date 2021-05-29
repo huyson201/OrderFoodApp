@@ -1,6 +1,7 @@
 package com.edu.vn.orderfoodapp.fragments;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import com.edu.vn.orderfoodapp.CartActivity;
 import com.edu.vn.orderfoodapp.Delegate.ClickCartItemDelegate;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.apdapters.CartItemAdapter;
+import com.edu.vn.orderfoodapp.models.Bill;
 import com.edu.vn.orderfoodapp.models.Food;
 import com.edu.vn.orderfoodapp.models.Invoice;
 
@@ -33,7 +35,7 @@ public class ListCartItemFragment extends Fragment implements ClickCartItemDeleg
     private ArrayList<Invoice> invoices = new ArrayList<Invoice>();
     private CartItemAdapter adapter;
 
-    private Button buyBtn;
+    private Button buyBtn, addToCartBtn;
     private TextView lblTotalPrice;
 
     private Activity context;
@@ -85,6 +87,8 @@ public class ListCartItemFragment extends Fragment implements ClickCartItemDeleg
 
             }
         });
+
+
 
         return view;
     }
