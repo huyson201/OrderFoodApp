@@ -119,6 +119,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                 String strValue = gson.toJson(invoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
                 editor.putString(CartActivity.INVOICES_TAG, strValue);
                 editor.apply();
+               startActivity(new Intent(FoodDetailActivity.this, CartActivity.class));
             }
         });
 
