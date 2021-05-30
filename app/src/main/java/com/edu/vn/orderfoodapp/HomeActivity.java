@@ -29,7 +29,7 @@ public class HomeActivity extends AppCompatActivity {
         navigationViewPager=findViewById(R.id.AHBottomNavigationViewPager);
         viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         navigationViewPager.setAdapter(viewPagerAdapter);
-        navigationViewPager.setPagingEnabled(true);
+//        navigationViewPager.setPagingEnabled(true);
 
         // Create items
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.titleItemHome, R.drawable.ic_baseline_home_24, R.color.color_orange);
@@ -42,10 +42,11 @@ public class HomeActivity extends AppCompatActivity {
         navigation.addItem(item3);
 
         navigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
+            //set mau tab khi tab duoc chon
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
                 navigationViewPager.setCurrentItem(position);
-                return false;
+                return true;
             }
         });
 
@@ -57,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                navigation.setCurrentItem(position);
+                    navigation.setCurrentItem(position);
             }
 
             @Override
@@ -65,7 +66,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
 
     }
 

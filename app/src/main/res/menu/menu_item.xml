@@ -5,8 +5,8 @@
 
     <item
         android:id="@+id/itemProfile"
-        android:icon="@drawable/ic_baseline_perm_contact_calendar_24"
-        android:title="@string/titleItemProfile"
+        android:icon="@drawable/ic_baseline_shopping_cart_24"
+        android:title="@string/titleItemCart"
         app:showAsAction="always"/>
 
     <item
