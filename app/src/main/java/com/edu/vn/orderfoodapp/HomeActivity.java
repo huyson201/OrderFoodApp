@@ -1,99 +1,72 @@
 package com.edu.vn.orderfoodapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.edu.vn.orderfoodapp.apdapters.CategoryAdapter;
-import com.edu.vn.orderfoodapp.apdapters.FoodAdapter;
-import com.edu.vn.orderfoodapp.models.Category;
-import com.edu.vn.orderfoodapp.models.Food;
-import com.edu.vn.orderfoodapp.models.UpdateRecyclerView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
+import com.edu.vn.orderfoodapp.apdapters.ViewPagerAdapter;
 
-import java.util.ArrayList;
-
-public class HomeActivity extends AppCompatActivity implements UpdateRecyclerView {
-    private ArrayList<Category> categories;
-    private ArrayList<Food> foodList;
-    private DatabaseReference database_Categories;
-    private RecyclerView categoryRecyclerView;
-    private RecyclerView foodRecyclerView;
-    private CategoryAdapter categoryAdapter;
-    private FoodAdapter foodAdapter;
-
-    private ImageView imageView;
-    private EditText edtSearch;
+public class HomeActivity extends AppCompatActivity {
+    //Fragment
+    //Navigation
+    private AHBottomNavigation navigation;
+    private AHBottomNavigationViewPager navigationViewPager;
+    private ViewPagerAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
-        categories = new ArrayList<Category>();
-        database_Categories = FirebaseDatabase.getInstance().getReference("categories");
 
-        //hien thi du lieu categories ra recylerview
-        categoryRecyclerView = findViewById(R.id.categories);
-        categoryAdapter = new CategoryAdapter(this, categories, this);
-        categoryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        categoryRecyclerView.setAdapter(categoryAdapter);
-        //lay du lieu categories trong database
-        database_Categories.addValueEventListener(new ValueEventListener() {
+        //Khoi tao doi tuong
+        navigation=findViewById(R.id.AHBottomNavigation);
+        navigationViewPager=findViewById(R.id.AHBottomNavigationViewPager);
+        viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        navigationViewPager.setAdapter(viewPagerAdapter);
+        navigationViewPager.setPagingEnabled(true);
+
+        // Create items
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.titleItemHome, R.drawable.ic_baseline_home_24, R.color.color_orange);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.titleItemCart, R.drawable.ic_baseline_shopping_cart_24, R.color.blue);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.titleItemProfile, R.drawable.ic_baseline_perm_contact_calendar_24, R.color.purple_200);
+
+        // Add items
+        navigation.addItem(item1);
+        navigation.addItem(item2);
+        navigation.addItem(item3);
+
+        navigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Category category = dataSnapshot.getValue(Category.class);
-                    categories.add(category);
-                }
-                categoryAdapter.notifyDataSetChanged();
+            public boolean onTabSelected(int position, boolean wasSelected) {
+                navigationViewPager.setCurrentItem(position);
+                return false;
+            }
+        });
+
+        navigationViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onPageSelected(int position) {
+                navigation.setCurrentItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
             }
         });
 
-        //hien thi du lieu food ra rycylerview
-        foodList = new ArrayList<>();
-        foodRecyclerView = findViewById(R.id.list_foods);
-        foodAdapter = new FoodAdapter(this, foodList);
-        foodRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        foodRecyclerView.setAdapter(foodAdapter);
 
-        edtSearch=findViewById(R.id.editSearch);
-        imageView=findViewById(R.id.imageView);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!edtSearch.getText().toString().equalsIgnoreCase(""))
-                {
-                    Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-                    intent.putExtra("text",edtSearch.getText().toString());
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    v.getContext().startActivity(intent);
-                }else {
-                    Toast.makeText(HomeActivity.this,"Please Input Keyword !!",Toast.LENGTH_LONG).show();
-                }
-//                Log.d("edtSearch",edtSearch.getText().toString());
-            }
-        });
     }
 
     @Override
@@ -102,12 +75,5 @@ public class HomeActivity extends AppCompatActivity implements UpdateRecyclerVie
         return true;
     }
 
-    @Override
-    public void callBack(int position, ArrayList<Food> foods) {
-        foodAdapter = new FoodAdapter(this, foods);
-        foodAdapter.notifyDataSetChanged();
-        foodRecyclerView.setAdapter(foodAdapter);
-    }
 
-//
 }
