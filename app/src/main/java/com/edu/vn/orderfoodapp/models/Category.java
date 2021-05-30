@@ -2,12 +2,12 @@ package com.edu.vn.orderfoodapp.models;
 
 public class Category {
     private String categoryName;
-    private String categoryID;
+    private String categoryId;
     private String categoryImg;
     public  Category(){}
-    public Category(String categoryName, String categoryID,String categoryImg) {
+    public Category(String categoryName, String categoryId,String categoryImg) {
         this.categoryName = categoryName;
-        this.categoryID = categoryID;
+        this.categoryId = categoryId;
         this.categoryImg = categoryImg;
     }
 
@@ -20,11 +20,11 @@ public class Category {
     }
 
     public String getCategoryID() {
-        return categoryID;
+        return categoryId;
     }
 
     public void setCategoryID(String categoryID) {
-        this.categoryID = categoryID;
+        this.categoryId = categoryID;
     }
 
     public String getCategoryImg() {

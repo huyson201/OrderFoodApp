@@ -52,9 +52,11 @@
     <string name="lbl_menu">Menus</string>
     <string name="lbl_category">Categories</string>
 
-<!--    upload category activity-->
+    <!--    upload category activity-->
     <string name="upload_btn">Select to upload image</string>
     <string name="cateygory_name_hint">Enter category\'s name</string>
     <string name="add_category_btn">Add category</string>
     <string name="lbl_add_category">New category</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

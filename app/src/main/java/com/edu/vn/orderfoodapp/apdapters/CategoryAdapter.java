@@ -68,7 +68,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         Glide.with(this.context).load(category.getCategoryImg()).fitCenter().into(holder.imageView);
         holder.categoryName.setText(category.getCategoryName());
         if (check) {
-            getValueFromDB(position);
+            getValueFromDB(position,category.getCategoryID());
             check = false;
         }
 
@@ -77,7 +77,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             public void onClick(View v) {
                 rowIndex = position;
                 notifyDataSetChanged();
-                getValueFromDB(position);
+                getValueFromDB(position,category.getCategoryID());
             }
         });
 
@@ -96,7 +96,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
     }
     // lay gia tri tu database
-    private void getValueFromDB(int position){
+    private void getValueFromDB(int position,String categoryId){
         ArrayList<Food> foods = new ArrayList<>();
         DatabaseReference databaseFood = FirebaseDatabase.getInstance().getReference("foods");
         databaseFood.addValueEventListener(new ValueEventListener() {
@@ -104,7 +104,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Food food = dataSnapshot.getValue(Food.class);
-                    if (Integer.parseInt(food.getCategoryId())==position+1) {
+                    if (food.getCategoryId().equalsIgnoreCase(categoryId)) {
                         foods.add(food);
                     }
                 }
