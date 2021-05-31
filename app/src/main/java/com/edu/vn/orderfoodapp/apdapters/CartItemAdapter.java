@@ -138,7 +138,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(CartActivity.INVOICES_TAG, value);
         editor.apply();
-        Toast.makeText(context, "updated", Toast.LENGTH_SHORT).show();
+
     }
     @Override
     public int getItemCount() {

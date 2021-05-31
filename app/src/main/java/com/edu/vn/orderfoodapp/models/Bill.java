@@ -20,6 +20,9 @@ public class Bill {
         this.userId = userId;
     }
 
+    public Bill() {
+    }
+
     public String getId() {
         return id;
     }
@@ -59,5 +62,15 @@ public class Bill {
         }
 
         return sum;
+    }
+
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id='" + id + '\'' +
+                ", invoices=" + invoices +
+                ", status='" + status + '\'' +
+                ", userId='" + userId + '\'' +
+                '}';
     }
 }

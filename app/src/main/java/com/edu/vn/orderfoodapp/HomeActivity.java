@@ -76,7 +76,6 @@ public class HomeActivity extends AppCompatActivity implements UpdateRecyclerVie
         foodAdapter = new FoodAdapter(this, foodList);
         foodRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         foodRecyclerView.setAdapter(foodAdapter);
-
         edtSearch=findViewById(R.id.editSearch);
         imageView=findViewById(R.id.imageView);
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +93,8 @@ public class HomeActivity extends AppCompatActivity implements UpdateRecyclerVie
 //                Log.d("edtSearch",edtSearch.getText().toString());
             }
         });
+
+        Log.d("test", LoginActivity.user.toString());
     }
 
     @Override

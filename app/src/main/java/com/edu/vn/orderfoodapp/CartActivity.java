@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import android.widget.ImageButton;
@@ -20,6 +21,7 @@ import com.edu.vn.orderfoodapp.fragments.OrderedFragment;
 import com.edu.vn.orderfoodapp.models.Bill;
 import com.edu.vn.orderfoodapp.models.Food;
 import com.edu.vn.orderfoodapp.models.Invoice;
+import com.edu.vn.orderfoodapp.models.User;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,11 +33,10 @@ public class CartActivity extends AppCompatActivity {
     public static ArrayList<Invoice> invoices;
     public static ArrayList<Bill> bills;
     private ImageButton backBtn;
-    private ArrayList<Fragment> fragments;
     private CartViewPagerAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-
+    private SharedPreferences sharedPref;
     public static String CART_TAG = "cart";
     public static final String CART_TAB_TAG = "Cart";
     public static final String INVOICES_TAG = "invoices";
@@ -48,11 +49,9 @@ public class CartActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.back_btn);
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tabLayout);
-
         invoices = new ArrayList<Invoice>();
         bills = new ArrayList<Bill>();
 
-        fragments = new ArrayList<Fragment>();
         adapter = new CartViewPagerAdapter(getSupportFragmentManager());
 
         // back btn processing event
@@ -71,16 +70,13 @@ public class CartActivity extends AppCompatActivity {
             invoices = new Gson().fromJson(strInvoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
         }
 
+
         // add fragment
         ListCartItemFragment fragment = new ListCartItemFragment(this);
         OrderedFragment fragment1 = new OrderedFragment(this);
 
 
-//        //add bill
-//        Bill bill = new Bill("1", invoices, Bill.COOKING_STATUS_TAG, "1");
-//        bills.add(bill);
-//        bills.add(bill);
-//        bills.add(bill);
+
 
         adapter.addFragment(fragment, CART_TAB_TAG);
         adapter.addFragment(fragment1, ORDERED_TAB_TAG);

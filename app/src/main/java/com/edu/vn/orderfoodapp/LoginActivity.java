@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -33,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView lblSignUp;
     private CheckBox chkRemember;
+    public static User user;
     public static int SIGN_UP_REQUEST_CODE = 1;
     public static String REMEMBER_LOGIN_TAG = "rememberLogin";
     public static String USER_LOGGED_IN = "userLogged";
@@ -55,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         String userLoggedJson = sharedPref.getString(USER_LOGGED_IN, "");
         if(! userLoggedJson.isEmpty()){
             Gson gson = new Gson();
-            User user = gson.fromJson(userLoggedJson, User.class);
+            user = gson.fromJson(userLoggedJson, User.class);
             goNextActivity(user);
         }
 
@@ -110,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if(task.isSuccessful()){
 
-                                        User user = task.getResult().getValue(User.class);
+                                        user = task.getResult().getValue(User.class);
 
                                         // check remember login
                                         if(chkRemember.isChecked()){

@@ -19,7 +19,11 @@
         </activity>
         <activity android:name=".FoodDetailActivity"></activity>
         <activity android:name=".CartActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".AdminActivity" >
 
@@ -29,13 +33,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".PlashActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:screenOrientation="portrait">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+        <activity android:name=".PlashActivity" >
+
 
         </activity>
         <activity android:name=".SearchActivity" />
