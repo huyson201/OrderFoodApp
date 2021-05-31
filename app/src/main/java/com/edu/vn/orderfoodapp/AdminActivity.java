@@ -29,8 +29,8 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
         menus.add(new AdminMenu(R.drawable.ic_profile, AdminMenu.PROFILE_TAG));
         menus.add(new AdminMenu(R.drawable.ic_category, AdminMenu.CATEGORY_TAG));
         menus.add(new AdminMenu(R.drawable.ic_menu, AdminMenu.MENUS_TAG));
-        menus.add(new AdminMenu(R.drawable.ic_task_list, AdminMenu.WAITING_INVOICE_TAG));
-        menus.add(new AdminMenu(R.drawable.ic_confirm_list, AdminMenu.CONFIRMED_INVOICE_TAG));
+        menus.add(new AdminMenu(R.drawable.ic_task_list, AdminMenu.WAITING_BILL_TAG));
+        menus.add(new AdminMenu(R.drawable.ic_confirm_list, AdminMenu.CONFIRMED_BILL_TAG));
         menus.add(new AdminMenu(R.drawable.ic_chef, AdminMenu.COOKING_TAG));
         menus.add(new AdminMenu(R.drawable.ic_food_delivery, AdminMenu.DELIVERY_TAG));
         menus.add(new AdminMenu(R.drawable.ic_logout, AdminMenu.LOGOUT_TAG));
@@ -64,7 +64,7 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
 
     @Override
     public void onClickWaitingInvoice() {
-        Toast.makeText(this, "Clicked Waiting Invoice", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(AdminActivity.this, ConfirmBillActivity.class));
     }
 
     @Override
