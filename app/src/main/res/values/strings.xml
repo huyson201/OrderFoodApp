@@ -69,4 +69,7 @@
     <string name="lbl_quantity2">x1</string>
     <string name="lbl_status">Giao hàng thành công</string>
     <string name="lbl_bill">Bill</string>
+
+<!--    empty layout-->
+    <string name="lbl_empty">Don\'t have any bill here. </string>
 </resources>

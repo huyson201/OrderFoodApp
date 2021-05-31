@@ -11,15 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.OrderFoodApp">
-        <activity android:name=".ConfirmBillActivity"></activity>
+        <activity android:name=".DeliveryListActivity"></activity>
+        <activity android:name=".CookingActivity" />
+        <activity android:name=".ConfirmBillActivity" />
         <activity
             android:name=".AddCategoryActivity"
-            android:parentActivityName=".AdminActivity"></activity>
-        <activity android:name=".HomeActivity"></activity>
+            android:parentActivityName=".AdminActivity" />
+        <activity android:name=".HomeActivity" />
         <activity android:name=".FoodDetailActivity" />
-        <activity android:name=".CartActivity">
-
-        </activity>
+        <activity android:name=".CartActivity" />
         <activity android:name=".AdminActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,8 +32,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".PlashActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".PlashActivity" />
         <activity android:name=".SearchActivity" />
     </application>
 

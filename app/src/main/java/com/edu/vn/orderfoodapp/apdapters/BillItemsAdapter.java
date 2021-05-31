@@ -36,6 +36,7 @@ public class BillItemsAdapter extends RecyclerView.Adapter<BillItemsAdapter.Bill
         Glide.with(this.context).load(invoice.getFoods().getFoodImage()).fitCenter().into(holder.foodImg);
         holder.lblFoodName.setText(invoice.getFoods().getFoodName());
         holder.lblQuantity.setText("x" + invoice.getQuantity());
+        holder.lblPrice.setText(invoice.getFoods().getFoodPrice() + "");
     }
 
     @Override

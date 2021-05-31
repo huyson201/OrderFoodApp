@@ -9,8 +9,11 @@ public class Bill {
     private String userId;
 
     public static final String CONFIRM_STATUS_TAG = "Đang xác nhận";
+    public static final String CONFIRMED_STATUS_TAG = "Đã xác nhận";
     public static final String COOKING_STATUS_TAG = "Đang chuẩn bị";
-    public static final String DELIVERY_STATUS_TAG = "Đang Giao";
+    public static final String COOKING_COMPLETED_STATUS_TAG = "Đã chuẩn bị xong";
+    public static final String DELIVERY_STATUS_TAG = "Đang giao";
+    public static final String DELIVERED_STATUS_TAG = "Đã giao";
     public static final String CANCEL_STATUS_TAG = "Đã hủy";
 
     public Bill(String id, ArrayList<Invoice> invoices, String status, String userId) {
