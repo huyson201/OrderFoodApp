@@ -20,10 +20,6 @@ import com.edu.vn.orderfoodapp.models.Invoice;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
- */
 public class CartFragment extends Fragment implements ClickCartItemDelegate {
 
     //properties

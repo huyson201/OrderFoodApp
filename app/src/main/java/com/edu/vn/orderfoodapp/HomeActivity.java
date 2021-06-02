@@ -34,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
         // Create items
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.titleItemHome, R.drawable.ic_baseline_home_24, R.color.color_orange);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.titleItemCart, R.drawable.ic_baseline_shopping_cart_24, R.color.blue);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.titleItemProfile, R.drawable.ic_baseline_perm_contact_calendar_24, R.color.purple_200);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.titleItemUser, R.drawable.ic_baseline_perm_contact_calendar_24, R.color.purple_200);
 
         // Add items
         navigation.addItem(item1);

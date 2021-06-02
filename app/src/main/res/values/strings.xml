@@ -43,7 +43,6 @@
     //Bottom navigation bar item
     <string name="titleItemHome">Home</string>
     <string name="titleItemCart">Cart</string>
-    <string name="titleItemHistory">HISTORY</string>
     <string name="titleItemUser">User</string>
 
     <!--    Menu item-->
@@ -63,11 +62,17 @@
     <string name="cart_fragment">Cart fragment</string>
     <string name="customer_fragment">Customer fragment</string>
 
-<!--    Profile information-->
+    <!--    Profile information-->
     <string name="titleItemProfile">PROFILE</string>
     <string name="lblFullName">Full Name :</string>
     <string name="lblEmail">Email :</string>
     <string name="lblPhone">Phone :</string>
     <string name="lblAddress">Address :</string>
     <string name="btnEditProfile">Edit profile</string>
+
+    <!--History-->
+    <string name="titleItemHistory">HISTORY</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
