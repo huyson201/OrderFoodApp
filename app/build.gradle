@@ -71,4 +71,6 @@ dependencies {
     //ahbottom navigation
     implementation 'com.aurelhubert:ahbottomnavigation:2.3.4'
 
+    //dependency for circular imageview
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

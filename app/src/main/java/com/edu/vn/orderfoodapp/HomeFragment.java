@@ -153,4 +153,5 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView {
         foodAdapter.notifyDataSetChanged();
         foodRecyclerView.setAdapter(foodAdapter);
     }
+
 }

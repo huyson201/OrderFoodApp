@@ -43,11 +43,11 @@
     //Bottom navigation bar item
     <string name="titleItemHome">Home</string>
     <string name="titleItemCart">Cart</string>
-    <string name="titleItemHistory">History</string>
+    <string name="titleItemHistory">HISTORY</string>
     <string name="titleItemUser">User</string>
 
     <!--    Menu item-->
-    <string name="titleItemProfile">Profile</string>
+
     <string name="titleItemLogout">Logout</string>
     <string name="lbl_menu">Menus</string>
     <string name="lbl_category">Categories</string>
@@ -62,4 +62,12 @@
     <string name="home_fragment">Home fragment</string>
     <string name="cart_fragment">Cart fragment</string>
     <string name="customer_fragment">Customer fragment</string>
+
+<!--    Profile information-->
+    <string name="titleItemProfile">PROFILE</string>
+    <string name="lblFullName">Full Name :</string>
+    <string name="lblEmail">Email :</string>
+    <string name="lblPhone">Phone :</string>
+    <string name="lblAddress">Address :</string>
+    <string name="btnEditProfile">Edit profile</string>
 </resources>

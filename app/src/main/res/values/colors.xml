@@ -13,5 +13,6 @@
     <color name="blue_3">#3366CC</color>
     <color name="lightGrey">#e0e0e0</color>
     <color name="color_orange">#EE4D2E</color>
+    <color name="color_user">#FD9A7A</color>
     <color name="color_medium_sea_green">#3CB371</color>
 </resources>
