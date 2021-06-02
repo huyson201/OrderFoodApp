@@ -24,6 +24,7 @@ public class CustomerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view=inflater.inflate(R.layout.fragment_customer, container, false);
+        homeActivity=(HomeActivity) getActivity();
         tabLayout=view.findViewById(R.id.tablayout);
         viewPager=view.findViewById(R.id.viewpager);
 

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.edu.vn.orderfoodapp.customerfragment.ProfileFragment;
 import com.edu.vn.orderfoodapp.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -36,10 +38,16 @@ public class LoginActivity extends AppCompatActivity {
     public static int SIGN_UP_REQUEST_CODE = 1;
     public static String REMEMBER_LOGIN_TAG = "rememberLogin";
     public static String USER_LOGGED_IN = "userLogged";
+    public static User userProFile = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Switch data from LoginActivity to HomeActivity
+        Intent intent = new Intent(this, HomeActivity.class);
+        Bundle bundle = new Bundle();
+
         setContentView(R.layout.login_layout);
         edtEmail = findViewById(R.id.edt_email);
         edtPassword = findViewById(R.id.edt_password);
@@ -56,7 +64,9 @@ public class LoginActivity extends AppCompatActivity {
         if(! userLoggedJson.isEmpty()){
             Gson gson = new Gson();
             User user = gson.fromJson(userLoggedJson, User.class);
+            Log.d("userName", user.getName());
             goNextActivity(user);
+
         }
 
 
@@ -111,6 +121,13 @@ public class LoginActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
 
                                         User user = task.getResult().getValue(User.class);
+
+                                        bundle.putString("fullName", user.getName());
+                                        bundle.putString("email", user.getEmail());
+                                        bundle.putString("phone", user.getPhone());
+                                        bundle.putString("address", user.getAddress());
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
 
                                         // check remember login
                                         if(chkRemember.isChecked()){
