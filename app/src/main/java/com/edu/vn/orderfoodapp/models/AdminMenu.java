@@ -7,8 +7,8 @@ public class AdminMenu {
 
     public static final String PROFILE_TAG = "Profile";
     public static final String LOGOUT_TAG = "Logout";
-    public static final String WAITING_INVOICE_TAG = "Waiting Invoices";
-    public static final String CONFIRMED_INVOICE_TAG = "Confirmed Invoices";
+    public static final String WAITING_BILL_TAG = "Waiting Bills";
+    public static final String CONFIRMED_BILL_TAG = "Completed Bills";
     public static final String DELIVERY_TAG = "Delivery";
     public static final String MENUS_TAG = "Menu";
     public static final String COOKING_TAG = "Cooking";

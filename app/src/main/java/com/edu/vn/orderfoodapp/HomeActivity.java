@@ -61,16 +61,28 @@ public class HomeActivity extends AppCompatActivity {
 
             }
 
+
             @Override
             public void onPageSelected(int position) {
                     navigation.setCurrentItem(position);
             }
 
+
+//        //hien thi du lieu food ra rycylerview
+//        foodList = new ArrayList<>();
+//        foodRecyclerView = findViewById(R.id.list_foods);
+//        foodAdapter = new FoodAdapter(this, foodList);
+//        foodRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+//        foodRecyclerView.setAdapter(foodAdapter);
+//        edtSearch=findViewById(R.id.editSearch);
+//        imageView=findViewById(R.id.imageView);
+//        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onPageScrollStateChanged(int state) {
 
             }
         });
+
     }
 
 //    @Override

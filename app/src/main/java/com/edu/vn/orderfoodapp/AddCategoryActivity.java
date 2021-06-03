@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import android.widget.ProgressBar;
+import android.widget.Toolbar;
 import android.widget.ViewSwitcher;
 
 import com.bumptech.glide.Glide;
@@ -43,7 +44,7 @@ public class AddCategoryActivity extends AppCompatActivity {
     private ImageView imgCategory;
     private ProgressBar progressBar;
     private ImageButton backBtn;
-
+    private Toolbar toolbar;
     private static final int  REQUEST_PERMISSION_CODE = 10;
     private static final int IMG_REQUEST_CODE = 11;
 
@@ -62,6 +63,10 @@ public class AddCategoryActivity extends AppCompatActivity {
         imgCategory = findViewById(R.id.img_category);
         progressBar = findViewById(R.id.progress_bar);
         backBtn = findViewById(R.id.back_btn);
+        toolbar = findViewById(R.id.toolbar);
+
+        // set action bar
+        setActionBar(toolbar);
 
         // back btn processing event
         backBtn.setOnClickListener(new View.OnClickListener() {

@@ -73,10 +73,10 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecycler
                 case AdminMenu.MENUS_TAG:
                     iMenuItemClick.onClickMenu();
                     break;
-                case AdminMenu.WAITING_INVOICE_TAG:
+                case AdminMenu.WAITING_BILL_TAG:
                     iMenuItemClick.onClickWaitingInvoice();
                     break;
-                case AdminMenu.CONFIRMED_INVOICE_TAG:
+                case AdminMenu.CONFIRMED_BILL_TAG:
                     iMenuItemClick.onClickConfirmedInvoice();
                     break;
                 case AdminMenu.COOKING_TAG:

@@ -1,6 +1,7 @@
 package com.edu.vn.orderfoodapp.apdapters;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
+import com.edu.vn.orderfoodapp.CartActivity;
 import com.edu.vn.orderfoodapp.Delegate.ClickCartItemDelegate;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.models.Invoice;
 import com.google.android.material.card.MaterialCardView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
@@ -29,11 +33,12 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
     private Activity context;
     private ClickCartItemDelegate clickCartItemDelegate;
     private ViewBinderHelper viewBinderHelper;
-
+    private Gson gson;
     public CartItemAdapter(Activity context, ArrayList<Invoice> invoices) {
         this.invoices = invoices;
         this.context = context;
         viewBinderHelper = new ViewBinderHelper();
+        gson = new Gson();
     }
 
     public void setClickAllDelegate(ClickCartItemDelegate clickCartItemDelegate) {
@@ -70,6 +75,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
                 if(clickCartItemDelegate != null){
                     clickCartItemDelegate.onClickCartItem();
                 }
+                updateCart();
             }
         });
 
@@ -98,6 +104,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
                 if(clickCartItemDelegate != null){
                     clickCartItemDelegate.onClickCartItem();
                 }
+
+                updateCart();
             }
         });
 
@@ -117,11 +125,21 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
                 if(clickCartItemDelegate != null){
                     clickCartItemDelegate.onClickCartItem();
                 }
+
+                updateCart();
+
             }
         });
     }
 
+    private  void updateCart(){
+        String value = gson.toJson(invoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
+        SharedPreferences sharedPref = context.getSharedPreferences(CartActivity.CART_TAG, context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(CartActivity.INVOICES_TAG, value);
+        editor.apply();
 
+    }
     @Override
     public int getItemCount() {
         if(invoices != null){

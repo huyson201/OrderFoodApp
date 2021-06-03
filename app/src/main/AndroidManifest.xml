@@ -19,7 +19,12 @@
         </activity>
         <activity android:name=".FoodDetailActivity"></activity>
         <activity android:name=".CartActivity"></activity>
-        <activity android:name=".AdminActivity" >
+
+        <activity android:name=".DeliveryListActivity"></activity>
+        <activity android:name=".CookingActivity" />
+        <activity android:name=".ConfirmBillActivity" />
+
+        <activity android:name=".AdminActivity">
 
         </activity>
         <activity
@@ -34,6 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".PlashActivity" />
         <activity android:name=".SearchActivity" />
     </application>

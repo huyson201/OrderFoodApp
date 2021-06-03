@@ -36,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView lblSignUp;
     private CheckBox chkRemember;
+    public static User user;
     public static int SIGN_UP_REQUEST_CODE = 1;
     public static String REMEMBER_LOGIN_TAG = "rememberLogin";
     public static String USER_LOGGED_IN = "userLogged";
@@ -68,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
             Gson gson = new Gson();
             userProFile= gson.fromJson(userLoggedJson, User.class);
             goNextActivity(userProFile);
+
         }
 
         //process when clicked to sign up link
@@ -119,9 +121,11 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if(task.isSuccessful()){
 
+
                                         userProFile = task.getResult().getValue(User.class);
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         Gson gson = new Gson();
+
                                         // check remember login
                                         if(chkRemember.isChecked()){
                                             String json = gson.toJson(userProFile);
