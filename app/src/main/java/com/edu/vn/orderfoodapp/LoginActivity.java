@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     public static int SIGN_UP_REQUEST_CODE = 1;
     public static String REMEMBER_LOGIN_TAG = "rememberLogin";
     public static String USER_LOGGED_IN = "userLogged";
-    public static User userProFile = new User();
+    public static User userProFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +60,13 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
 
         //check logged in
-        SharedPreferences sharedPref = getSharedPreferences(REMEMBER_LOGIN_TAG,MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences(REMEMBER_LOGIN_TAG, Context.MODE_PRIVATE);
         String userLoggedJson = sharedPref.getString(USER_LOGGED_IN, "");
-        if(! userLoggedJson.isEmpty()){
+        if(userLoggedJson!=null){
             Gson gson = new Gson();
-            User user = gson.fromJson(userLoggedJson, User.class);
-            Log.d("userName", user.getName());
-            goNextActivity(user);
+            userProFile= gson.fromJson(userLoggedJson, User.class);
+//            Log.d("userName", user.getName());
+            goNextActivity(userProFile);
 
         }
 
@@ -120,14 +121,14 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if(task.isSuccessful()){
 
-                                        User user = task.getResult().getValue(User.class);
+                                        userProFile = task.getResult().getValue(User.class);
 
-                                        bundle.putString("fullName", user.getName());
-                                        bundle.putString("email", user.getEmail());
-                                        bundle.putString("phone", user.getPhone());
-                                        bundle.putString("address", user.getAddress());
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
+//                                        bundle.putString("fullName", user.getName());
+//                                        bundle.putString("email", user.getEmail());
+//                                        bundle.putString("phone", user.getPhone());
+//                                        bundle.putString("address", user.getAddress());
+//                                        intent.putExtras(bundle);
+//                                        startActivity(intent);
 
                                         // check remember login
                                         if(chkRemember.isChecked()){
@@ -137,12 +138,12 @@ public class LoginActivity extends AppCompatActivity {
 
                                             //save user to sharedPref
                                             SharedPreferences.Editor editor = sharedPref.edit();
-                                            String json = gson.toJson(user);
+                                            String json = gson.toJson(userProFile);
                                             editor.putString(USER_LOGGED_IN, json);
                                             editor.apply();
                                         }
 
-                                        goNextActivity(user);
+                                        goNextActivity(userProFile);
                                     }
                                 }
                             });

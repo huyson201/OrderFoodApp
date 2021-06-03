@@ -40,13 +40,13 @@ public class ProfileFragment extends Fragment {
         homeActivity = (HomeActivity) getActivity();
         Intent intent = homeActivity.getIntent();
         Bundle bundle = intent.getExtras();
-        if (bundle != null){
-            fullName.setText(bundle.getString("fullName"));
-            email.setText(bundle.getString("email"));
-            phone.setText(bundle.getString("phone"));
-            address.setText(bundle.getString("address"));
-        }
-
+//        if (bundle != null){
+//            fullName.setText(bundle.getString("fullName"));
+//            email.setText(bundle.getString("email"));
+//            phone.setText(bundle.getString("phone"));
+//            address.setText(bundle.getString("address"));
+//        }
+        address.setText(LoginActivity.userProFile.getAddress());
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

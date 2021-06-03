@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,7 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_home, container, false);
         homeActivity=(HomeActivity) getActivity();
-
+//        Log.d("userprofile",LoginActivity.userProFile.toString());
         categories = new ArrayList<Category>();
         database_Categories = FirebaseDatabase.getInstance().getReference("categories");
 
