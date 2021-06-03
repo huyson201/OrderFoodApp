@@ -49,7 +49,6 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView {
         // Inflate the layout for this fragment
         view=inflater.inflate(R.layout.fragment_home, container, false);
         homeActivity=(HomeActivity) getActivity();
-//        Log.d("userprofile",LoginActivity.userProFile.toString());
         categories = new ArrayList<Category>();
         database_Categories = FirebaseDatabase.getInstance().getReference("categories");
 
@@ -58,6 +57,7 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView {
         categoryAdapter = new CategoryAdapter(homeActivity, categories, this);
         categoryRecyclerView.setLayoutManager(new LinearLayoutManager(homeActivity, LinearLayoutManager.HORIZONTAL, false));
         categoryRecyclerView.setAdapter(categoryAdapter);
+
         //lay du lieu categories trong database
         database_Categories.addValueEventListener(new ValueEventListener() {
             @Override
@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView {
             }
         });
 
-        //hien thi du lieu food ra rycylerview
+        //Hien thi du lieu food ra recylerview
         foodList = new ArrayList<>();
         foodRecyclerView = view.findViewById(R.id.list_foods);
         foodAdapter = new FoodAdapter(homeActivity, foodList);

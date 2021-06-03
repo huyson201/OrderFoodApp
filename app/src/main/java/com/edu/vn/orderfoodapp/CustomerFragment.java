@@ -19,6 +19,7 @@ public class CustomerFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private View view;
+    private  TextView txtName;
     private HomeActivity homeActivity;
     private CustomerPagerAdapter adapter;
     @Override
@@ -30,6 +31,8 @@ public class CustomerFragment extends Fragment {
         viewPager=view.findViewById(R.id.viewpager);
 
         tabLayout.setupWithViewPager(viewPager);
+        txtName = view.findViewById(R.id.username);
+        txtName.setText(LoginActivity.userProFile.getName());
         adapter=new CustomerPagerAdapter(homeActivity.getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new ProfileFragment(),"PROFILE");
         adapter.addFragment(new HistoryFragment(),"HISTORY");

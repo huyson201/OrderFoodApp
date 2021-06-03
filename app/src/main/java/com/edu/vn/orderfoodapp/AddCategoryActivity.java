@@ -101,8 +101,9 @@ public class AddCategoryActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
 
                 String categoryName = edtCategoryName.getText().toString();
-                if(!categoryName.isEmpty() && imgPath != null){
 
+                if(!categoryName.isEmpty() && imgPath != null){
+                    Log.d("imgpath",imgPath.toString());
                     UploadTask uploadTask = storage.putFile(imgPath);
                     uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                         @Override
@@ -119,6 +120,8 @@ public class AddCategoryActivity extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Uri uri = task.getResult();
                                 String key = db.push().getKey();
+                                Log.d("imgpathkey",key);
+                                Log.d("imgpaturi",uri.toString());
                                 Category category = new Category(categoryName, key, uri.toString());
                                 db.child(key).setValue(category);
 

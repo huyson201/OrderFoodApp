@@ -35,22 +35,18 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.txtEmail);
         address = view.findViewById(R.id.txtAddress);
         btnEdit = view.findViewById(R.id.btnEdit);
-
-
         homeActivity = (HomeActivity) getActivity();
-        Intent intent = homeActivity.getIntent();
-        Bundle bundle = intent.getExtras();
-//        if (bundle != null){
-//            fullName.setText(bundle.getString("fullName"));
-//            email.setText(bundle.getString("email"));
-//            phone.setText(bundle.getString("phone"));
-//            address.setText(bundle.getString("address"));
-//        }
+
+
+        //get user logged data
+        fullName.setText(LoginActivity.userProFile.getName());
+        email.setText(LoginActivity.userProFile.getEmail());
+        phone.setText(LoginActivity.userProFile.getPhone());
         address.setText(LoginActivity.userProFile.getAddress());
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("btnEdit","True");
+                Log.d("btnEdit", "True");
             }
         });
         // Inflate the layout for this fragment

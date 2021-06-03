@@ -39,8 +39,9 @@ public class LoginActivity extends AppCompatActivity {
     public static int SIGN_UP_REQUEST_CODE = 1;
     public static String REMEMBER_LOGIN_TAG = "rememberLogin";
     public static String USER_LOGGED_IN = "userLogged";
+    public static String REMEMBER_CHECK = "rememberCheck";
     public static User userProFile;
-
+    private SharedPreferences sharedPref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,20 +60,17 @@ public class LoginActivity extends AppCompatActivity {
         // hiding progressbar
         progressBar.setVisibility(View.INVISIBLE);
 
-        //check logged in
-        SharedPreferences sharedPref = getSharedPreferences(REMEMBER_LOGIN_TAG, Context.MODE_PRIVATE);
+        //check remember login
+         sharedPref = getSharedPreferences(REMEMBER_LOGIN_TAG, Context.MODE_PRIVATE);
         String userLoggedJson = sharedPref.getString(USER_LOGGED_IN, "");
-        if(userLoggedJson!=null){
+        Boolean check = sharedPref.getBoolean(REMEMBER_CHECK,false);
+        if(check==true){
             Gson gson = new Gson();
             userProFile= gson.fromJson(userLoggedJson, User.class);
-//            Log.d("userName", user.getName());
             goNextActivity(userProFile);
-
         }
 
-
         //process when clicked to sign up link
-
         lblSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,10 +99,10 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(password.isEmpty()){
+                if(password.isEmpty() || password.length()<5){
                     loginBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(LoginActivity.this, "Password is empty.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Password is invalid.", Toast.LENGTH_LONG).show();
                     edtPassword.requestFocus();
                     return;
                 }
@@ -122,27 +120,18 @@ public class LoginActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
 
                                         userProFile = task.getResult().getValue(User.class);
-
-//                                        bundle.putString("fullName", user.getName());
-//                                        bundle.putString("email", user.getEmail());
-//                                        bundle.putString("phone", user.getPhone());
-//                                        bundle.putString("address", user.getAddress());
-//                                        intent.putExtras(bundle);
-//                                        startActivity(intent);
-
+                                        SharedPreferences.Editor editor = sharedPref.edit();
+                                        Gson gson = new Gson();
                                         // check remember login
                                         if(chkRemember.isChecked()){
-
-                                            Gson gson = new Gson();
-                                            SharedPreferences sharedPref = getSharedPreferences(REMEMBER_LOGIN_TAG, MODE_PRIVATE);
-
-                                            //save user to sharedPref
-                                            SharedPreferences.Editor editor = sharedPref.edit();
                                             String json = gson.toJson(userProFile);
                                             editor.putString(USER_LOGGED_IN, json);
+                                            editor.putBoolean(REMEMBER_CHECK,true);
                                             editor.apply();
                                         }
-
+                                        else{
+                                            editor.putBoolean(REMEMBER_CHECK,false);
+                                        }
                                         goNextActivity(userProFile);
                                     }
                                 }

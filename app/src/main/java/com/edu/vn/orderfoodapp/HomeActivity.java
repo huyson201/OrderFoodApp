@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -12,6 +14,8 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.edu.vn.orderfoodapp.apdapters.ViewPagerAdapter;
+import com.edu.vn.orderfoodapp.models.User;
+import com.google.gson.Gson;
 
 public class HomeActivity extends AppCompatActivity {
     //Fragment
@@ -67,7 +71,6 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
 //    @Override
