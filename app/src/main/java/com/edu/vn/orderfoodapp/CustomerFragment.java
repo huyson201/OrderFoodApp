@@ -1,5 +1,8 @@
 package com.edu.vn.orderfoodapp;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +23,7 @@ public class CustomerFragment extends Fragment {
     private ViewPager viewPager;
     private View view;
     private  TextView txtName;
+    private  TextView logout;
     private HomeActivity homeActivity;
     private CustomerPagerAdapter adapter;
     @Override
@@ -31,8 +35,27 @@ public class CustomerFragment extends Fragment {
         viewPager=view.findViewById(R.id.viewpager);
 
         tabLayout.setupWithViewPager(viewPager);
+
         txtName = view.findViewById(R.id.username);
         txtName.setText(LoginActivity.userProFile.getName());
+        logout = view.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // remove user from shared preferences
+                SharedPreferences sharedPref = homeActivity.getSharedPreferences(LoginActivity.REMEMBER_LOGIN_TAG, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.remove(LoginActivity.USER_LOGGED_IN);
+                editor.apply();
+
+                // go to login activity
+                Intent intent = new Intent(homeActivity, LoginActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
         adapter=new CustomerPagerAdapter(homeActivity.getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new ProfileFragment(),"PROFILE");
         adapter.addFragment(new HistoryFragment(),"HISTORY");

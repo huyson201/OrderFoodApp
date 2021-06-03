@@ -42,7 +42,9 @@ public class LoginActivity extends AppCompatActivity {
     public static String USER_LOGGED_IN = "userLogged";
     public static String REMEMBER_CHECK = "rememberCheck";
     public static User userProFile;
+    private Gson gson;
     private SharedPreferences sharedPref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,15 +64,15 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
 
         //check remember login
-         sharedPref = getSharedPreferences(REMEMBER_LOGIN_TAG, Context.MODE_PRIVATE);
+        sharedPref = getSharedPreferences(REMEMBER_LOGIN_TAG, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
         String userLoggedJson = sharedPref.getString(USER_LOGGED_IN, "");
-        Boolean check = sharedPref.getBoolean(REMEMBER_CHECK,false);
-        if(check==true){
-            Gson gson = new Gson();
-            userProFile= gson.fromJson(userLoggedJson, User.class);
+        if (!userLoggedJson.isEmpty()) {
+           gson = new Gson();
+            userProFile = gson.fromJson(userLoggedJson, User.class);
             goNextActivity(userProFile);
-
         }
+
 
         //process when clicked to sign up link
         lblSignUp.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 // check fields is empty
 
-                if(email.isEmpty()){
+                if (email.isEmpty()) {
                     loginBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(LoginActivity.this, "Email is empty.", Toast.LENGTH_LONG).show();
@@ -101,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(password.isEmpty() || password.length()<5){
+                if (password.isEmpty() || password.length() < 5) {
                     loginBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
                     Toast.makeText(LoginActivity.this, "Password is invalid.", Toast.LENGTH_LONG).show();
@@ -113,37 +115,30 @@ public class LoginActivity extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             FirebaseUser fbUser = mAuth.getCurrentUser();
                             DatabaseReference db = FirebaseDatabase.getInstance().getReference("users");
                             db.child(mAuth.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if(task.isSuccessful()){
-
+                                    if (task.isSuccessful()) {
                                         userProFile = task.getResult().getValue(User.class);
-                                        SharedPreferences.Editor editor = sharedPref.edit();
                                         Gson gson = new Gson();
-
                                         // check remember login
-                                        if(chkRemember.isChecked()){
+                                        if (chkRemember.isChecked()) {
                                             String json = gson.toJson(userProFile);
                                             editor.putString(USER_LOGGED_IN, json);
-                                            editor.putBoolean(REMEMBER_CHECK,true);
                                             editor.apply();
-                                        }
-                                        else{
-                                            editor.putBoolean(REMEMBER_CHECK,false);
                                         }
                                         goNextActivity(userProFile);
                                     }
                                 }
                             });
 
-                        }else{
+                        } else {
                             loginBtn.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(LoginActivity.this,"Email / Password is invalid.",Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, "Email / Password is invalid.", Toast.LENGTH_LONG).show();
                             edtPassword.setText("");
                         }
                     }
@@ -156,18 +151,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == SIGN_UP_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null){
+        if (requestCode == SIGN_UP_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             String email = data.getStringExtra(User.EMAIL_KEY);
             edtEmail.setText(email);
         }
     }
 
-    private void goNextActivity(User user){
+    private void goNextActivity(User user) {
         // check role
-        if(user.getRole() == User.USER_ROLE){
+        if (user.getRole() == User.USER_ROLE) {
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
-        }else if(user.getRole() == User.ADMIN_ROLE){
+        } else if (user.getRole() == User.ADMIN_ROLE) {
             Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
             startActivity(intent);
         }

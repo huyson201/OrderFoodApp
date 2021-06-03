@@ -54,6 +54,7 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
         SharedPreferences sharedPref = getSharedPreferences(LoginActivity.REMEMBER_LOGIN_TAG, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove(LoginActivity.USER_LOGGED_IN);
+//        editor.remove(LoginActivity.REMEMBER_CHECK);
         editor.apply();
 
         // go to login activity
