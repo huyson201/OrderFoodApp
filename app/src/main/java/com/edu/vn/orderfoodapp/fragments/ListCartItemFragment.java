@@ -1,6 +1,7 @@
 package com.edu.vn.orderfoodapp.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -18,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.edu.vn.orderfoodapp.CartActivity;
+import com.edu.vn.orderfoodapp.CartFragment;
 import com.edu.vn.orderfoodapp.Delegate.ClickCartItemDelegate;
+import com.edu.vn.orderfoodapp.HomeActivity;
 import com.edu.vn.orderfoodapp.LoginActivity;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.apdapters.CartItemAdapter;
@@ -43,7 +46,6 @@ public class ListCartItemFragment extends Fragment implements ClickCartItemDeleg
     private Button buyBtn;
     private TextView lblTotalPrice;
     private User user;
-
     private Activity context;
     private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
@@ -63,9 +65,14 @@ public class ListCartItemFragment extends Fragment implements ClickCartItemDeleg
         lblTotalPrice = view.findViewById(R.id.lbl_total_price);
         buyBtn = view.findViewById(R.id.buy_btn);
 
+        context = (HomeActivity) getActivity();
+        //get invoices
+        SharedPreferences sharedPref = context.getSharedPreferences(CartFragment.CART_TAG, Context.MODE_PRIVATE);
+        String strInvoices = sharedPref.getString(CartFragment.INVOICES_TAG, "");
+        if(strInvoices != ""){
+            invoices = new Gson().fromJson(strInvoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
+        }
 
-
-        this.invoices = CartActivity.invoices;
 
         //get user
         this.user = LoginActivity.user;

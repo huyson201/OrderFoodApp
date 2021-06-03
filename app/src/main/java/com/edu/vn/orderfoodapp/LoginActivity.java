@@ -121,7 +121,6 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if(task.isSuccessful()){
 
-
                                         userProFile = task.getResult().getValue(User.class);
                                         SharedPreferences.Editor editor = sharedPref.edit();
                                         Gson gson = new Gson();

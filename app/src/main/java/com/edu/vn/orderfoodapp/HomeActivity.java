@@ -8,14 +8,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.edu.vn.orderfoodapp.apdapters.ViewPagerAdapter;
+import com.edu.vn.orderfoodapp.models.Invoice;
 import com.edu.vn.orderfoodapp.models.User;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
     //Fragment
@@ -68,6 +73,8 @@ public class HomeActivity extends AppCompatActivity {
             }
 
 
+
+
 //        //hien thi du lieu food ra rycylerview
 //        foodList = new ArrayList<>();
 //        foodRecyclerView = findViewById(R.id.list_foods);
@@ -82,7 +89,13 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
+//        ArrayList<Invoice> invoices = new ArrayList<>();
+//        SharedPreferences sharedPref = getSharedPreferences(CartActivity.CART_TAG, Context.MODE_PRIVATE);
+//        String strInvoices = sharedPref.getString(CartActivity.INVOICES_TAG, "");
+//        Log.d("list",strInvoices);
+//        if(strInvoices != ""){
+//            invoices = new Gson().fromJson(strInvoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
+//        }
     }
 
 //    @Override

@@ -120,7 +120,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                 editor.putString(CartActivity.INVOICES_TAG, strValue);
                 editor.apply();
 
-               startActivity(new Intent(FoodDetailActivity.this, CartActivity.class));
+               startActivity(new Intent(FoodDetailActivity.this, HomeActivity.class));
             }
         });
 
