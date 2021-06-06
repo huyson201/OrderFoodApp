@@ -21,19 +21,17 @@
              android:layout_height="match_parent"
              android:orientation="horizontal"
              android:gravity="center">
-
              <TextView
                  android:id="@+id/lbl_edit"
                  android:layout_width="match_parent"
                  android:layout_height="match_parent"
                  android:background="@color/blue_2"
                  android:gravity="center"
-                 android:padding="8dp"
+                 android:padding="20dp"
                  android:text="@string/lbl_edit"
                  android:textAllCaps="true"
                  android:textColor="@color/white"
                  android:textStyle="bold" />
-
              <TextView
                  android:id="@+id/lbl_delete"
                  android:layout_width="match_parent"

@@ -32,7 +32,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView7"
+                android:id="@+id/lbl_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -81,6 +81,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="500dp"
+        app:backgroundTint="@null"
         android:background="@drawable/button_bg"
         android:text="@string/upload_btn"
         android:textColor="@color/white"
@@ -134,15 +135,17 @@
         android:layout_marginBottom="220dp"
         android:ems="10"
         android:hint="@string/food_price_hint"
-        android:inputType="text"
+        android:inputType="number"
         android:paddingLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_food_desc"
+        app:layout_constraintVertical_bias="0.242"
         app:layout_constraintWidth_percent=".8" />
 
     <Button
+        app:backgroundTint="@null"
         android:id="@+id/add_food_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -166,28 +169,28 @@
         app:layout_constraintStart_toStartOf="@+id/add_food_btn"
         app:layout_constraintTop_toTopOf="@+id/add_food_btn" />
 
-<!--    <com.google.android.material.textfield.TextInputLayout-->
-<!--        android:id="@+id/categories_dropdown"-->
-<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="48dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="48dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/edt_food_price"-->
-<!--        app:layout_constraintVertical_bias="0.094">-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/categories_dropdown"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_food_price"
+        app:layout_constraintVertical_bias="0.118">
 
-<!--        <AutoCompleteTextView-->
-<!--            android:id="@+id/dropdown_item"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:hint="Choose Category"-->
-<!--            android:inputType="none" />-->
+                <AutoCompleteTextView
+                    android:id="@+id/dropdown_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Choose Category"
+                    android:inputType="none" />
 
-<!--    </com.google.android.material.textfield.TextInputLayout>-->
+    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

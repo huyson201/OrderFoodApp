@@ -1,13 +1,11 @@
 package com.edu.vn.orderfoodapp.apdapters;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-import android.util.Log;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,45 +16,90 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
-import com.edu.vn.orderfoodapp.CartActivity;
-import com.edu.vn.orderfoodapp.Delegate.ClickCartItemDelegate;
-import com.edu.vn.orderfoodapp.HomeActivity;
+import com.edu.vn.orderfoodapp.EditFoodActivity;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.models.Food;
-import com.edu.vn.orderfoodapp.models.Invoice;
-import com.google.android.material.card.MaterialCardView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
-
-public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuViewHolder> {
-    //propeties
-    private ArrayList<Food> menus;
-    private Activity context;
-    private ClickCartItemDelegate clickCartItemDelegate;
+public class MenuItemAdapter extends FirebaseRecyclerAdapter<Food, MenuItemAdapter.MyViewHolder> {
+    /**
+     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
+     * {@link FirebaseRecyclerOptions} for configuration options.
+     *
+     * @param options
+     */
     private ViewBinderHelper viewBinderHelper;
-    private DatabaseReference database;
-
-    public MenuItemAdapter(Activity context, ArrayList<Food> menus) {
-        this.menus = menus;
-        this.context = context;
+    public MenuItemAdapter(@NonNull FirebaseRecyclerOptions options) {
+        super(options);
         viewBinderHelper = new ViewBinderHelper();
     }
 
-    public class MenuViewHolder extends RecyclerView.ViewHolder {
+
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.menu_item,parent,false);
+        return new MyViewHolder(view);
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull MyViewHolder holder,final int position, @NonNull final Food food) {
+        viewBinderHelper.bind(holder.swipeRevealLayout, position + "");
+        Glide.with(holder.foodImg.getContext()).load(food.getFoodImage()).fitCenter().into(holder.foodImg);
+        holder.foodName.setText(food.getFoodName());
+        holder.foodPrice.setText((food.getFoodPrice() + ""));
+        holder.foodDecs.setText(food.getFoodDescription());
+
+        // delete button
+        holder.lblDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(holder.foodName.getContext());
+                builder.setTitle("Are you sure?");
+                builder.setMessage("Deleted data can't be Undo");
+                builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseDatabase.getInstance().getReference("foods").child(food.getFoodId()).removeValue();
+                        Toast.makeText(holder.foodName.getContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(holder.foodName.getContext(), "Cancelled", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.show();
+            }
+        });
+
+        // edit button
+        holder.lblEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.foodName.getContext(), EditFoodActivity.class);
+                intent.putExtra("foodId",food.getFoodId());
+                intent.putExtra("foodName",food.getFoodName());
+                intent.putExtra("foodImage",food.getFoodImage());
+                intent.putExtra("foodDesc",food.getFoodDescription());
+                intent.putExtra("foodPrice",food.getFoodPrice());
+                intent.putExtra("foodCate",food.getCategoryId());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                holder.foodName.getContext().startActivity(intent);
+            }
+        });
+    }
+
+    public  class MyViewHolder extends RecyclerView.ViewHolder{
         private ImageView foodImg;
         private TextView foodName, foodPrice, foodDecs;
         private SwipeRevealLayout swipeRevealLayout;
         private TextView lblDelete;
         private TextView lblEdit;
-
-        public MenuViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             foodImg = itemView.findViewById(R.id.food_img);
             foodName = itemView.findViewById(R.id.lbl_food_name);
@@ -65,72 +108,7 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuVi
             swipeRevealLayout = itemView.findViewById(R.id.swipe_reveal_layout);
             lblDelete = itemView.findViewById(R.id.lbl_delete);
             lblEdit = itemView.findViewById(R.id.lbl_edit);
-
         }
-    }
-
-    public void setClickAllDelegate(ClickCartItemDelegate clickCartItemDelegate) {
-        this.clickCartItemDelegate = clickCartItemDelegate;
-    }
-
-    @NonNull
-    @Override
-    public MenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        MaterialCardView cardView = (MaterialCardView) LayoutInflater.from(this.context).inflate(R.layout.menu_item, parent, false);
-        return new MenuViewHolder(cardView);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
-        Food food = menus.get(position);
-        viewBinderHelper.bind(holder.swipeRevealLayout, position + "");
-
-        Glide.with(this.context).load(food.getFoodImage()).fitCenter().into(holder.foodImg);
-        holder.foodName.setText(food.getFoodName());
-        holder.foodPrice.setText((food.getFoodPrice() + ""));
-        holder.foodDecs.setText(food.getFoodDescription());
-
-
-        // delete processing
-        holder.lblDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Log.d("FoodID",food.getFoodId());
-                menus.remove(holder.getAdapterPosition());
-                notifyItemRemoved(holder.getAdapterPosition());
-                deleteFood(food.getFoodId());
-//
-//                if(clickCartItemDelegate != null){
-//                    clickCartItemDelegate.onClickCartItem();
-//                }
-//                updateCart();
-            }
-        });
-
-
-    }
-
-    public void deleteFood(String foodID) {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("foods");
-        database.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-            database.child(foodID).removeValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    @Override
-    public int getItemCount() {
-        if (menus != null) {
-            return menus.size();
-        }
-        return 0;
     }
 
 

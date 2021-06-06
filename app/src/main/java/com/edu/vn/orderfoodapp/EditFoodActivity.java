@@ -29,6 +29,7 @@ import com.edu.vn.orderfoodapp.models.Food;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +42,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class AddFoodActivity extends AppCompatActivity {
+public class EditFoodActivity extends AppCompatActivity {
     //properties
     private Button uploadImgBtn, addFoodBtn;
     private EditText edtFoodName, edtFoodDesc, edtFoodPrice;
@@ -59,6 +60,13 @@ public class AddFoodActivity extends AppCompatActivity {
     private Uri imgPath;
     private AutoCompleteTextView dropdown_menu;
     private String randomKey;
+    private TextInputLayout categories_dropdown;
+    public static final String FOOD_ID_TAG = "foodId";
+    public static final String FOOD_IMG_TAG = "foodImage";
+    public static final String FOOD_NAME_TAG = "foodName";
+    public static final String FOOD_DESC_TAG = "foodDesc";
+    public static final String FOOD_PRICE_TAG = "foodPrice";
+    public static final String FOOD_CATEGORY_TAG = "foodCate";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +83,18 @@ public class AddFoodActivity extends AppCompatActivity {
         backBtn = findViewById(R.id.back_btn);
         toolbar = findViewById(R.id.toolbar);
         dropdown_menu = findViewById(R.id.dropdown_item);
+        categories_dropdown = findViewById(R.id.categories_dropdown);
         randomKey = UUID.randomUUID().toString();
         storage = FirebaseStorage.getInstance().getReference().child("foods/" + randomKey);
+
+        //set value
+        edtFoodName.setText(getIntent().getStringExtra(FOOD_NAME_TAG));
+        edtFoodDesc.setText(getIntent().getStringExtra(FOOD_DESC_TAG));
+        edtFoodPrice.setText(getIntent().getIntExtra(FOOD_PRICE_TAG, 0) + "");
+        String foodId = getIntent().getStringExtra(FOOD_ID_TAG);
+        String foodImg = getIntent().getStringExtra(FOOD_IMG_TAG);
+
+        Glide.with(this).load(foodImg).fitCenter().into(imgFood);
         // set action bar
         setActionBar(toolbar);
         // back btn processing event
@@ -89,10 +107,19 @@ public class AddFoodActivity extends AppCompatActivity {
         });
         // category adapter
         categories = new ArrayList<>();
-        getCategoryNames();
-        arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_item, categories);
-        dropdown_menu.setAdapter(arrayAdapter);
+        db_cate.child(getIntent().getStringExtra(FOOD_CATEGORY_TAG)).child("categoryName").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dropdown_menu.setText(snapshot.getValue().toString());
+                getCategoryNames();
+                arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_item, categories);
+                dropdown_menu.setAdapter(arrayAdapter);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
         // hide progress bar
         progressBar.setVisibility(View.INVISIBLE);
         //processing click upload image btn
@@ -125,7 +152,8 @@ public class AddFoodActivity extends AppCompatActivity {
                 String foodPrice = edtFoodPrice.getText().toString();
                 String categoryName = dropdown_menu.getText().toString();
                 //check input values
-                if (!foodName.isEmpty() && imgPath != null && !categoryName.isEmpty()) {
+                imgPath = Uri.parse(foodImg);
+                if (!foodName.isEmpty() && !imgPath.equals(Uri.parse(foodImg)) && !categoryName.isEmpty()) {
                     UploadTask uploadTask = storage.putFile(imgPath);
                     uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                         @Override
@@ -140,47 +168,55 @@ public class AddFoodActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Uri> task) {
                             if (task.isSuccessful()) {
-                                Uri uri = task.getResult();
-                                String key = db_food.push().getKey();
+
+                                 Uri uri = task.getResult();
+
                                 //get category ID
-                                db_cate.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                            Category category = dataSnapshot.getValue(Category.class);
-                                            if(category.getCategoryName().equalsIgnoreCase(categoryName)){
-                                                Food food = new Food(category.getCategoryID(),key, uri.toString(), foodName, foodDesc, Integer.parseInt(foodPrice));
-                                                db_food.child(key).setValue(food);
-                                                addFoodBtn.setVisibility(View.VISIBLE);
-                                                progressBar.setVisibility(View.INVISIBLE);
-                                                Toast.makeText(AddFoodActivity.this, "Add food Successfully.", Toast.LENGTH_SHORT).show();
-                                                resetField();
-                                                break;
-                                            }
-                                        }
-                                    }
+                                updateFood(uri.toString(),foodName,foodDesc,foodPrice,foodId,categoryName);
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                    }
-                                });
 
-                                //return the menus
-                                Intent intent = new Intent(AddFoodActivity.this, MenuActivity.class);
-                                startActivity(intent);
                             }
                         }
                     });
-                } else {
-                    Toast.makeText(AddFoodActivity.this, "Food's name must not be empty", Toast.LENGTH_SHORT).show();
+                }else if(imgPath.equals(Uri.parse(foodImg))){
+                    updateFood(foodImg,foodName,foodDesc,foodPrice,foodId,categoryName);
+
+                }else {
+                    Toast.makeText(EditFoodActivity.this, "Food's name must not be empty", Toast.LENGTH_SHORT).show();
                     addFoodBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
 
                 }
+
+
             }
         });
     }
+    private void updateFood(String foodImg,String foodName,String foodDesc,String foodPrice,String foodId,String categoryName){
+        db_cate.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Category category = dataSnapshot.getValue(Category.class);
+                    if (category.getCategoryName().equalsIgnoreCase(categoryName)) {
+                        Food food = new Food(category.getCategoryID(),foodId ,foodImg, foodName, foodDesc, Integer.parseInt(foodPrice));
+                        db_food.child(foodId).setValue(food);
+                        addFoodBtn.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(EditFoodActivity.this, "Edited Successfully.", Toast.LENGTH_SHORT).show();
+                        resetField();
+                        Intent intent = new Intent(EditFoodActivity.this, MenuActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -201,7 +237,9 @@ public class AddFoodActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Category category = dataSnapshot.getValue(Category.class);
+
                     categories.add(category.getCategoryName());
+//                    Log.d("CategoriesName",categories.toString());
                 }
                 arrayAdapter.notifyDataSetChanged();
             }

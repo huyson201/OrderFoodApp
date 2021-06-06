@@ -17,13 +17,20 @@ public class Food {
         this.foodPrice = foodPrice;
     }
 
-    public Food(String foodId, String imgUrl, String name, String description, int price) {
-        this.foodId = foodId;
-        this.foodImage = imgUrl;
-        this.foodName = name;
-        this.foodDescription = description;
-        this.foodPrice = price;
+    public Food(String categoryId , String foodImage, String foodName, String foodDescription, int foodPrice) {
+        this.categoryId = categoryId;
+        this.foodImage = foodImage;
+        this.foodName = foodName;
+        this.foodDescription = foodDescription;
+        this.foodPrice = foodPrice;
     }
+//    public Food(String foodId, String imgUrl, String name, String description, int price) {
+//        this.foodId = foodId;
+//        this.foodImage = imgUrl;
+//        this.foodName = name;
+//        this.foodDescription = description;
+//        this.foodPrice = price;
+//    }
 
     public Food() {
     }

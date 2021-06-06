@@ -47,8 +47,8 @@ public class AddCategoryActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private static final int  REQUEST_PERMISSION_CODE = 10;
     private static final int IMG_REQUEST_CODE = 11;
-
-    private StorageReference storage = FirebaseStorage.getInstance().getReference().child("images/");
+    private String randomKey;
+    private StorageReference storage;
     private DatabaseReference db = FirebaseDatabase.getInstance().getReference("categories");
     private  Uri imgPath;
 
@@ -77,6 +77,8 @@ public class AddCategoryActivity extends AppCompatActivity {
             }
         });
 
+        randomKey = UUID.randomUUID().toString();
+        storage = FirebaseStorage.getInstance().getReference().child("categories/"+randomKey);
         // hide progress bar
 
         progressBar.setVisibility(View.INVISIBLE);
