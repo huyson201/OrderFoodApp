@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.edu.vn.orderfoodapp.EditProfileActivity;
 import com.edu.vn.orderfoodapp.HomeActivity;
 import com.edu.vn.orderfoodapp.LoginActivity;
 import com.edu.vn.orderfoodapp.R;
@@ -24,6 +25,7 @@ public class ProfileFragment extends Fragment {
     private TextView address;
     private Button btnEdit;
     private View view;
+    private HomeActivity homeActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,7 +36,7 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.txtEmail);
         address = view.findViewById(R.id.txtAddress);
         btnEdit = view.findViewById(R.id.btnEdit);
-
+        homeActivity=(HomeActivity) getActivity();
 
 
         //get user logged data
@@ -45,7 +47,8 @@ public class ProfileFragment extends Fragment {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("btnEdit", "True");
+                Intent intent = new Intent(homeActivity, EditProfileActivity.class);
+                startActivity(intent);
             }
         });
         // Inflate the layout for this fragment
