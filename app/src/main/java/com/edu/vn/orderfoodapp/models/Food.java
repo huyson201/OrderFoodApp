@@ -8,6 +8,15 @@ public class Food {
     private String foodDescription;
     private int foodPrice;
 
+    public Food(String categoryId, String foodId, String foodImage, String foodName, String foodDescription, int foodPrice) {
+        this.categoryId = categoryId;
+        this.foodId = foodId;
+        this.foodImage = foodImage;
+        this.foodName = foodName;
+        this.foodDescription = foodDescription;
+        this.foodPrice = foodPrice;
+    }
+
     public Food(String foodId, String imgUrl, String name, String description, int price) {
         this.foodId = foodId;
         this.foodImage = imgUrl;

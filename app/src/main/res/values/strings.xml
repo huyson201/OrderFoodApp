@@ -37,6 +37,7 @@
     <string name="lbl_total_price">2000</string>
     <string name="lbl_quantity">1</string>
     <string name="lbl_delete">DELETE</string>
+    <string name="lbl_edit">EDIT</string>
     <string name="lbl_ordered">Ordered</string>
     <!--Search-->
     <string name="edtSearch">Search...</string>
@@ -58,6 +59,12 @@
     <string name="add_category_btn">Add category</string>
     <string name="lbl_add_category">New category</string>
 
+<!--  add food  -->
+    <string name="food_name_hint">Enter food\'s name</string>
+    <string name="food_desc_hint">Enter food\'s description</string>
+    <string name="food_price_hint">Enter food\'s price</string>
+    <string name="add_food_btn">Add food</string>
+    <string name="lbl_add_food">New food</string>
 
 
     <string name="home_fragment">Home fragment</string>

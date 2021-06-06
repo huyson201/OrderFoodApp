@@ -21,6 +21,19 @@
              android:layout_height="match_parent"
              android:orientation="horizontal"
              android:gravity="center">
+
+             <TextView
+                 android:id="@+id/lbl_edit"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:background="@color/blue_2"
+                 android:gravity="center"
+                 android:padding="8dp"
+                 android:text="@string/lbl_edit"
+                 android:textAllCaps="true"
+                 android:textColor="@color/white"
+                 android:textStyle="bold" />
+
              <TextView
                  android:id="@+id/lbl_delete"
                  android:layout_width="match_parent"
@@ -45,12 +58,10 @@
                 android:id="@+id/constraintLayout4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                card_view:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 card_view:layout_constraintHorizontal_bias="0.0"
                 card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toTopOf="parent"
-                card_view:layout_constraintVertical_bias="0.0">
+                card_view:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/lbl_food_name"
@@ -70,26 +81,32 @@
                     card_view:layout_constraintTop_toTopOf="parent"
                     card_view:layout_constraintVertical_bias="0.0" />
 
-                <CheckBox
-                    android:id="@+id/chk_select"
+                <TextView
+                    android:id="@+id/lbl_food_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/lbl_food_name"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintHorizontal_bias="0.0"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent" />
+                    card_view:layout_constraintStart_toEndOf="@+id/food_img"
+                    card_view:layout_constraintTop_toBottomOf="@+id/lbl_food_name"
+                    card_view:layout_constraintVertical_bias="0.222" />
 
                 <ImageView
                     android:id="@+id/food_img"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:layout_marginStart="8dp"
                     android:scaleType="fitXY"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintHorizontal_bias="0.0"
-                    card_view:layout_constraintStart_toEndOf="@+id/chk_select"
+                    card_view:layout_constraintHorizontal_bias="0.022"
+                    card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toTopOf="parent"
                     card_view:srcCompat="@drawable/img_thit_bo_xao" />
 
@@ -99,6 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="1dp"
                     android:text="@string/lbl_price_unit"
                     android:textColor="@color/color_orange"
                     android:textSize="18sp"
@@ -106,70 +124,23 @@
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintHorizontal_bias="0.0"
                     card_view:layout_constraintStart_toEndOf="@+id/food_img"
-                    card_view:layout_constraintTop_toBottomOf="@+id/lbl_food_name"
-                    card_view:layout_constraintVertical_bias="0.0" />
+                    card_view:layout_constraintTop_toBottomOf="@+id/lbl_food_desc" />
 
                 <TextView
                     android:id="@+id/lbl_food_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="@string/lbl_price"
                     android:textColor="@color/color_orange"
                     android:textSize="16sp"
-                    card_view:layout_constraintBaseline_toBaselineOf="@+id/textView8"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintHorizontal_bias="0.0"
-                    card_view:layout_constraintStart_toEndOf="@+id/textView8" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                card_view:layout_constraintBottom_toBottomOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"
-                card_view:layout_constraintHorizontal_bias="1.0"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintTop_toBottomOf="@id/constraintLayout4"
-                card_view:layout_constraintVertical_bias="0.0">
-
-                <ImageButton
-                    android:id="@+id/minus_btn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/fui_transparent"
-                    android:src="@drawable/ic_minus"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintEnd_toStartOf="@+id/lbl_quantity"
-                    card_view:layout_constraintHorizontal_bias="1.0"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/lbl_quantity"
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:gravity="center"
-                    android:text="@string/lbl_quantity"
-                    android:textColor="@color/black"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintVertical_bias="0.0" />
-
-                <ImageButton
-                    android:id="@+id/plus_btn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@color/fui_transparent"
-                    android:src="@drawable/ic_plus"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintHorizontal_bias="0.0"
-                    card_view:layout_constraintStart_toEndOf="@+id/lbl_quantity"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintVertical_bias="0.0" />
+                    card_view:layout_constraintStart_toEndOf="@+id/textView8"
+                    card_view:layout_constraintTop_toBottomOf="@+id/lbl_food_desc"
+                    card_view:layout_constraintVertical_bias="0.666" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

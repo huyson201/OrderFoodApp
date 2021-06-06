@@ -14,6 +14,9 @@
         <activity android:name=".AddCategoryActivity" android:parentActivityName=".AdminActivity">
 
         </activity>
+        <activity android:name=".AddFoodActivity" android:parentActivityName=".AdminActivity" >
+
+        </activity>
         <activity android:name=".HomeActivity">
 
         </activity>
@@ -27,6 +30,9 @@
         <activity android:name=".AdminActivity">
 
         </activity>
+        <activity android:name=".MenuActivity">
+
+        </activity>
         <activity
             android:name=".SignUpActivity"
             android:screenOrientation="portrait" />
@@ -35,7 +41,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -56,7 +56,7 @@ public class CustomerFragment extends Fragment {
         });
 
 
-        adapter=new CustomerPagerAdapter(homeActivity.getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        adapter=new CustomerPagerAdapter(getChildFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         adapter.addFragment(new ProfileFragment(),"PROFILE");
         adapter.addFragment(new HistoryFragment(),"HISTORY");
         viewPager.setAdapter(adapter);

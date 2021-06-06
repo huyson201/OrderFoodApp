@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView lblSignUp;
     private CheckBox chkRemember;
-    public static User user;
+//    public static User user;
     public static int SIGN_UP_REQUEST_CODE = 1;
     public static String REMEMBER_LOGIN_TAG = "rememberLogin";
     public static String USER_LOGGED_IN = "userLogged";

@@ -75,7 +75,7 @@ public class ListCartItemFragment extends Fragment implements ClickCartItemDeleg
 
 
         //get user
-        this.user = LoginActivity.user;
+        this.user = LoginActivity.userProFile;
 
         // default price
         lblTotalPrice.setText(0 +"");
@@ -161,7 +161,7 @@ public class ListCartItemFragment extends Fragment implements ClickCartItemDeleg
         }
 
         if(invoices.size() > 0){
-            Bill bill = new Bill("", invoices, Bill.CONFIRM_STATUS_TAG, "1");
+            Bill bill = new Bill("", invoices, Bill.CONFIRM_STATUS_TAG, user.getId());
             return  bill;
         }
 

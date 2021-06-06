@@ -33,27 +33,9 @@ import java.util.ArrayList;
 
 public class CartFragment extends Fragment {
 
-//    //properties
-//    private CheckBox chkAll;
-//    private boolean isCheckAll = false;
-//    private RecyclerView listCartItems;
-//    private ArrayList<Invoice> invoices;
-//    private CartItemAdapter adapter;
-//
-//    private TextView lblTotalPrice;
-//    private ImageButton backBtn;
-//    private Button buyBtn;
-//
+
     private View view;
     private HomeActivity homeActivity;
-//
-//    public static String CART_TAG = "cart";
-
-    public CartFragment() {
-        // Required empty public constructor
-    }
-
-
     public static ArrayList<Invoice> invoices;
     public static ArrayList<Bill> bills;
     private ImageButton backBtn;
@@ -65,6 +47,9 @@ public class CartFragment extends Fragment {
     public static final String CART_TAB_TAG = "Cart";
     public static final String INVOICES_TAG = "invoices";
     public static final String ORDERED_TAB_TAG = "Ordered";
+    public CartFragment() {
+        // Required empty public constructor
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,7 +63,7 @@ public class CartFragment extends Fragment {
         invoices = new ArrayList<Invoice>();
         bills = new ArrayList<Bill>();
 
-        adapter = new CartViewPagerAdapter(homeActivity.getSupportFragmentManager());
+        adapter = new CartViewPagerAdapter(getChildFragmentManager());
 
 //        // back btn processing event
 //        backBtn.setOnClickListener(new View.OnClickListener() {

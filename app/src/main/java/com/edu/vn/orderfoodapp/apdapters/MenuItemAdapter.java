@@ -2,6 +2,7 @@ package com.edu.vn.orderfoodapp.apdapters;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,26 +20,53 @@ import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.edu.vn.orderfoodapp.CartActivity;
 import com.edu.vn.orderfoodapp.Delegate.ClickCartItemDelegate;
+import com.edu.vn.orderfoodapp.HomeActivity;
 import com.edu.vn.orderfoodapp.R;
+import com.edu.vn.orderfoodapp.models.Food;
 import com.edu.vn.orderfoodapp.models.Invoice;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
-public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartItemViewHolder> {
+public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.MenuViewHolder> {
     //propeties
-    private ArrayList<Invoice> invoices;
+    private ArrayList<Food> menus;
     private Activity context;
     private ClickCartItemDelegate clickCartItemDelegate;
     private ViewBinderHelper viewBinderHelper;
-    private Gson gson;
-    public CartItemAdapter(Activity context, ArrayList<Invoice> invoices) {
-        this.invoices = invoices;
+    private DatabaseReference database;
+
+    public MenuItemAdapter(Activity context, ArrayList<Food> menus) {
+        this.menus = menus;
         this.context = context;
         viewBinderHelper = new ViewBinderHelper();
-        gson = new Gson();
+    }
+
+    public class MenuViewHolder extends RecyclerView.ViewHolder {
+        private ImageView foodImg;
+        private TextView foodName, foodPrice, foodDecs;
+        private SwipeRevealLayout swipeRevealLayout;
+        private TextView lblDelete;
+        private TextView lblEdit;
+
+        public MenuViewHolder(@NonNull View itemView) {
+            super(itemView);
+            foodImg = itemView.findViewById(R.id.food_img);
+            foodName = itemView.findViewById(R.id.lbl_food_name);
+            foodPrice = itemView.findViewById(R.id.lbl_food_price);
+            foodDecs = itemView.findViewById(R.id.lbl_food_desc);
+            swipeRevealLayout = itemView.findViewById(R.id.swipe_reveal_layout);
+            lblDelete = itemView.findViewById(R.id.lbl_delete);
+            lblEdit = itemView.findViewById(R.id.lbl_edit);
+
+        }
     }
 
     public void setClickAllDelegate(ClickCartItemDelegate clickCartItemDelegate) {
@@ -47,127 +75,63 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
 
     @NonNull
     @Override
-    public CartItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        MaterialCardView cardView = (MaterialCardView) LayoutInflater.from(this.context).inflate(R.layout.cart_item_layout, parent, false);
-        return new CartItemViewHolder(cardView);
+    public MenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        MaterialCardView cardView = (MaterialCardView) LayoutInflater.from(this.context).inflate(R.layout.menu_item, parent, false);
+        return new MenuViewHolder(cardView);
     }
-
 
     @Override
-    public void onBindViewHolder(@NonNull CartItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MenuViewHolder holder, int position) {
+        Food food = menus.get(position);
+        viewBinderHelper.bind(holder.swipeRevealLayout, position + "");
 
-        Invoice invoice = invoices.get(position);
-        viewBinderHelper.bind(holder.swipeRevealLayout,position + "");
+        Glide.with(this.context).load(food.getFoodImage()).fitCenter().into(holder.foodImg);
+        holder.foodName.setText(food.getFoodName());
+        holder.foodPrice.setText((food.getFoodPrice() + ""));
+        holder.foodDecs.setText(food.getFoodDescription());
 
-        Glide.with(this.context).load(invoice.getFoods().getFoodImage()).fitCenter().into(holder.foodImg);
-        holder.foodName.setText(invoice.getFoods().getFoodName());
-        holder.foodPrice.setText((invoice.getFoods().getFoodPrice() + ""));
-        holder.quantity.setText((invoice.getQuantity() + ""));
-        holder.chkSelect.setChecked(invoice.isSelected());
 
-        //delete processing
-        holder.lbl_delete.setOnClickListener(new View.OnClickListener() {
+        // delete processing
+        holder.lblDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                invoices.remove(holder.getAdapterPosition());
+//                Log.d("FoodID",food.getFoodId());
+                menus.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
-
-                if(clickCartItemDelegate != null){
-                    clickCartItemDelegate.onClickCartItem();
-                }
-                updateCart();
+                deleteFood(food.getFoodId());
+//
+//                if(clickCartItemDelegate != null){
+//                    clickCartItemDelegate.onClickCartItem();
+//                }
+//                updateCart();
             }
         });
 
-        // processing click selected check box
-        holder.chkSelect.setOnClickListener(new View.OnClickListener() {
+
+    }
+
+    public void deleteFood(String foodID) {
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("foods");
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                invoice.setSelected(((CheckBox) v).isChecked());
-               if(clickCartItemDelegate != null){
-                   clickCartItemDelegate.onClickCartItem();
-               }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            database.child(foodID).removeValue();
             }
-        });
 
-        // processing click minus btn
-        holder.minusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                int quantity = invoice.getQuantity();
-                if(quantity > 1){
-                    quantity--;
-                    invoice.setQuantity(quantity);
-                    holder.quantity.setText(quantity + "");
-                }
-
-                if(clickCartItemDelegate != null){
-                    clickCartItemDelegate.onClickCartItem();
-                }
-
-                updateCart();
-            }
-        });
-
-        // processing click plus btn
-        holder.plusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int quantity = invoice.getQuantity();
-                if(quantity < 10){
-                    quantity++;
-                    invoice.setQuantity(quantity);
-                    holder.quantity.setText(quantity + "");
-                }else{
-                    Toast.makeText(context, "Maximum is 10", Toast.LENGTH_SHORT).show();
-                }
-
-                if(clickCartItemDelegate != null){
-                    clickCartItemDelegate.onClickCartItem();
-                }
-
-                updateCart();
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
     }
 
-    private  void updateCart(){
-        String value = gson.toJson(invoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
-        SharedPreferences sharedPref = context.getSharedPreferences(CartActivity.CART_TAG, context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(CartActivity.INVOICES_TAG, value);
-        editor.apply();
-
-    }
     @Override
     public int getItemCount() {
-        if(invoices != null){
-            return invoices.size();
+        if (menus != null) {
+            return menus.size();
         }
         return 0;
     }
 
-    public class CartItemViewHolder extends RecyclerView.ViewHolder{
-        //properties
-        private ImageView foodImg;
-        private TextView foodName, foodPrice, quantity;
-        private ImageButton minusBtn, plusBtn;
-        private CheckBox chkSelect;
-        private SwipeRevealLayout swipeRevealLayout;
-        private TextView lbl_delete;
-        public CartItemViewHolder(@NonNull View cartItem) {
-            super(cartItem);
 
-            foodImg =  cartItem.findViewById(R.id.food_img);
-            foodName =  cartItem.findViewById(R.id.lbl_food_name);
-            foodPrice =  cartItem.findViewById(R.id.lbl_food_price);
-            quantity =  cartItem.findViewById(R.id.lbl_quantity);
-            minusBtn =  cartItem.findViewById(R.id.minus_btn);
-            plusBtn =  cartItem.findViewById(R.id.plus_btn);
-            chkSelect = cartItem.findViewById(R.id.chk_select);
-            swipeRevealLayout = cartItem.findViewById(R.id.swipe_reveal_layout);
-            lbl_delete = cartItem.findViewById(R.id.lbl_delete);
-        }
-    }
 }

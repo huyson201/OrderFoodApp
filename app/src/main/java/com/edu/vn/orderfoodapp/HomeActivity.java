@@ -56,6 +56,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
                 navigationViewPager.setCurrentItem(position);
+                if(position==3){
+//                    navigationViewPager.getI
+                }
                 return true;
             }
         });
@@ -69,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                    navigation.setCurrentItem(position);
+//                    navigation.setCurrentItem(position);
             }
 
 

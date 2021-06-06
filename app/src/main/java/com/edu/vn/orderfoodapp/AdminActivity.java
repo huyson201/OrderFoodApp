@@ -75,7 +75,8 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
 
     @Override
     public void onClickMenu() {
-        Toast.makeText(this, "Clicked  Menu", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(AdminActivity.this, MenuActivity.class));
+
     }
 
     @Override
