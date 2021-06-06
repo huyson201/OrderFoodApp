@@ -24,7 +24,6 @@ public class ProfileFragment extends Fragment {
     private TextView address;
     private Button btnEdit;
     private View view;
-    private HomeActivity homeActivity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,7 +34,7 @@ public class ProfileFragment extends Fragment {
         email = view.findViewById(R.id.txtEmail);
         address = view.findViewById(R.id.txtAddress);
         btnEdit = view.findViewById(R.id.btnEdit);
-        homeActivity = (HomeActivity) getActivity();
+
 
 
         //get user logged data
