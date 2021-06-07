@@ -45,6 +45,7 @@ public class EditProfileActivity extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 updateProfile( edtFullName.getText().toString(),edtEmail.getText().toString(),edtPhone.getText().toString(),edtAdress.getText().toString(),LoginActivity.userProFile.getId());
                 Intent intent = new Intent(EditProfileActivity.this, HomeActivity.class);
                 startActivity(intent);
