@@ -1,5 +1,6 @@
 package com.edu.vn.orderfoodapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,9 @@ import com.edu.vn.orderfoodapp.models.Food;
 import com.edu.vn.orderfoodapp.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,15 +36,16 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile_layout);
 
-        edtFullName=findViewById(R.id.edt_full_name);
-        edtEmail=findViewById(R.id.edt_email);
-        edtPhone=findViewById(R.id.edt_phone);
-        edtAdress=findViewById(R.id.edt_address);
-        editBtn=findViewById(R.id.btn_edtProfile);
+        edtFullName = findViewById(R.id.edt_full_name);
+        edtEmail = findViewById(R.id.edt_email);
+        edtPhone = findViewById(R.id.edt_phone);
+        edtAdress = findViewById(R.id.edt_address);
+        editBtn = findViewById(R.id.btn_edtProfile);
 
 
 //        Intent intent=getIntent();
         //get user logged data
+
         edtFullName.setText(LoginActivity.userProFile.getName());
         edtEmail.setText(LoginActivity.userProFile.getEmail());
         edtPhone.setText(LoginActivity.userProFile.getPhone());
@@ -48,29 +53,73 @@ public class EditProfileActivity extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                updateProfile( edtFullName.getText().toString(),edtEmail.getText().toString(),edtPhone.getText().toString(),edtAdress.getText().toString(),LoginActivity.userProFile.getId());
+                String name = edtFullName.getText().toString();
+                String email = edtEmail.getText().toString();
+                String phone = edtPhone.getText().toString();
+                String address = edtAdress.getText().toString();
+                String userId = LoginActivity.userProFile.getId();
+//                Intent intent1=getIntent();
+//                Log.d("intent", intent1.getStringExtra("name")) ;
+                updateProfile(name, email, phone, address, userId);
+                getData(userId);
                 Intent intent = new Intent(EditProfileActivity.this, HomeActivity.class);
+//                intent.putExtra("name",name);
+//                intent.putExtra("email",email);
+//                intent.putExtra("phone",phone);
+//                intent.putExtra("address",address);
                 startActivity(intent);
+
             }
         });
 
     }
 
-    private void updateProfile(String fullName,String email,String phone,String address,String userId){
-//        database.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (!task.isSuccessful()) {
-//                    Log.e("firebase", "Error getting data", task.getException());
-//                }
-//                else {
-////                    Log.d("firebase", String.valueOf(task.getResult().getValue(User.class)));
-//                    User user = task.getResult().getValue(User.class);
-//                }
-//            }
-//        });
-        User user = new User(userId,fullName,email,phone,address);
+    private void updateProfile(String fullName, String email, String phone, String address, String userId) {
+
+        if (fullName.isEmpty()) {
+            Toast.makeText(EditProfileActivity.this, "FullName is empty.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        if (email.isEmpty()) {
+            Toast.makeText(EditProfileActivity.this, "Email is empty.", Toast.LENGTH_LONG).show();
+            edtEmail.requestFocus();
+            return;
+        }
+        if (phone.isEmpty()) {
+            Toast.makeText(EditProfileActivity.this, "Phone number is empty.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (address.isEmpty()) {
+            Toast.makeText(EditProfileActivity.this, "Address number is empty.", Toast.LENGTH_LONG).show();
+            return;
+        }
+        User user = new User(userId, fullName, email, phone, address);
         database.child(userId).setValue(user);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser fbUser = mAuth.getCurrentUser();
+        fbUser.updateEmail(user.getEmail());
+        mAuth.updateCurrentUser(fbUser);
+}
+
+
+    private void getData(String userId) {
+        database.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                } else {
+//                    Log.d("firebase", String.valueOf(task.getResult().getValue(User.class)));
+                    User user = task.getResult().getValue(User.class);
+                    LoginActivity.userProFile.setName(user.getName());
+                    LoginActivity.userProFile.setEmail(user.getEmail());
+                    LoginActivity.userProFile.setPhone(user.getPhone());
+                    LoginActivity.userProFile.setAddress(user.getAddress());
+
+                }
+            }
+        });
     }
 }

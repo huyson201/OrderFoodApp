@@ -9,14 +9,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OrderFoodApp"
-        android:screenOrientation="portrait">
+        android:theme="@style/Theme.OrderFoodApp">
 
         <activity
             android:name=".AddCategoryActivity"
-            android:parentActivityName=".AdminActivity">
-        </activity>
+            android:parentActivityName=".AdminActivity"></activity>
         <activity
             android:name=".AddFoodActivity"
             android:parentActivityName=".AdminActivity"
@@ -31,10 +30,13 @@
         <activity android:name=".DeliveryListActivity"></activity>
         <activity android:name=".CookingActivity" />
         <activity android:name=".ConfirmBillActivity" />
+        <activity android:name=".EditProfileActivity" />
         <activity android:name=".AdminActivity">
 
         </activity>
-        <activity android:name=".EditFoodActivity" android:theme="@style/Theme">
+        <activity
+            android:name=".EditFoodActivity"
+            android:theme="@style/Theme">
 
         </activity>
         <activity android:name=".MenuActivity">

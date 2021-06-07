@@ -26,6 +26,7 @@ public class CustomerFragment extends Fragment {
     private  TextView logout;
     private HomeActivity homeActivity;
     private CustomerPagerAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

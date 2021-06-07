@@ -116,7 +116,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser fbUser = mAuth.getCurrentUser();
+//                            FirebaseUser fbUser = mAuth.getCurrentUser();
+                            Log.d("user id",mAuth.getUid());
                             DatabaseReference db = FirebaseDatabase.getInstance().getReference("users");
                             db.child(mAuth.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override

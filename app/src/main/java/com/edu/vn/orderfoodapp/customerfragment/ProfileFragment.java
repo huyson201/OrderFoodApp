@@ -48,6 +48,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(homeActivity, EditProfileActivity.class);
+                intent.putExtra("name",fullName.getText().toString());
                 startActivity(intent);
             }
         });
