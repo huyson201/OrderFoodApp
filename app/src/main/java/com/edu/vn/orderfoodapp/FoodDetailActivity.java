@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -96,12 +97,15 @@ public class FoodDetailActivity extends AppCompatActivity {
 
                 ArrayList<Invoice> invoices;
                 Food food = new Food(id, imgUri, name, desc, price );
+                Log.d("foodbuyy",food.toString());
+
                 if(strInvoices == ""){
                     invoices = new ArrayList<Invoice>();
                     invoices.add(new Invoice(food, 1));
                 }else {
                     boolean isExistFood = false;
                     invoices = gson.fromJson(strInvoices,new TypeToken<ArrayList<Invoice>>(){}.getType());
+                    Log.d("foodalready",invoices.toString());
                     for (Invoice invoice : invoices){
                         if(invoice.getFoods().getFoodId().equals(food.getFoodId())){
                             invoice.setQuantity(invoice.getQuantity() + 1);

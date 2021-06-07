@@ -92,13 +92,13 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-//        ArrayList<Invoice> invoices = new ArrayList<>();
-//        SharedPreferences sharedPref = getSharedPreferences(CartActivity.CART_TAG, Context.MODE_PRIVATE);
-//        String strInvoices = sharedPref.getString(CartActivity.INVOICES_TAG, "");
-//        Log.d("list",strInvoices);
-//        if(strInvoices != ""){
-//            invoices = new Gson().fromJson(strInvoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
-//        }
+        ArrayList<Invoice> invoices = new ArrayList<>();
+        SharedPreferences sharedPref = getSharedPreferences(CartActivity.CART_TAG, Context.MODE_PRIVATE);
+        String strInvoices = sharedPref.getString(CartActivity.INVOICES_TAG, "");
+        Log.d("list",strInvoices);
+        if(strInvoices != ""){
+            invoices = new Gson().fromJson(strInvoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
+        }
     }
 
 //    @Override

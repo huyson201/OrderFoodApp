@@ -91,7 +91,7 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
 
     @Override
     public void onClickAddCategory() {
-         Intent intent = new Intent(AdminActivity.this, AddCategoryActivity.class);
+         Intent intent = new Intent(AdminActivity.this, CategoryListActivity.class);
          startActivity(intent);
     }
 
