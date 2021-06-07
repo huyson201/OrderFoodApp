@@ -2,6 +2,7 @@ package com.edu.vn.orderfoodapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.edu.vn.orderfoodapp.models.Category;
 import com.edu.vn.orderfoodapp.models.Food;
 import com.edu.vn.orderfoodapp.models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,6 +58,18 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void updateProfile(String fullName,String email,String phone,String address,String userId){
+//        database.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (!task.isSuccessful()) {
+//                    Log.e("firebase", "Error getting data", task.getException());
+//                }
+//                else {
+////                    Log.d("firebase", String.valueOf(task.getResult().getValue(User.class)));
+//                    User user = task.getResult().getValue(User.class);
+//                }
+//            }
+//        });
         User user = new User(userId,fullName,email,phone,address);
         database.child(userId).setValue(user);
     }
