@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.edu.vn.orderfoodapp.models.Category;
 import com.edu.vn.orderfoodapp.models.Food;
+import com.edu.vn.orderfoodapp.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +45,7 @@ public class EditProfileActivity extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                updateProfile( edtFullName.getText().toString(),edtEmail.getText().toString(),edtPhone.getText().toString(),edtAdress.getText().toString(),LoginActivity.userProFile.getId());
                 Intent intent = new Intent(EditProfileActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
@@ -52,6 +54,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void updateProfile(String fullName,String email,String phone,String address,String userId){
-
+        User user = new User(userId,fullName,email,phone,address);
+        database.child(userId).setValue(user);
     }
 }
