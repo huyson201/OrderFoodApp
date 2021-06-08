@@ -17,6 +17,7 @@ import com.edu.vn.orderfoodapp.apdapters.CustomerPagerAdapter;
 import com.edu.vn.orderfoodapp.customerfragment.HistoryFragment;
 import com.edu.vn.orderfoodapp.customerfragment.ProfileFragment;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class CustomerFragment extends Fragment {
     private TabLayout tabLayout;
@@ -47,7 +48,7 @@ public class CustomerFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.remove(LoginActivity.USER_LOGGED_IN);
                 editor.apply();
-
+                FirebaseAuth.getInstance().signOut();
                 // go to login activity
                 Intent intent = new Intent(homeActivity, LoginActivity.class);
                 startActivity(intent);

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -44,6 +45,7 @@ import java.util.UUID;
 
 public class EditFoodActivity extends AppCompatActivity {
     //properties
+    private TextView title;
     private Button uploadImgBtn, addFoodBtn;
     private EditText edtFoodName, edtFoodDesc, edtFoodPrice;
     private ImageView imgFood;
@@ -84,10 +86,13 @@ public class EditFoodActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         dropdown_menu = findViewById(R.id.dropdown_item);
         categories_dropdown = findViewById(R.id.categories_dropdown);
+        title = findViewById(R.id.lbl_title);
         randomKey = UUID.randomUUID().toString();
         storage = FirebaseStorage.getInstance().getReference().child("foods/" + randomKey);
 
         //set value
+        title.setText("Edit Food");
+        addFoodBtn.setText("Edit Food");
         edtFoodName.setText(getIntent().getStringExtra(FOOD_NAME_TAG));
         edtFoodDesc.setText(getIntent().getStringExtra(FOOD_DESC_TAG));
         edtFoodPrice.setText(getIntent().getIntExtra(FOOD_PRICE_TAG, 0) + "");

@@ -7,17 +7,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.edu.vn.orderfoodapp.apdapters.AdminRecyclerViewAdapter;
 import com.edu.vn.orderfoodapp.models.AdminMenu;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
 public class AdminActivity extends AppCompatActivity implements AdminRecyclerViewAdapter.IMenuItemClick {
     private RecyclerView recyclerView;
     private ArrayList<AdminMenu> menus;
-
+    private AdminRecyclerViewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,11 +37,11 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
         menus.add(new AdminMenu(R.drawable.ic_confirm_list, AdminMenu.CONFIRMED_BILL_TAG));
         menus.add(new AdminMenu(R.drawable.ic_logout, AdminMenu.LOGOUT_TAG));
 
-        AdminRecyclerViewAdapter adapter = new AdminRecyclerViewAdapter(menus, this);
+         adapter = new AdminRecyclerViewAdapter(menus, this);
         recyclerView.setAdapter(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-
+`
     }
 
 
@@ -54,9 +56,8 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
         SharedPreferences sharedPref = getSharedPreferences(LoginActivity.REMEMBER_LOGIN_TAG, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.remove(LoginActivity.USER_LOGGED_IN);
-//        editor.remove(LoginActivity.REMEMBER_CHECK);
         editor.apply();
-
+        FirebaseAuth.getInstance().signOut();
         // go to login activity
         Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
         startActivity(intent);
@@ -70,7 +71,7 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
 
     @Override
     public void onClickConfirmedInvoice() {
-        Toast.makeText(this, "Clicked  Completed Invoice", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(AdminActivity.this, ConfirmedListActivity.class));
     }
 
     @Override

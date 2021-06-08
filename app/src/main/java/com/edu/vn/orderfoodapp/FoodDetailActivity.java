@@ -95,9 +95,8 @@ public class FoodDetailActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 Gson gson = new Gson();
 
-                ArrayList<Invoice> invoices;
+               ArrayList<Invoice> invoices;
                 Food food = new Food(id, imgUri, name, desc, price );
-                Log.d("foodbuyy",food.toString());
 
                 if(strInvoices == ""){
                     invoices = new ArrayList<Invoice>();
@@ -105,7 +104,6 @@ public class FoodDetailActivity extends AppCompatActivity {
                 }else {
                     boolean isExistFood = false;
                     invoices = gson.fromJson(strInvoices,new TypeToken<ArrayList<Invoice>>(){}.getType());
-                    Log.d("foodalready",invoices.toString());
                     for (Invoice invoice : invoices){
                         if(invoice.getFoods().getFoodId().equals(food.getFoodId())){
                             invoice.setQuantity(invoice.getQuantity() + 1);
@@ -123,7 +121,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                 String strValue = gson.toJson(invoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
                 editor.putString(CartActivity.INVOICES_TAG, strValue);
                 editor.apply();
-
+                Toast.makeText(FoodDetailActivity.this, "Added To Cart", Toast.LENGTH_SHORT).show();
                startActivity(new Intent(FoodDetailActivity.this, HomeActivity.class));
             }
         });

@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -54,11 +55,12 @@ public class AdminRecyclerViewAdapter extends RecyclerView.Adapter<AdminRecycler
         private ImageView img;
         private TextView itemName;
         private IMenuItemClick iMenuItemClick;
-
+        private LinearLayout item;
         public MyViewHolder(@NonNull View cardView, IMenuItemClick iMenuItemClick) {
             super(cardView);
             img = cardView.findViewById(R.id.image_item);
             itemName = cardView.findViewById(R.id.item_name);
+            item = cardView.findViewById(R.id.cardview_item);
             cardView.setOnClickListener(this);
             this.iMenuItemClick = iMenuItemClick;
         }

@@ -46,6 +46,9 @@
         <activity android:name=".MenuActivity">
 
         </activity>
+    <activity android:name=".ConfirmedListActivity">
+
+    </activity>
         <activity
             android:name=".SignUpActivity"
             android:screenOrientation="portrait" />

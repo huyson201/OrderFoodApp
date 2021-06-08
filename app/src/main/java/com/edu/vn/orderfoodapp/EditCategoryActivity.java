@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -36,6 +37,7 @@ import java.util.UUID;
 
 public class EditCategoryActivity extends AppCompatActivity {
     //properties
+    private TextView title;
     private Button uploadImgBtn, addCategoryBtn;
     private EditText edtCategoryName;
     private ImageView imgCategory;
@@ -63,8 +65,10 @@ public class EditCategoryActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         backBtn = findViewById(R.id.back_btn);
         toolbar = findViewById(R.id.toolbar);
+        title = findViewById(R.id.lbl_title);
         //get intent value
-
+        addCategoryBtn.setText("Edit Category");
+        title.setText("Edit Category");
         edtCategoryName.setText(getIntent().getStringExtra(CATE_NAME_TAG));
         String cateId = getIntent().getStringExtra(CATE_ID_TAG);
         String cateImg = getIntent().getStringExtra(CATE_IMG_TAG);
