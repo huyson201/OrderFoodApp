@@ -46,6 +46,18 @@
             android:layout_below="@+id/username"
             android:includeFontPadding="false"
             android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Delete"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@+id/logout"
+            android:layout_below="@+id/username"
+            android:includeFontPadding="false"
+            android:layout_marginLeft="15dp"/>
     </RelativeLayout>
 
     <Toolbar

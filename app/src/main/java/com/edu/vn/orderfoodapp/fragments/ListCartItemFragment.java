@@ -49,6 +49,10 @@ public class ListCartItemFragment extends Fragment implements ClickCartItemDeleg
     private Activity context;
     private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
+    public ListCartItemFragment() {
+
+    }
+
     public ListCartItemFragment(Activity context) {
         this.context = context;
     }
