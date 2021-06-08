@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
         if (user.getRole() == User.USER_ROLE) {
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
-        } else if (user.getRole() == User.ADMIN_ROLE) {
+        } else if (user.getRole() == User.ADMIN_ROLE || user.getRole() == User.COOKING_ROLE || user.getRole() == User.SHIPPER_ROLE) {
             Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
             startActivity(intent);
         }

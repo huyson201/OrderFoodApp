@@ -119,7 +119,7 @@ public class AddFoodActivity extends AppCompatActivity {
             public void onClick(View v) {
                 addFoodBtn.setVisibility(View.INVISIBLE);
                 progressBar.setVisibility(View.VISIBLE);
-                //get edittext
+                //get edit text
                 String foodName = edtFoodName.getText().toString();
                 String foodDesc = edtFoodDesc.getText().toString();
                 String foodPrice = edtFoodPrice.getText().toString();

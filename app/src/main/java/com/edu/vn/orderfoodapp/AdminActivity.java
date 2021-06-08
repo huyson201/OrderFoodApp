@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.edu.vn.orderfoodapp.apdapters.AdminRecyclerViewAdapter;
@@ -20,13 +21,17 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
     private RecyclerView recyclerView;
     private ArrayList<AdminMenu> menus;
     private AdminRecyclerViewAdapter adapter;
+    private TextView name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.admin_dashboard_layout);
 
         recyclerView = findViewById(R.id.admin_recycler_view);
+        name = findViewById(R.id.admin_name);
 
+        name.setText(LoginActivity.userProFile.getName());
         menus = new ArrayList<AdminMenu>();
         menus.add(new AdminMenu(R.drawable.ic_profile, AdminMenu.PROFILE_TAG));
         menus.add(new AdminMenu(R.drawable.ic_category, AdminMenu.CATEGORY_TAG));
@@ -37,11 +42,11 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
         menus.add(new AdminMenu(R.drawable.ic_confirm_list, AdminMenu.CONFIRMED_BILL_TAG));
         menus.add(new AdminMenu(R.drawable.ic_logout, AdminMenu.LOGOUT_TAG));
 
-         adapter = new AdminRecyclerViewAdapter(menus, this);
+        adapter = new AdminRecyclerViewAdapter(menus, this);
         recyclerView.setAdapter(adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-`
+
     }
 
 
@@ -92,8 +97,8 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
 
     @Override
     public void onClickAddCategory() {
-         Intent intent = new Intent(AdminActivity.this, CategoryListActivity.class);
-         startActivity(intent);
+        Intent intent = new Intent(AdminActivity.this, CategoryListActivity.class);
+        startActivity(intent);
     }
 
 }
