@@ -9,16 +9,16 @@
     <RelativeLayout
         android:id="@+id/rltUser"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="250dp"
         android:layout_below="@+id/toolbar"
         android:background="@drawable/user_bg">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageUser"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="70dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="30dp"
             app:civ_border_width="1dp"
+            android:layout_centerHorizontal="true"
             app:civ_border_color="@color/white"
             android:src="@drawable/img_thit_bo_xao"/>
 
@@ -26,72 +26,111 @@
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="35dp"
-            android:text="UserName"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_toRightOf="@+id/imageUser"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/imageUser"
             android:includeFontPadding="false"
-            android:layout_marginLeft="10dp"/>
+            android:text="UserName"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-        <TextView
+<!--        <TextView-->
+<!--            android:id="@+id/logout"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Logout"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:layout_toRightOf="@+id/imageUser"-->
+<!--            android:layout_below="@+id/username"-->
+<!--            android:includeFontPadding="false"-->
+<!--            android:layout_marginLeft="15dp"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/delete"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:hint="Delete"-->
+<!--            android:textSize="15sp"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:layout_toRightOf="@+id/logout"-->
+<!--            android:layout_below="@+id/username"-->
+<!--            android:includeFontPadding="false"-->
+<!--            android:layout_marginLeft="15dp"/>-->
+
+        <ImageButton
+            android:id="@+id/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/black"
+            android:layout_below="@+id/username"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="5dp"
+            app:srcCompat="@drawable/ic_address" />
+        <ImageButton
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"
-            android:textSize="15sp"
+            android:layout_alignParentBottom="true"
             android:textColor="@color/black"
-            android:layout_toRightOf="@+id/imageUser"
             android:layout_below="@+id/username"
-            android:includeFontPadding="false"
-            android:layout_marginLeft="15dp"/>
-
-        <TextView
+            android:layout_toEndOf="@+id/edit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="5dp"
+            app:srcCompat="@drawable/ic_logout" />
+        <ImageButton
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Delete"
-            android:textSize="15sp"
+            android:layout_alignParentBottom="true"
             android:textColor="@color/black"
-            android:layout_toRightOf="@+id/logout"
             android:layout_below="@+id/username"
-            android:includeFontPadding="false"
-            android:layout_marginLeft="15dp"/>
-    </RelativeLayout>
+            android:layout_centerHorizontal="true"
+            android:layout_toStartOf="@+id/edit"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="5dp"
+            app:srcCompat="@drawable/ic_logout" />
 
-    <Toolbar
-        android:id="@+id/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0"
-        android:contentInsetLeft="0dp"
-        android:contentInsetStart="0dp"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        android:contentInsetRight="0dp"
-        android:contentInsetEnd="0dp"
-        app:contentInsetRight="0dp"
-        app:contentInsetEnd="0dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <Toolbar
+            android:id="@+id/tool_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageButton
-                android:id="@+id/btn_back"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/toolbar_btn_bg"
-                android:src="@drawable/ic_arrow_back"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0"
-                android:layout_marginLeft="10dp" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </Toolbar>
+            android:layout_height="45dp"
+            android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
+            android:contentInsetEnd="0dp"
+            android:contentInsetRight="0dp"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/toolbar_btn_bg"
+                    android:src="@drawable/ic_arrow_back"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </Toolbar>
+    </RelativeLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tablayout"
