@@ -62,6 +62,10 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView {
         database_Categories.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Category categoryAll=new Category();
+                categoryAll.setCategoryName("All");
+                categoryAll.setCategoryID("0");
+                categories.add(categoryAll);
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Category category = dataSnapshot.getValue(Category.class);
                     categories.add(category);
@@ -84,6 +88,7 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView {
 
         edtSearch=view.findViewById(R.id.editSearch);
         imageView=view.findViewById(R.id.imageView);
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

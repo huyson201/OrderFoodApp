@@ -56,7 +56,6 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
                 navigationViewPager.setCurrentItem(position);
-
                 return true;
             }
         });
@@ -72,38 +71,14 @@ public class HomeActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
 //                    navigation.setCurrentItem(position);
             }
-
-
-
-
-//        //hien thi du lieu food ra rycylerview
-//        foodList = new ArrayList<>();
-//        foodRecyclerView = findViewById(R.id.list_foods);
-//        foodAdapter = new FoodAdapter(this, foodList);
-//        foodRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//        foodRecyclerView.setAdapter(foodAdapter);
-//        edtSearch=findViewById(R.id.editSearch);
-//        imageView=findViewById(R.id.imageView);
-//        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onPageScrollStateChanged(int state) {
 
             }
         });
-        ArrayList<Invoice> invoices = new ArrayList<>();
-        SharedPreferences sharedPref = getSharedPreferences(CartActivity.CART_TAG, Context.MODE_PRIVATE);
-        String strInvoices = sharedPref.getString(CartActivity.INVOICES_TAG, "");
-        Log.d("list",strInvoices);
-        if(strInvoices != ""){
-            invoices = new Gson().fromJson(strInvoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
-        }
+
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_item, menu);
-//        return true;
-//    }
 
 
 }
