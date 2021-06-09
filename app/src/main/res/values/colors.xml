@@ -15,4 +15,7 @@
     <color name="color_orange">#EE4D2E</color>
     <color name="color_user">#FD9A7A</color>
     <color name="color_medium_sea_green">#3CB371</color>
+    <color name="startBlue">#09c6df</color>
+    <color name="endBlue">#0bcce6</color>
+    <color name="grayLight">#fafafa</color>
 </resources>
