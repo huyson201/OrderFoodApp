@@ -33,6 +33,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     boolean check = true;
     boolean select = true;
     private Activity context;
+    private ArrayList<Food> foodArrayList = new ArrayList<>();
 
     public CategoryAdapter(Activity context, ArrayList<Category> categories, UpdateRecyclerView updateRecyclerView) {
         this.context = context;
@@ -68,8 +69,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         Glide.with(this.context).load(category.getCategoryImg()).fitCenter().into(holder.imageView);
         holder.categoryName.setText(category.getCategoryName());
         if (check) {
-            getValueFromDB(position,category.getCategoryID());
-            check = false;
+                getValueFromDB(position, category.getCategoryID());
+                check = false;
         }
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +78,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             public void onClick(View v) {
                 rowIndex = position;
                 notifyDataSetChanged();
-                getValueFromDB(position,category.getCategoryID());
+                getValueFromDB(position, category.getCategoryID());
             }
         });
 
@@ -95,8 +96,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         }
 
     }
+
     // lay gia tri tu database
-    private void getValueFromDB(int position,String categoryId){
+    private void getValueFromDB(int position, String categoryId) {
         ArrayList<Food> foods = new ArrayList<>();
         DatabaseReference databaseFood = FirebaseDatabase.getInstance().getReference("foods");
         databaseFood.addValueEventListener(new ValueEventListener() {
@@ -104,17 +106,23 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Food food = dataSnapshot.getValue(Food.class);
+
                     if (food.getCategoryId().equalsIgnoreCase(categoryId)) {
+                        foods.add(food);
+                    }
+                    if (categoryId.equalsIgnoreCase("0")){
                         foods.add(food);
                     }
                 }
                 updateRecyclerView.callBack(position, foods);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return categories.size();
