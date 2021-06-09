@@ -13,8 +13,8 @@ public class User {
     public static final int USER_ROLE = 1;
     public static final String EMAIL_KEY = "email";
 
-    public User() {
 
+    public User() {
     }
 
     public User(String id, String name, String email, String phone, String address) {
@@ -26,6 +26,17 @@ public class User {
         this.role = USER_ROLE;
         this.imgUrl = "";
     }
+
+    public User(String id, String name, String email, String phone, String address, String image) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.role = USER_ROLE;
+        this.imgUrl = image;
+    }
+
 
     public String getId() {
         return id;

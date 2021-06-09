@@ -18,4 +18,6 @@
     <color name="startBlue">#09c6df</color>
     <color name="endBlue">#0bcce6</color>
     <color name="grayLight">#fafafa</color>
+    <color name="headings">#3797CF</color>
+    <color name="grey">#E5E5E5</color>
 </resources>

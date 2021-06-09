@@ -55,6 +55,7 @@ public class OrderedFragment extends Fragment {
 
         // get all bill of user
 
+       Log.d("idhihi",LoginActivity.userProFile.getId());
         db.child("bills").orderByChild("userId").equalTo(LoginActivity.userProFile.getId()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

@@ -65,6 +65,7 @@ public class HomeFragment extends Fragment implements UpdateRecyclerView {
                 Category categoryAll=new Category();
                 categoryAll.setCategoryName("All");
                 categoryAll.setCategoryID("0");
+                categoryAll.setCategoryImg("https://firebasestorage.googleapis.com/v0/b/orderfood-160b8.appspot.com/o/categories%2Ffast-food.png?alt=media&token=f35854cb-0d33-4238-b3d1-c4bcaa11332d");
                 categories.add(categoryAll);
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Category category = dataSnapshot.getValue(Category.class);
