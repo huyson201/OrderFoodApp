@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.edu.vn.orderfoodapp.apdapters.AdminRecyclerViewAdapter;
 import com.edu.vn.orderfoodapp.models.AdminMenu;
+import com.edu.vn.orderfoodapp.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
@@ -34,12 +35,19 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
         name.setText(LoginActivity.userProFile.getName());
         menus = new ArrayList<AdminMenu>();
         menus.add(new AdminMenu(R.drawable.ic_profile, AdminMenu.PROFILE_TAG));
-        menus.add(new AdminMenu(R.drawable.ic_category, AdminMenu.CATEGORY_TAG));
-        menus.add(new AdminMenu(R.drawable.ic_menu, AdminMenu.MENUS_TAG));
-        menus.add(new AdminMenu(R.drawable.ic_task_list, AdminMenu.WAITING_BILL_TAG));
-        menus.add(new AdminMenu(R.drawable.ic_chef, AdminMenu.COOKING_TAG));
-        menus.add(new AdminMenu(R.drawable.ic_food_delivery, AdminMenu.DELIVERY_TAG));
-        menus.add(new AdminMenu(R.drawable.ic_confirm_list, AdminMenu.CONFIRMED_BILL_TAG));
+        if(LoginActivity.userProFile.getRole()== User.ADMIN_ROLE) {
+            menus.add(new AdminMenu(R.drawable.ic_category, AdminMenu.CATEGORY_TAG));
+            menus.add(new AdminMenu(R.drawable.ic_menu, AdminMenu.MENUS_TAG));
+            menus.add(new AdminMenu(R.drawable.ic_task_list, AdminMenu.WAITING_BILL_TAG));
+            menus.add(new AdminMenu(R.drawable.ic_chef, AdminMenu.COOKING_TAG));
+            menus.add(new AdminMenu(R.drawable.ic_confirm_list, AdminMenu.CONFIRMED_BILL_TAG));
+        }
+        else if(LoginActivity.userProFile.getRole()== User.COOKING_ROLE){
+            menus.add(new AdminMenu(R.drawable.ic_chef, AdminMenu.COOKING_TAG));
+        }
+        else if(LoginActivity.userProFile.getRole()== User.SHIPPER_ROLE){
+            menus.add(new AdminMenu(R.drawable.ic_food_delivery, AdminMenu.DELIVERY_TAG));
+        }
         menus.add(new AdminMenu(R.drawable.ic_logout, AdminMenu.LOGOUT_TAG));
 
         adapter = new AdminRecyclerViewAdapter(menus, this);
