@@ -58,22 +58,18 @@ public class EditProfileActivity extends AppCompatActivity {
                 String phone = edtPhone.getText().toString();
                 String address = edtAdress.getText().toString();
                 String userId = LoginActivity.userProFile.getId();
-//                Intent intent1=getIntent();
-//                Log.d("intent", intent1.getStringExtra("name")) ;
+
                 updateProfile(name, email, phone, address, userId);
-                getData(userId);
+                transformData(userId);
+
                 Intent intent = new Intent(EditProfileActivity.this, HomeActivity.class);
-//                intent.putExtra("name",name);
-//                intent.putExtra("email",email);
-//                intent.putExtra("phone",phone);
-//                intent.putExtra("address",address);
                 startActivity(intent);
 
             }
         });
 
     }
-
+//update profile
     private void updateProfile(String fullName, String email, String phone, String address, String userId) {
 
         if (fullName.isEmpty()) {
@@ -96,15 +92,15 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         User user = new User(userId, fullName, email, phone, address);
         database.child(userId).setValue(user);
-
+    //update data to auth
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser fbUser = mAuth.getCurrentUser();
         fbUser.updateEmail(user.getEmail());
         mAuth.updateCurrentUser(fbUser);
 }
 
-
-    private void getData(String userId) {
+//Transform data to loginactivity
+    private void transformData(String userId) {
         database.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
