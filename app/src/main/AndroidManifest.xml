@@ -12,45 +12,29 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.OrderFoodApp">
-
+        <activity android:name=".AdminProfileActivity"></activity>
         <activity
             android:name=".AddCategoryActivity"
-            android:parentActivityName=".AdminActivity"></activity>
+            android:parentActivityName=".AdminActivity" />
         <activity
             android:name=".AddFoodActivity"
             android:parentActivityName=".AdminActivity"
-            android:theme="@style/Theme">
-
-        </activity>
-        <activity android:name=".HomeActivity">
-
-        </activity>
-        <activity android:name=".EditProfileActivity"></activity>
-        <activity android:name=".FoodDetailActivity"></activity>
-        <activity android:name=".CartActivity"></activity>
-        <activity android:name=".DeliveryListActivity"></activity>
+            android:theme="@style/Theme"></activity>
+        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".FoodDetailActivity" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".DeliveryListActivity" />
         <activity android:name=".CookingActivity" />
         <activity android:name=".ConfirmBillActivity" />
-        <activity android:name=".AdminActivity">
-
-        </activity>
-
-
-        <activity android:name=".CategoryListActivity">
-        </activity>
-        <activity android:name=".EditFoodActivity" android:theme="@style/Theme">
-
-
-        </activity>
-        <activity android:name=".EditCategoryActivity" >
-
-        </activity>
-        <activity android:name=".MenuActivity">
-
-        </activity>
-    <activity android:name=".ConfirmedListActivity">
-
-    </activity>
+        <activity android:name=".AdminActivity"></activity>
+        <activity android:name=".CategoryListActivity"></activity>
+        <activity
+            android:name=".EditFoodActivity"
+            android:theme="@style/Theme"></activity>
+        <activity android:name=".EditCategoryActivity"></activity>
+        <activity android:name=".MenuActivity"></activity>
+        <activity android:name=".ConfirmedListActivity"></activity>
         <activity
             android:name=".SignUpActivity"
             android:screenOrientation="portrait" />
@@ -59,10 +43,10 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".PlashActivity" />
         <activity android:name=".SearchActivity" />
     </application>

@@ -36,7 +36,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     public static final String FOOD_NAME_TAG = "foodName";
     public static final String FOOD_DESC_TAG = "foodDesc";
     public static final String FOOD_PRICE_TAG = "foodPrice";
-
+    public  static boolean CHECK_TRANFORM = false;
     private String id;
     private String imgUri;
     private String name;
@@ -122,7 +122,9 @@ public class FoodDetailActivity extends AppCompatActivity {
                 editor.putString(CartActivity.INVOICES_TAG, strValue);
                 editor.apply();
                 Toast.makeText(FoodDetailActivity.this, "Added To Cart", Toast.LENGTH_SHORT).show();
+                CHECK_TRANFORM = true;
                startActivity(new Intent(FoodDetailActivity.this, HomeActivity.class));
+
             }
         });
 

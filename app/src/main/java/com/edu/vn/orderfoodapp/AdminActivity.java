@@ -60,7 +60,7 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
 
     @Override
     public void onClickProfile() {
-        Toast.makeText(this, "Clicked Profile", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(AdminActivity.this, AdminProfileActivity.class));
     }
 
     @Override

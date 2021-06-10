@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -50,7 +51,10 @@ public class HomeActivity extends AppCompatActivity {
         navigation.addItem(item1);
         navigation.addItem(item2);
         navigation.addItem(item3);
-
+        if(FoodDetailActivity.CHECK_TRANFORM){
+            navigation.setCurrentItem(1);
+            navigationViewPager.setCurrentItem(1);
+        }
         navigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             //set mau tab khi tab duoc chon
             @Override

@@ -15,12 +15,14 @@
             android:layout_height="350dp"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/imageUser"
                 android:layout_marginTop="45dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:src="@drawable/account_circle"/>
             <TextView
+                android:id="@+id/nameUser"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
@@ -37,13 +39,13 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/edt_full_name"
+
+            android:id="@+id/lbl_name"
             style="@style/customize_edt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_person"
             android:hint="@string/edt_full_name_hint"
-            android:inputType="textPersonName"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -53,7 +55,7 @@
             app:layout_constraintWidth_percent=".8" />
 
         <TextView
-            android:id="@+id/edt_email"
+            android:id="@+id/lbl_email"
             style="@style/customize_edt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -61,43 +63,40 @@
             android:drawableLeft="@drawable/ic_email"
             android:ems="10"
             android:hint="@string/edt_email_hint"
-            android:inputType="textEmailAddress"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_full_name"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_name"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_percent=".8" />
 
         <TextView
-            android:id="@+id/edt_phone"
+            android:id="@+id/lbl_phone"
             style="@style/customize_edt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:drawableLeft="@drawable/ic_phone"
             android:hint="@string/edt_phone_hint"
-            android:inputType="phone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_email"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_email"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintWidth_percent=".8" />
 
         <TextView
-            android:id="@+id/edt_address"
+            android:id="@+id/lbl_address"
             style="@style/customize_edt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:drawableLeft="@drawable/ic_address"
             android:hint="@string/edt_address_hint"
-            android:inputType="text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_phone"
+            app:layout_constraintTop_toBottomOf="@+id/lbl_phone"
             app:layout_constraintVertical_bias="0"
             app:layout_constraintWidth_percent=".8" />
     </androidx.constraintlayout.widget.ConstraintLayout>
