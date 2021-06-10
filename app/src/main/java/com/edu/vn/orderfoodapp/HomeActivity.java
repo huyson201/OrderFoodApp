@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -24,20 +25,21 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
-    public static final int EDIT_CODE = 3 ;
+    public static final int EDIT_CODE = 3;
     //Fragment
     //Navigation
     private AHBottomNavigation navigation;
     private AHBottomNavigationViewPager navigationViewPager;
     private ViewPagerAdapter viewPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_layout);
         //Khoi tao doi tuong
-        navigation=findViewById(R.id.AHBottomNavigation);
-        navigationViewPager=findViewById(R.id.AHBottomNavigationViewPager);
-        viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        navigation = findViewById(R.id.AHBottomNavigation);
+        navigationViewPager = findViewById(R.id.AHBottomNavigationViewPager);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         navigationViewPager.setAdapter(viewPagerAdapter);
 
         // Create items
@@ -49,10 +51,16 @@ public class HomeActivity extends AppCompatActivity {
         navigation.addItem(item1);
         navigation.addItem(item2);
         navigation.addItem(item3);
-        if(EditProfileActivity.CHECK_EDIT){
+
+        if (FoodDetailActivity.CHECK_TRANFORM) {
+            navigation.setCurrentItem(1);
+            navigationViewPager.setCurrentItem(1);
+        }
+        if (EditProfileActivity.CHECK_EDIT) {
             navigation.setCurrentItem(2);
             navigationViewPager.setCurrentItem(2);
         }
+
         navigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             //set mau tab khi tab duoc chon
             @Override
@@ -71,17 +79,13 @@ public class HomeActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
 //                    navigation.setCurrentItem(position);
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
 
             }
         });
-    }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
     }
 }

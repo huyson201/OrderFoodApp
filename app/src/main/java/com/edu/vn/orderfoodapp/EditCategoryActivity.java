@@ -1,9 +1,5 @@
 package com.edu.vn.orderfoodapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -17,17 +13,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
-
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
-import android.widget.ViewSwitcher;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.edu.vn.orderfoodapp.models.Category;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -37,8 +35,9 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
 
-public class AddCategoryActivity extends AppCompatActivity {
+public class EditCategoryActivity extends AppCompatActivity {
     //properties
+    private TextView title;
     private Button uploadImgBtn, addCategoryBtn;
     private EditText edtCategoryName;
     private ImageView imgCategory;
@@ -51,7 +50,9 @@ public class AddCategoryActivity extends AppCompatActivity {
     private StorageReference storage;
     private DatabaseReference db = FirebaseDatabase.getInstance().getReference("categories");
     private  Uri imgPath;
-
+    public static String CATE_NAME_TAG = "cateName";
+    public static String CATE_ID_TAG = "cateId";
+    public static String CATE_IMG_TAG = "cateImage";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +65,15 @@ public class AddCategoryActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         backBtn = findViewById(R.id.back_btn);
         toolbar = findViewById(R.id.toolbar);
+        title = findViewById(R.id.lbl_title);
+        //get intent value
+        addCategoryBtn.setText("Edit Category");
+        title.setText("Edit Category");
+        edtCategoryName.setText(getIntent().getStringExtra(CATE_NAME_TAG));
+        String cateId = getIntent().getStringExtra(CATE_ID_TAG);
+        String cateImg = getIntent().getStringExtra(CATE_IMG_TAG);
+
+        Glide.with(this).load(cateImg).fitCenter().into(imgCategory);
 
         // set action bar
         setActionBar(toolbar);
@@ -108,8 +118,10 @@ public class AddCategoryActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
 
                 String categoryName = edtCategoryName.getText().toString();
-
-                if(!categoryName.isEmpty() && imgPath != null){
+                //check input values
+                imgPath = Uri.parse(cateImg);
+                if(!categoryName.isEmpty() && !imgPath.equals(Uri.parse(cateImg))){
+                    Log.d("imgpath",imgPath.toString());
                     UploadTask uploadTask = storage.putFile(imgPath);
                     uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                         @Override
@@ -125,21 +137,14 @@ public class AddCategoryActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Uri> task) {
                             if (task.isSuccessful()) {
                                 Uri uri = task.getResult();
-                                String key = db.push().getKey();
-
-                                Category category = new Category(categoryName, key, uri.toString());
-                                db.child(key).setValue(category);
-
-                                addCategoryBtn.setVisibility(View.VISIBLE);
-                                progressBar.setVisibility(View.INVISIBLE);
-
-                                Toast.makeText(AddCategoryActivity.this, "Add category Successfully.", Toast.LENGTH_SHORT).show();
-                                resetField();
+                                updateCategory(cateId,categoryName,uri.toString());
                             }
                         }
                     });
+                }else if(imgPath.equals(Uri.parse(cateImg))){
+                    updateCategory(cateId,categoryName,cateImg);
                 }else{
-                    Toast.makeText(AddCategoryActivity.this, "Category's name must not be empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditCategoryActivity.this, "Category's name must not be empty", Toast.LENGTH_SHORT).show();
                     addCategoryBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
 
@@ -147,7 +152,16 @@ public class AddCategoryActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void updateCategory(String cateId, String cateName, String cateImg){
+        Category category = new Category(cateName, cateId, cateImg);
+        db.child(cateId).setValue(category);
+        addCategoryBtn.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        Toast.makeText(EditCategoryActivity.this, "Edit category Successfully.", Toast.LENGTH_SHORT).show();
+        resetField();
+        Intent intent = new Intent(EditCategoryActivity.this, CategoryListActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -163,7 +177,7 @@ public class AddCategoryActivity extends AppCompatActivity {
 
     // check permission read storage
     private boolean checkPermissionStorage(String permission){
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int check = checkSelfPermission(permission);
             return check == PackageManager.PERMISSION_GRANTED;
         }else{

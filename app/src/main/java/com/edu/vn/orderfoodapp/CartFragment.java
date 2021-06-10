@@ -63,7 +63,7 @@ public class CartFragment extends Fragment {
         invoices = new ArrayList<Invoice>();
         bills = new ArrayList<Bill>();
 
-        adapter = new CartViewPagerAdapter(getChildFragmentManager());
+        adapter = new CartViewPagerAdapter(getFragmentManager());
 
 //        // back btn processing event
 //        backBtn.setOnClickListener(new View.OnClickListener() {

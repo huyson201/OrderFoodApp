@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.edu.vn.orderfoodapp.models.Bill;
 import com.edu.vn.orderfoodapp.models.Food;
 import com.edu.vn.orderfoodapp.models.Invoice;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -35,12 +38,13 @@ public class FoodDetailActivity extends AppCompatActivity {
     public static final String FOOD_NAME_TAG = "foodName";
     public static final String FOOD_DESC_TAG = "foodDesc";
     public static final String FOOD_PRICE_TAG = "foodPrice";
-
+    public  static boolean CHECK_TRANFORM = false;
     private String id;
     private String imgUri;
     private String name;
     private String desc;
     private int price;
+    private DatabaseReference db = FirebaseDatabase.getInstance().getReference("bills");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +98,9 @@ public class FoodDetailActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 Gson gson = new Gson();
 
-                ArrayList<Invoice> invoices;
+               ArrayList<Invoice> invoices;
                 Food food = new Food(id, imgUri, name, desc, price );
+
                 if(strInvoices == ""){
                     invoices = new ArrayList<Invoice>();
                     invoices.add(new Invoice(food, 1));
@@ -119,8 +124,10 @@ public class FoodDetailActivity extends AppCompatActivity {
                 String strValue = gson.toJson(invoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
                 editor.putString(CartFragment.INVOICES_TAG, strValue);
                 editor.apply();
-
+                Toast.makeText(FoodDetailActivity.this, "Added To Cart", Toast.LENGTH_SHORT).show();
+                CHECK_TRANFORM = true;
                startActivity(new Intent(FoodDetailActivity.this, HomeActivity.class));
+
             }
         });
 
@@ -128,7 +135,16 @@ public class FoodDetailActivity extends AppCompatActivity {
         buyNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(FoodDetailActivity.this, "clicked buy now button", Toast.LENGTH_SHORT).show();
+               Food food = new Food(id,imgUri,name,desc,price);
+                Invoice invoice = new Invoice(food,1);
+                ArrayList<Invoice> invoices = new ArrayList<>();
+                invoices.add(invoice);
+                String billId = db.push().getKey();
+                Bill bill = new Bill(billId,invoices,Bill.CONFIRM_STATUS_TAG, LoginActivity.userProFile.getId());
+                db.child(billId).setValue(bill);
+                Toast.makeText(FoodDetailActivity.this, "Buy successfully", Toast.LENGTH_SHORT).show();
+                CHECK_TRANFORM = true;
+                startActivity(new Intent(FoodDetailActivity.this, HomeActivity.class));
             }
         });
     }

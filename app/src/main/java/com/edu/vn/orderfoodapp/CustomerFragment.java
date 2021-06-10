@@ -30,11 +30,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 
+
 import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class CustomerFragment extends Fragment {
     private TabLayout tabLayout;
@@ -88,7 +91,7 @@ public class CustomerFragment extends Fragment {
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.remove(LoginActivity.USER_LOGGED_IN);
                 editor.apply();
-
+                FirebaseAuth.getInstance().signOut();
                 // go to login activity
                 Intent intent = new Intent(homeActivity, LoginActivity.class);
                 startActivity(intent);

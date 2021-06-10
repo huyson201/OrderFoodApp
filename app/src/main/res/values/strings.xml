@@ -59,7 +59,7 @@
     <string name="add_category_btn">Add category</string>
     <string name="lbl_add_category">New category</string>
 
-<!--  add food  -->
+    <!--  add food  -->
     <string name="food_name_hint">Enter food\'s name</string>
     <string name="food_desc_hint">Enter food\'s description</string>
     <string name="food_price_hint">Enter food\'s price</string>
@@ -83,8 +83,6 @@
     <string name="titleItemHistory">HISTORY</string>
 
 
-
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--   ordered fragment-->
@@ -96,7 +94,7 @@
     <string name="lbl_status">Giao hàng thành công</string>
     <string name="lbl_bill">Bill</string>
 
-<!--    empty layout-->
+    <!--    empty layout-->
     <string name="lbl_empty">Don\'t have any bill here. </string>
->>>>>>> admin_manager_bills
+    >>>>>>> admin_manager_bills
 </resources>
