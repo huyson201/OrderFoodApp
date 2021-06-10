@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.edu.vn.orderfoodapp.models.Bill;
 import com.edu.vn.orderfoodapp.models.Food;
 import com.edu.vn.orderfoodapp.models.Invoice;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -42,6 +44,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     private String name;
     private String desc;
     private int price;
+    private DatabaseReference db = FirebaseDatabase.getInstance().getReference("bills");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +135,16 @@ public class FoodDetailActivity extends AppCompatActivity {
         buyNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(FoodDetailActivity.this, "clicked buy now button", Toast.LENGTH_SHORT).show();
+               Food food = new Food(id,imgUri,name,desc,price);
+                Invoice invoice = new Invoice(food,1);
+                ArrayList<Invoice> invoices = new ArrayList<>();
+                invoices.add(invoice);
+                String billId = db.push().getKey();
+                Bill bill = new Bill(billId,invoices,Bill.CONFIRM_STATUS_TAG, LoginActivity.userProFile.getId());
+                db.child(billId).setValue(bill);
+                Toast.makeText(FoodDetailActivity.this, "Buy successfully", Toast.LENGTH_SHORT).show();
+                CHECK_TRANFORM = true;
+                startActivity(new Intent(FoodDetailActivity.this, HomeActivity.class));
             }
         });
     }
