@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
-import com.edu.vn.orderfoodapp.CartActivity;
+import com.edu.vn.orderfoodapp.CartFragment;
 import com.edu.vn.orderfoodapp.Delegate.ClickCartItemDelegate;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.models.Invoice;
@@ -134,9 +134,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.CartIt
 
     private  void updateCart(){
         String value = gson.toJson(invoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
-        SharedPreferences sharedPref = context.getSharedPreferences(CartActivity.CART_TAG, context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences(CartFragment.CART_TAG, context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(CartActivity.INVOICES_TAG, value);
+        editor.putString(CartFragment.INVOICES_TAG, value);
         editor.apply();
 
     }

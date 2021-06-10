@@ -124,6 +124,14 @@
         app:layout_constraintTop_toBottomOf="@+id/edt_address"
         app:layout_constraintVertical_bias="0.2"
         app:layout_constraintWidth_percent=".8" />
-
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_edtProfile"
+        app:layout_constraintEnd_toEndOf="@+id/btn_edtProfile"
+        app:layout_constraintStart_toStartOf="@+id/btn_edtProfile"
+        app:layout_constraintTop_toTopOf="@+id/btn_edtProfile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

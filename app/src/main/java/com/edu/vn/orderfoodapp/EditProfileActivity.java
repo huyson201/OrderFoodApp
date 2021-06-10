@@ -2,7 +2,9 @@ package com.edu.vn.orderfoodapp;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +39,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
 
 import java.util.UUID;
 
@@ -50,12 +54,13 @@ public class EditProfileActivity extends AppCompatActivity {
     private Uri imgPath=Uri.parse(LoginActivity.userProFile.getImgUrl());
     private StorageReference storage;
     private String randomKey;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_profile_layout);
-
+        progressBar= findViewById(R.id.progress_bar);
         edtFullName = findViewById(R.id.edt_full_name);
         edtEmail = findViewById(R.id.edt_email);
         edtPhone = findViewById(R.id.edt_phone);
@@ -67,10 +72,8 @@ public class EditProfileActivity extends AppCompatActivity {
         randomKey = UUID.randomUUID().toString();
         storage = FirebaseStorage.getInstance().getReference().child("users/" + randomKey);
 
-
-//        Intent intent=getIntent();
         //get user logged data
-
+        progressBar.setVisibility(View.INVISIBLE);
         edtFullName.setText(LoginActivity.userProFile.getName());
         edtEmail.setText(LoginActivity.userProFile.getEmail());
         edtPhone.setText(LoginActivity.userProFile.getPhone());
@@ -81,18 +84,22 @@ public class EditProfileActivity extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                editBtn.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
                 String name = edtFullName.getText().toString();
                 String email = edtEmail.getText().toString();
                 String phone = edtPhone.getText().toString();
                 String address = edtAdress.getText().toString();
                 String userId = LoginActivity.userProFile.getId();
                 String img = LoginActivity.userProFile.getImgUrl();
-//                imgPath = Uri.parse(img);
                 //check input values
                 if (!name.isEmpty() && !email.isEmpty() && !phone.isEmpty() && !address.isEmpty()) {
                     if (imgPath.equals(Uri.parse(img))) {
                         updateProfile(name, email, phone, address, userId, imgPath.toString());
-//                        transformData(userId);
+                        updateJson();
+                        editBtn.setVisibility(View.VISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        afterEdit();
                     } else {
                         UploadTask uploadTask = storage.putFile(imgPath);
                         uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -108,18 +115,19 @@ public class EditProfileActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<Uri> task) {
                                 if (task.isSuccessful()) {
                                     Uri uri = task.getResult();
+                                    Log.d("userURI",uri.toString());
                                     updateProfile(name, email, phone, address, userId, uri.toString());
-//                                    transformData(userId);
 
+
+                                    afterEdit();
                                 }
                             }
+                            
+
                         });
                     }
 
                 }
-                CHECK_EDIT=true;
-                Intent intent = new Intent(EditProfileActivity.this, HomeActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -141,10 +149,25 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
+    private void updateJson() {
+        SharedPreferences sharedPref = getSharedPreferences(LoginActivity.REMEMBER_LOGIN_TAG, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        String userLoggedJson = sharedPref.getString(LoginActivity.USER_LOGGED_IN, "");
+        if (!userLoggedJson.isEmpty()) {
+            Gson gson = new Gson();
+            String json = gson.toJson(LoginActivity.userProFile);
+            editor.putString(LoginActivity.USER_LOGGED_IN, json);
+            editor.apply();
+        }
+    }
+
+    private void afterEdit() {
+        Intent intent = new Intent(EditProfileActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
+
     //update profile
     private void updateProfile(String fullName, String email, String phone, String address, String userId, String image) {
-
-
         if (fullName.isEmpty()) {
             Toast.makeText(EditProfileActivity.this, "FullName is empty.", Toast.LENGTH_LONG).show();
             edtFullName.requestFocus();
@@ -166,11 +189,10 @@ public class EditProfileActivity extends AppCompatActivity {
             edtAdress.requestFocus();
             return;
         }
-//        User user = new User(userId, fullName, email, phone, address);
-//        if (!image.isEmpty()) {
-//            user = new User(userId, fullName, email, phone, address, image);
-//        }
-        User user = new User(userId, fullName, email, phone, address, image);
+        User user = new User(userId, fullName, email, phone, address);
+        if (!image.isEmpty()) {
+            user = new User(userId, fullName, email, phone, address, image);
+        }
         database.child(userId).setValue(user);
         LoginActivity.userProFile=user;
 
@@ -179,26 +201,13 @@ public class EditProfileActivity extends AppCompatActivity {
         FirebaseUser fbUser = mAuth.getCurrentUser();
         fbUser.updateEmail(user.getEmail());
         mAuth.updateCurrentUser(fbUser);
+        CHECK_EDIT = true;
+        updateJson();
+        editBtn.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        Toast.makeText(EditProfileActivity.this, "Edited successfully!", Toast.LENGTH_SHORT).show();
     }
 
-    //Transform data to loginactivity
-    private void transformData(String userId) {
-        database.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                } else {
-                    User user = task.getResult().getValue(User.class);
-                    LoginActivity.userProFile.setName(user.getName());
-                    LoginActivity.userProFile.setEmail(user.getEmail());
-                    LoginActivity.userProFile.setPhone(user.getPhone());
-                    LoginActivity.userProFile.setAddress(user.getAddress());
-                    LoginActivity.userProFile.setImgUrl(user.getImgUrl());
-                }
-            }
-        });
-    }
 
     // check permission read storage
     private boolean checkPermissionStorage(String permission) {

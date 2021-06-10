@@ -39,9 +39,6 @@ public class HomeActivity extends AppCompatActivity {
         navigationViewPager=findViewById(R.id.AHBottomNavigationViewPager);
         viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         navigationViewPager.setAdapter(viewPagerAdapter);
-//        navigationViewPager.setPagingEnabled(true);
-
-
 
         // Create items
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.titleItemHome, R.drawable.ic_baseline_home_24, R.color.color_orange);
@@ -81,13 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==11){
 
-        }
-    }
     @Override
     protected void onResume() {
         super.onResume();

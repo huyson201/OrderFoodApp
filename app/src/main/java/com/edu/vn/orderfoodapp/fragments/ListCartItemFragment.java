@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.edu.vn.orderfoodapp.CartActivity;
 import com.edu.vn.orderfoodapp.CartFragment;
 import com.edu.vn.orderfoodapp.Delegate.ClickCartItemDelegate;
 import com.edu.vn.orderfoodapp.HomeActivity;
@@ -26,7 +24,6 @@ import com.edu.vn.orderfoodapp.LoginActivity;
 import com.edu.vn.orderfoodapp.R;
 import com.edu.vn.orderfoodapp.apdapters.CartItemAdapter;
 import com.edu.vn.orderfoodapp.models.Bill;
-import com.edu.vn.orderfoodapp.models.Food;
 import com.edu.vn.orderfoodapp.models.Invoice;
 import com.edu.vn.orderfoodapp.models.User;
 import com.google.firebase.database.DatabaseReference;
@@ -139,9 +136,9 @@ public class ListCartItemFragment extends Fragment implements ClickCartItemDeleg
                    // update cart
                    Gson gson = new Gson();
                    String value = gson.toJson(invoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
-                   SharedPreferences sharedPref = context.getSharedPreferences(CartActivity.CART_TAG, context.MODE_PRIVATE);
+                   SharedPreferences sharedPref = context.getSharedPreferences(CartFragment.CART_TAG, context.MODE_PRIVATE);
                    SharedPreferences.Editor editor = sharedPref.edit();
-                   editor.putString(CartActivity.INVOICES_TAG, value);
+                   editor.putString(CartFragment.INVOICES_TAG, value);
                    editor.apply();
 
                    adapter.notifyDataSetChanged();
