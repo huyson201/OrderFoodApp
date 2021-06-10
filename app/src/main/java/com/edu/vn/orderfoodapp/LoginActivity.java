@@ -69,11 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         sharedPref = getSharedPreferences(REMEMBER_LOGIN_TAG, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         String userLoggedJson = sharedPref.getString(USER_LOGGED_IN, "");
-        if (!userLoggedJson.isEmpty()) {
-           gson = new Gson();
-            userProFile = gson.fromJson(userLoggedJson, User.class);
-            goNextActivity(userProFile);
-        }
+//        if (!userLoggedJson.isEmpty()) {
+//           gson = new Gson();
+//            userProFile = gson.fromJson(userLoggedJson, User.class);
+//            goNextActivity(userProFile);
+//        }
 
 
         //process when clicked to sign up link
@@ -119,7 +119,6 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 //                            FirebaseUser fbUser = mAuth.getCurrentUser();
-                            Log.d("user id",mAuth.getUid());
                             DatabaseReference db = FirebaseDatabase.getInstance().getReference("users");
                             db.child(mAuth.getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override

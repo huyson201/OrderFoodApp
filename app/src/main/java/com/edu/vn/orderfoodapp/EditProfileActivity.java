@@ -42,11 +42,12 @@ import java.util.UUID;
 public class EditProfileActivity extends AppCompatActivity {
     private EditText edtFullName, edtEmail, edtPhone, edtAdress;
     private ImageView imageView;
-    private Button editBtn,uploadImgBtn;
+    private Button editBtn, uploadImgBtn;
     private DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
     private static final int REQUEST_PERMISSION_CODE = 10;
     private static final int IMG_REQUEST_CODE = 11;
-    private Uri imgPath;
+    public static boolean CHECK_EDIT = false;
+    private Uri imgPath=Uri.parse(LoginActivity.userProFile.getImgUrl());
     private StorageReference storage;
     private String randomKey;
 
@@ -60,8 +61,8 @@ public class EditProfileActivity extends AppCompatActivity {
         edtPhone = findViewById(R.id.edt_phone);
         edtAdress = findViewById(R.id.edt_address);
         editBtn = findViewById(R.id.btn_edtProfile);
-        uploadImgBtn=findViewById(R.id.upload_img_btn);
-        imageView=findViewById(R.id.imageView);
+        uploadImgBtn = findViewById(R.id.upload_img_btn);
+        imageView = findViewById(R.id.imageView);
 
         randomKey = UUID.randomUUID().toString();
         storage = FirebaseStorage.getInstance().getReference().child("users/" + randomKey);
@@ -74,6 +75,9 @@ public class EditProfileActivity extends AppCompatActivity {
         edtEmail.setText(LoginActivity.userProFile.getEmail());
         edtPhone.setText(LoginActivity.userProFile.getPhone());
         edtAdress.setText(LoginActivity.userProFile.getAddress());
+        if (!LoginActivity.userProFile.getImgUrl().isEmpty()) {
+            Glide.with(imageView.getContext()).load(LoginActivity.userProFile.getImgUrl()).fitCenter().into(imageView);
+        }
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,37 +86,40 @@ public class EditProfileActivity extends AppCompatActivity {
                 String phone = edtPhone.getText().toString();
                 String address = edtAdress.getText().toString();
                 String userId = LoginActivity.userProFile.getId();
-
+                String img = LoginActivity.userProFile.getImgUrl();
+//                imgPath = Uri.parse(img);
                 //check input values
-                if (!name.isEmpty() && imgPath != null && !email.isEmpty()&& !phone.isEmpty()&& !address.isEmpty()) {
-                    UploadTask uploadTask = storage.putFile(imgPath);
-                    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                        @Override
-                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            if (!task.isSuccessful()) {
-                                throw task.getException();
+                if (!name.isEmpty() && !email.isEmpty() && !phone.isEmpty() && !address.isEmpty()) {
+                    if (imgPath.equals(Uri.parse(img))) {
+                        updateProfile(name, email, phone, address, userId, imgPath.toString());
+//                        transformData(userId);
+                    } else {
+                        UploadTask uploadTask = storage.putFile(imgPath);
+                        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                if (!task.isSuccessful()) {
+                                    throw task.getException();
+                                }
+                                return storage.getDownloadUrl();
                             }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if (task.isSuccessful()) {
+                                    Uri uri = task.getResult();
+                                    updateProfile(name, email, phone, address, userId, uri.toString());
+//                                    transformData(userId);
 
-                            return storage.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            if (task.isSuccessful()) {
-                                Uri uri = task.getResult();
-//                                String key = database.push().getKey();
-                                updateProfile(name, email, phone, address, userId,uri.toString());
-                                Log.d("imagehihi",uri.toString());
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
+
                 }
-
-                transformData(userId);
-
+                CHECK_EDIT=true;
                 Intent intent = new Intent(EditProfileActivity.this, HomeActivity.class);
                 startActivity(intent);
-
             }
         });
 
@@ -121,22 +128,22 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean check = checkPermissionStorage(Manifest.permission.READ_EXTERNAL_STORAGE);
-                if(check){
+                if (check) {
                     openGallery();
-                }else {
+                } else {
                     String[] permission = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         requestPermissions(permission, REQUEST_PERMISSION_CODE);
                     }
                 }
             }
-
-
         });
 
     }
-//update profile
+
+    //update profile
     private void updateProfile(String fullName, String email, String phone, String address, String userId, String image) {
+
 
         if (fullName.isEmpty()) {
             Toast.makeText(EditProfileActivity.this, "FullName is empty.", Toast.LENGTH_LONG).show();
@@ -159,22 +166,22 @@ public class EditProfileActivity extends AppCompatActivity {
             edtAdress.requestFocus();
             return;
         }
-        User user;
-        if(!image.isEmpty()){
-            user= new User(userId, fullName, email, phone, address,image);
-        }else {
-            user = new User(userId, fullName, email, phone,address);
-        }
+//        User user = new User(userId, fullName, email, phone, address);
+//        if (!image.isEmpty()) {
+//            user = new User(userId, fullName, email, phone, address, image);
+//        }
+        User user = new User(userId, fullName, email, phone, address, image);
         database.child(userId).setValue(user);
-        Log.d("imageuserhihi",user.getImgUrl()+"oanhcute");
-    //update data to auth
+        LoginActivity.userProFile=user;
+
+        //update data to auth
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser fbUser = mAuth.getCurrentUser();
         fbUser.updateEmail(user.getEmail());
         mAuth.updateCurrentUser(fbUser);
-}
+    }
 
-//Transform data to loginactivity
+    //Transform data to loginactivity
     private void transformData(String userId) {
         database.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -182,25 +189,23 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (!task.isSuccessful()) {
                     Log.e("firebase", "Error getting data", task.getException());
                 } else {
-//                    Log.d("firebase", String.valueOf(task.getResult().getValue(User.class)));
                     User user = task.getResult().getValue(User.class);
                     LoginActivity.userProFile.setName(user.getName());
                     LoginActivity.userProFile.setEmail(user.getEmail());
                     LoginActivity.userProFile.setPhone(user.getPhone());
                     LoginActivity.userProFile.setAddress(user.getAddress());
                     LoginActivity.userProFile.setImgUrl(user.getImgUrl());
-
                 }
             }
         });
     }
 
     // check permission read storage
-    private boolean checkPermissionStorage(String permission){
+    private boolean checkPermissionStorage(String permission) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             int check = checkSelfPermission(permission);
             return check == PackageManager.PERMISSION_GRANTED;
-        }else{
+        } else {
             return true;
         }
     }
