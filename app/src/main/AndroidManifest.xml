@@ -19,12 +19,14 @@
         <activity
             android:name=".AddFoodActivity"
             android:parentActivityName=".AdminActivity"
+
             android:theme="@style/Theme"></activity>
         <activity android:name=".HomeActivity"></activity>
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".FoodDetailActivity" />
-        <activity android:name=".CartActivity" />
+
         <activity android:name=".DeliveryListActivity" />
+
         <activity android:name=".CookingActivity" />
         <activity android:name=".ConfirmBillActivity" />
         <activity android:name=".AdminActivity"></activity>

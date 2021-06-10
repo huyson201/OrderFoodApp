@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.edu.vn.orderfoodapp.EditProfileActivity;
 import com.edu.vn.orderfoodapp.HomeActivity;
+
 import com.edu.vn.orderfoodapp.LoginActivity;
 import com.edu.vn.orderfoodapp.R;
 
@@ -23,7 +24,6 @@ public class ProfileFragment extends Fragment {
     private TextView phone;
     private TextView email;
     private TextView address;
-    private Button btnEdit;
     private View view;
     private HomeActivity homeActivity;
 
@@ -35,7 +35,6 @@ public class ProfileFragment extends Fragment {
         phone = view.findViewById(R.id.txtPhone);
         email = view.findViewById(R.id.txtEmail);
         address = view.findViewById(R.id.txtAddress);
-        btnEdit = view.findViewById(R.id.btnEdit);
         homeActivity=(HomeActivity) getActivity();
 
 
@@ -44,14 +43,7 @@ public class ProfileFragment extends Fragment {
         email.setText(LoginActivity.userProFile.getEmail());
         phone.setText(LoginActivity.userProFile.getPhone());
         address.setText(LoginActivity.userProFile.getAddress());
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(homeActivity, EditProfileActivity.class);
-                intent.putExtra("name",fullName.getText().toString());
-                startActivity(intent);
-            }
-        });
+
         // Inflate the layout for this fragment
         return view;
     }
