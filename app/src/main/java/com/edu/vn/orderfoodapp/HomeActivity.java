@@ -52,9 +52,11 @@ public class HomeActivity extends AppCompatActivity {
         navigation.addItem(item2);
         navigation.addItem(item3);
 
+
         if (FoodDetailActivity.CHECK_TRANFORM) {
             navigation.setCurrentItem(1);
             navigationViewPager.setCurrentItem(1);
+
         }
         if (EditProfileActivity.CHECK_EDIT) {
             navigation.setCurrentItem(2);

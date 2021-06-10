@@ -90,7 +90,7 @@ public class AddFoodActivity extends AppCompatActivity {
         // category adapter
         categories = new ArrayList<>();
         getCategoryNames();
-        arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_item, categories);
+        arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.dropdown_item, categories );
         dropdown_menu.setAdapter(arrayAdapter);
 
         // hide progress bar
@@ -193,7 +193,22 @@ public class AddFoodActivity extends AppCompatActivity {
         }
 
     }
+    private void getCategories() {
+        db_cate.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Category category = dataSnapshot.getValue(Category.class);
+                    categories.add(category.getCategoryName());
+                }
+                arrayAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+    }
 
     private void getCategoryNames() {
         db_cate.addValueEventListener(new ValueEventListener() {

@@ -73,11 +73,11 @@ public class CartFragment extends Fragment {
 //            }
 //        });
         // get invoices
-        SharedPreferences sharedPref = homeActivity.getSharedPreferences(CART_TAG, Context.MODE_PRIVATE);
-        String strInvoices = sharedPref.getString(INVOICES_TAG, "");
-        if(strInvoices != ""){
-            invoices = new Gson().fromJson(strInvoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
-        }
+//        SharedPreferences sharedPref = homeActivity.getSharedPreferences(CART_TAG, Context.MODE_PRIVATE);
+//        String strInvoices = sharedPref.getString(INVOICES_TAG, "");
+//        if(strInvoices != ""){
+//            invoices = new Gson().fromJson(strInvoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
+//        }
 
         // add fragment
         ListCartItemFragment fragment = new ListCartItemFragment(homeActivity);
