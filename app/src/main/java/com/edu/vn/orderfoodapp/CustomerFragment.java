@@ -22,8 +22,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.edu.vn.orderfoodapp.apdapters.CustomerPagerAdapter;
-import com.edu.vn.orderfoodapp.customerfragment.HistoryFragment;
 import com.edu.vn.orderfoodapp.customerfragment.ProfileFragment;
+import com.edu.vn.orderfoodapp.fragments.HistoryFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
