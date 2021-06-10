@@ -100,7 +100,8 @@ public class User {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
-                ", role=" + role +
+                ", role=" + role + '\'' +
+                ", img=" + imgUrl +
                 '}';
     }
 

@@ -69,11 +69,11 @@ public class LoginActivity extends AppCompatActivity {
         sharedPref = getSharedPreferences(REMEMBER_LOGIN_TAG, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         String userLoggedJson = sharedPref.getString(USER_LOGGED_IN, "");
-//        if (!userLoggedJson.isEmpty()) {
-//           gson = new Gson();
-//            userProFile = gson.fromJson(userLoggedJson, User.class);
-//            goNextActivity(userProFile);
-//        }
+        if (!userLoggedJson.isEmpty()) {
+           gson = new Gson();
+            userProFile = gson.fromJson(userLoggedJson, User.class);
+            goNextActivity(userProFile);
+        }
 
 
         //process when clicked to sign up link

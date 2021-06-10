@@ -1,5 +1,6 @@
 package com.edu.vn.orderfoodapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -61,7 +63,7 @@ public class CustomerFragment extends Fragment {
         delete = view.findViewById(R.id.delete);
         edit=view.findViewById(R.id.btnEdit);
         circleImageView=view.findViewById(R.id.imageUser);
-
+        // Create items
         if (!LoginActivity.userProFile.getImgUrl().isEmpty()){
             Glide.with(circleImageView.getContext()).load(LoginActivity.userProFile.getImgUrl()).fitCenter().into(circleImageView);
 
@@ -69,14 +71,12 @@ public class CustomerFragment extends Fragment {
             String path = "https://firebasestorage.googleapis.com/v0/b/orderfood-160b8.appspot.com/o/users%2Fround-account-button-with-user-inside.png?alt=media&token=2e0b93a7-2ba4-4c23-9910-4d9acde49740";
             Glide.with(circleImageView.getContext()).load(path).fitCenter().into(circleImageView);
         }
-
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // go to login activity
                 Intent intent = new Intent(homeActivity, EditProfileActivity.class);
                 startActivity(intent);
-//                startActivityForResult(intent,homeActivity.EDIT_CODE);
             }
         });
 
@@ -146,4 +146,6 @@ public class CustomerFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
+
+
 }

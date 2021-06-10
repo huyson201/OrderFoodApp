@@ -26,7 +26,6 @@
 
         </activity>
         <activity android:name=".FoodDetailActivity"></activity>
-        <activity android:name=".CartActivity"></activity>
         <activity android:name=".DeliveryListActivity"></activity>
         <activity android:name=".CookingActivity" />
         <activity android:name=".ConfirmBillActivity" />

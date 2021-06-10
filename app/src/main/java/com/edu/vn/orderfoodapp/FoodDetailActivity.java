@@ -89,8 +89,8 @@ public class FoodDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences sharedPref = getSharedPreferences(CartActivity.CART_TAG, MODE_PRIVATE);
-                String strInvoices = sharedPref.getString(CartActivity.INVOICES_TAG, "");
+                SharedPreferences sharedPref = getSharedPreferences(CartFragment.CART_TAG, MODE_PRIVATE);
+                String strInvoices = sharedPref.getString(CartFragment.INVOICES_TAG, "");
                 SharedPreferences.Editor editor = sharedPref.edit();
                 Gson gson = new Gson();
 
@@ -117,7 +117,7 @@ public class FoodDetailActivity extends AppCompatActivity {
                 }
 
                 String strValue = gson.toJson(invoices, new TypeToken<ArrayList<Invoice>>(){}.getType());
-                editor.putString(CartActivity.INVOICES_TAG, strValue);
+                editor.putString(CartFragment.INVOICES_TAG, strValue);
                 editor.apply();
 
                startActivity(new Intent(FoodDetailActivity.this, HomeActivity.class));
