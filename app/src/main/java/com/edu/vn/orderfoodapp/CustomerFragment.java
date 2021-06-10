@@ -70,9 +70,6 @@ public class CustomerFragment extends Fragment {
         if (!LoginActivity.userProFile.getImgUrl().isEmpty()){
             Glide.with(circleImageView.getContext()).load(LoginActivity.userProFile.getImgUrl()).fitCenter().into(circleImageView);
 
-        }else {
-            String path = "https://firebasestorage.googleapis.com/v0/b/orderfood-160b8.appspot.com/o/users%2Fround-account-button-with-user-inside.png?alt=media&token=2e0b93a7-2ba4-4c23-9910-4d9acde49740";
-            Glide.with(circleImageView.getContext()).load(path).fitCenter().into(circleImageView);
         }
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +122,7 @@ public class CustomerFragment extends Fragment {
                                         }
                                     });
                         }
-                        FirebaseDatabase.getInstance().getReference("users").child(LoginActivity.userProFile.getId()).removeValue();
+//                        FirebaseDatabase.getInstance().getReference("users").child(LoginActivity.userProFile.getId()).removeValue();
                         Log.d("deleted - ", "successfully");
                         LoginActivity.userProFile=null;
                         Intent intent = new Intent(homeActivity, LoginActivity.class);

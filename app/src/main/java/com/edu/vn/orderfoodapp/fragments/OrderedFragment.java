@@ -61,7 +61,9 @@ public class OrderedFragment extends Fragment {
                 if(!snapshot.getKey().isEmpty()){
                     for(DataSnapshot data : snapshot.getChildren()){
                         Bill bill = data.getValue(Bill.class);
-                        bills.add(bill);
+                        if (!bill.getStatus().equalsIgnoreCase(Bill.DELIVERED_STATUS_TAG)&&!bill.getStatus().equalsIgnoreCase(Bill.CANCEL_STATUS_TAG)) {
+                            bills.add(bill);
+                        }
 
                     }
                 }

@@ -117,8 +117,6 @@ public class EditProfileActivity extends AppCompatActivity {
                                     Uri uri = task.getResult();
                                     Log.d("userURI",uri.toString());
                                     updateProfile(name, email, phone, address, userId, uri.toString());
-
-
                                     afterEdit();
                                 }
                             }

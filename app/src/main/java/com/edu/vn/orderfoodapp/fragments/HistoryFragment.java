@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.edu.vn.orderfoodapp.CartActivity;
 import com.edu.vn.orderfoodapp.HomeActivity;
 import com.edu.vn.orderfoodapp.LoginActivity;
 import com.edu.vn.orderfoodapp.R;
@@ -34,10 +33,10 @@ import java.util.ArrayList;
 
 public class HistoryFragment extends Fragment {
     private RecyclerView recyclerView;
-    private Activity context;
-    private OrderedListBillAdapter adapter;
     private ArrayList<Bill> bills;
     private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+    private OrderedListBillAdapter adapter;
+    private HomeActivity homeActivity;
 
     private boolean clearBill = false;
 
@@ -50,6 +49,7 @@ public class HistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.history_layout, container, false);
         recyclerView = view.findViewById(R.id.list_invoice);
         bills = new ArrayList<Bill>();
+        homeActivity=(HomeActivity) getActivity();
 
         // get all bill of user
 
@@ -64,14 +64,13 @@ public class HistoryFragment extends Fragment {
                 if (!snapshot.getKey().isEmpty()) {
                     for (DataSnapshot data : snapshot.getChildren()) {
                         Bill bill = data.getValue(Bill.class);
-                        if (bill.getStatus().equalsIgnoreCase(Bill.DELIVERED_STATUS_TAG)) {
+                        if (bill.getStatus().equalsIgnoreCase(Bill.DELIVERED_STATUS_TAG)||bill.getStatus().equalsIgnoreCase(Bill.CANCEL_STATUS_TAG)) {
                             bills.add(bill);
                         }
                     }
                 }
-                context = new HomeActivity();
-                adapter = new OrderedListBillAdapter(context, bills);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+                adapter = new OrderedListBillAdapter(homeActivity, bills);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(homeActivity);
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setAdapter(adapter);
                 recyclerView.setLayoutManager(layoutManager);
