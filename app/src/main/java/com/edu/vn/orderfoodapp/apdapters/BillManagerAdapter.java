@@ -1,6 +1,7 @@
 package com.edu.vn.orderfoodapp.apdapters;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,9 +65,11 @@ public class BillManagerAdapter extends RecyclerView.Adapter<BillManagerAdapter.
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                     if (task.isSuccessful()) {
                         User user = task.getResult().getValue(User.class);
+
                         holder.lblName.setText(user.getName());
                         holder.lblPhone.setText(user.getPhone());
                         holder.lblAddress.setText(user.getAddress());
+
 
                     }
                 }
