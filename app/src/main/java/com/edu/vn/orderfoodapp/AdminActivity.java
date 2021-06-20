@@ -40,6 +40,7 @@ public class AdminActivity extends AppCompatActivity implements AdminRecyclerVie
             menus.add(new AdminMenu(R.drawable.ic_menu, AdminMenu.MENUS_TAG));
             menus.add(new AdminMenu(R.drawable.ic_task_list, AdminMenu.WAITING_BILL_TAG));
             menus.add(new AdminMenu(R.drawable.ic_chef, AdminMenu.COOKING_TAG));
+            menus.add(new AdminMenu(R.drawable.ic_food_delivery, AdminMenu.DELIVERY_TAG));
             menus.add(new AdminMenu(R.drawable.ic_confirm_list, AdminMenu.CONFIRMED_BILL_TAG));
         }
         else if(LoginActivity.userProFile.getRole()== User.COOKING_ROLE){
