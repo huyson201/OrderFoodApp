@@ -46,6 +46,7 @@ public class HomeActivity extends AppCompatActivity {
         //Khoi tao doi tuong
         navigation = findViewById(R.id.AHBottomNavigation);
         navigationViewPager = findViewById(R.id.AHBottomNavigationViewPager);
+
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         navigationViewPager.setAdapter(viewPagerAdapter);
 
