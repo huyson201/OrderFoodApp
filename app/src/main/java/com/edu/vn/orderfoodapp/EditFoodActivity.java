@@ -158,35 +158,36 @@ public class EditFoodActivity extends AppCompatActivity {
                 String categoryName = dropdown_menu.getText().toString();
                 //check input values
                 imgPath = Uri.parse(foodImg);
-                if (!foodName.isEmpty() && !imgPath.equals(Uri.parse(foodImg)) && !categoryName.isEmpty()) {
-                    UploadTask uploadTask = storage.putFile(imgPath);
-                    uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                        @Override
-                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            if (!task.isSuccessful()) {
-                                throw task.getException();
+                if (!foodName.isEmpty() && !foodDesc.isEmpty() && !foodPrice.isEmpty() && !categoryName.isEmpty()) {
+                    if (!imgPath.equals(Uri.parse(foodImg))) {
+                        UploadTask uploadTask = storage.putFile(imgPath);
+                        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                if (!task.isSuccessful()) {
+                                    throw task.getException();
+                                }
+
+                                return storage.getDownloadUrl();
                             }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if (task.isSuccessful()) {
 
-                            return storage.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            if (task.isSuccessful()) {
+                                    Uri uri = task.getResult();
 
-                                 Uri uri = task.getResult();
-
-                                //get category ID
-                                updateFood(uri.toString(),foodName,foodDesc,foodPrice,foodId,categoryName);
+                                    //get category ID
+                                    updateFood(uri.toString(), foodName, foodDesc, foodPrice, foodId, categoryName);
 
 
+                                }
                             }
-                        }
-                    });
-                }else if(imgPath.equals(Uri.parse(foodImg))){
-                    updateFood(foodImg,foodName,foodDesc,foodPrice,foodId,categoryName);
-
-                }else {
+                        });
+                    } else if (imgPath.equals(Uri.parse(foodImg))) {
+                        updateFood(foodImg, foodName, foodDesc, foodPrice, foodId, categoryName);
+                    }
+                } else {
                     Toast.makeText(EditFoodActivity.this, "Food's name must not be empty", Toast.LENGTH_SHORT).show();
                     addFoodBtn.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
@@ -197,14 +198,15 @@ public class EditFoodActivity extends AppCompatActivity {
             }
         });
     }
-    private void updateFood(String foodImg,String foodName,String foodDesc,String foodPrice,String foodId,String categoryName){
+
+    private void updateFood(String foodImg, String foodName, String foodDesc, String foodPrice, String foodId, String categoryName) {
         db_cate.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Category category = dataSnapshot.getValue(Category.class);
                     if (category.getCategoryName().equalsIgnoreCase(categoryName)) {
-                        Food food = new Food(category.getCategoryID(),foodId ,foodImg, foodName, foodDesc, Integer.parseInt(foodPrice));
+                        Food food = new Food(category.getCategoryID(), foodId, foodImg, foodName, foodDesc, Integer.parseInt(foodPrice));
                         db_food.child(foodId).setValue(food);
                         addFoodBtn.setVisibility(View.VISIBLE);
                         progressBar.setVisibility(View.INVISIBLE);
@@ -222,6 +224,7 @@ public class EditFoodActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
