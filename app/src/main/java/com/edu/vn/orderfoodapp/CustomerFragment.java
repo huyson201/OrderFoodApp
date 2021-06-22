@@ -124,7 +124,10 @@ public class CustomerFragment extends Fragment {
                         }
 //                        FirebaseDatabase.getInstance().getReference("users").child(LoginActivity.userProFile.getId()).removeValue();
                         Log.d("deleted - ", "successfully");
-                        LoginActivity.userProFile=null;
+                        SharedPreferences sharedPref = homeActivity.getSharedPreferences(LoginActivity.REMEMBER_LOGIN_TAG, Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.remove(LoginActivity.USER_LOGGED_IN);
+                        editor.apply();
                         Intent intent = new Intent(homeActivity, LoginActivity.class);
                         startActivity(intent);
                     }
